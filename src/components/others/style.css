@@ -1,0 +1,16 @@
+.modal {
+    @apply fixed z-[100] overflow-auto bg-[rgba(#000,0.4)] opacity-0 invisible inset-0 flex items-center justify-center;
+  }
+  .modal.active {
+    @apply opacity-100 visible;
+  }
+  .modal__content {
+    @apply bg-[#0f0f0f] w-6/12 opacity-0 translate-y-[-250px] relative w-4/5 p-8;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+  }
+  .modal__content__close {
+    @apply absolute text-2xl cursor-pointer right-[5px] top-[5px] hover:text-[#ff0000];
+  }
+  .modal.active .modal__content {
+    @apply opacity-100 translate-y-0;
+  }

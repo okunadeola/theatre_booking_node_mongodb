@@ -1,0 +1,194 @@
+.shining-shadow {
+    animation: shining ease-in-out 2.5s  infinite;
+  }
+  
+  @keyframes shining {
+    0% {
+      box-shadow: 0 0 10px 5px #ebdcb1;
+    }
+    50% {
+      box-shadow: 0 0 20px 10px #b7a97e;
+    }
+    100% {
+      box-shadow: 0 0 10px 5px #2b2a25;
+    }
+  }
+
+
+
+  .wrapper{
+    perspective: 1000px;
+  }
+
+  .screen {
+    /* background-color: #fff; */
+    /* height: 150px;
+    width: 100%;
+    margin: 15px 0;
+    transform: rotateX(-48deg);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7); */
+
+    /* transform: perspective(500px)  */
+
+    /* background-color: #000; */
+    height: 150px;
+    width: 90%;
+    margin: 15px 0;
+    transform: rotateX(-45deg);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.75);
+    overflow: hidden;
+  }
+
+
+
+  .screen-img {
+    height: 50px;
+    transform: rotateX(-45deg);
+    overflow: hidden;
+  }
+  
+
+
+
+  
+  .item-paper {
+    /* position: absolute; */
+    width: 30%;
+    height: 50px;
+
+    background-color: blue;
+    animation: move 10s linear infinite alternate;
+  }
+  
+  @keyframes move {
+    /* 0% {
+      left: 0;
+    }
+    100% {
+      left: calc(100% - 200px);
+    } */
+    /* 0% {
+        transform: translateX(-50%);
+      }
+      100% {
+        transform: translateZ(calc(100% + 50px)) ; /* Move the object across the screen linearly */
+      /* }  */
+
+
+      /* 0% {
+        top: 0;
+        left: 0;
+      }
+      25% {
+        top: 0;
+        left: calc(100% - 50px);
+      }
+      50% {
+        top: calc(100% - 50px);
+        left: calc(100% - 50px);
+      }
+      75% {
+        top: calc(100% - 50px);
+        left: 0;
+      }
+      100% {
+        top: 0;
+        left: 0;
+      } */
+
+      0% {
+        top: 0;
+        left: 0;
+      }
+      100% {
+        top: 100%;
+        left: 100%;
+      }
+
+
+
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* qrcode */
+
+
+
+  .ticket-container {
+    position: relative;
+    width: 350px;
+    height: 450px;
+    background-color: #fff;
+    border: 2px solid #000;
+    overflow: hidden;
+    clip-path: polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%);
+  }
+  .ticket-container::before {
+  content: '';
+  position: absolute;
+
+  bottom: 40px;
+  left: 0px; /* Adjust to control the position */
+  width: 20px; /* Diameter of the circle */
+  height: 10px;
+  background: red; /* Background color */
+  border-radius: 50%;
+  clip-path: circle(150% at 0% 10%) padding-box;
+}
+
+/* Circular clip path on right edge */
+.ticket-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -20px; /* Adjust to control the position */
+  width: 40px; /* Diameter of the circle */
+  background: #fff; /* Background color */
+  border-radius: 50%;
+}
+  
+  .qr-code {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background-color: black; /* Set background color of the QR code */
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); /* Clip path for top and bottom */
+  }
+  
+  .qr-code::before,
+  .qr-code::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    width: 50px;
+    background: linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  }
+  
+  .qr-code::before {
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 50px) 100%, 0 100%);
+  }
+  
+  .qr-code::after {
+    right: 0;
+    clip-path: polygon(50px 0, 100% 0, 100% 100%, 0 100%);
+  }
+  

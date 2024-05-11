@@ -1,0 +1,57 @@
+
+.sidebar {
+  @apply flex-col xl:text-[#4E4D4F] xl:w-[384px] xl:bg-[#fff] h-screen fixed xl:z-[100] w-screen bg-[#8624DB] text-[#fff] z-[1] top-0 flex items-stretch justify-start;
+  /* @include flex(stretch, flex-start); */
+}
+.sidebar__logo {
+  @apply xl:h-[171px] justify-between h-[70px] mb-[24px] px-[24px] py-0 flex items-center;
+}
+.sidebar__logo img {
+  @apply w-[55px] h-[55px];
+  /* @apply w-[var(--size)] h-[var(--size)];
+  --size: 55px; */
+}
+.sidebar__logo .sidebar-close {
+  @apply cursor-pointer xl:hidden block;
+}
+.sidebar__logo .sidebar-close i {
+  @apply text-[2rem];
+}
+/* .sidebar__logo .sidebar-close {
+} */
+.sidebar__menu {
+  @apply flex-col grow flex items-stretch justify-start ;
+  /* @include flex(stretch, flex-start); */
+}
+.sidebar__menu__item {
+  @apply relative transition-[color] duration-300 ease-in-out mb-8 xl:pl-[20%] pl-[24px] xl:hover:text-[#8624DB] hover:text-[#FF9066] last:cursor-pointer last:mt-auto flex items-center justify-start;
+  
+}
+/* .sidebar__menu__item:hover {
+} */
+.sidebar__menu__item.active {
+  @apply font-bold xl:text-[#8624DB] text-[#FF9066] before:content-[''] before:absolute before:h-full before:w-[5px] xl:before:bg-[#8624DB] before:bg-[#FF9066] before:rounded-tr-[20px] before:rounded-br-[20px] before:left-0 before:top-0;
+}
+/* .sidebar__menu__item.active::before {
+} */
+.sidebar__menu__item__icon {
+  @apply w-[40px] h-[40px] xl:mr-12 mr-4 flex items-center justify-center;
+}
+.sidebar__menu__item__icon i {
+  @apply text-[1.9rem];
+}
+
+
+
+
+
+/* root layout */
+.main {
+    @apply overflow-x-hidden w-screen;
+  }
+  .main__content {
+    @apply min-h-screen transition-all duration-500 ease-in-out relative bg-[#F3F4FA] z-[100];
+  }
+  .sidebar-open .main__content {
+    @apply h-screen overflow-hidden translate-x-1/3  md:translate-x-1/4 transition-all duration-500 ease-in-out rounded-tl-[30px] rounded-bl-[30px] scale-[0.8];
+  }

@@ -1,0 +1,13 @@
+button {
+    @apply cursor-pointer;
+  }
+  .btn {
+    @apply bg-[#ff0000] text-[#fff] rounded-[30px] text-2xl font-semibold shadow-[0px_0px_7px_8px_#ff00004d] transition-shadow duration-300 ease-in-out relative px-[1.8rem] py-2 border-4 border-solid border-transparent hover:shadow-[0px_0px_7px_15px_#ff00004d];
+  }
+  .btn-outline {
+    @apply bg-transparent text-[#fff] shadow-[unset] border-[3px] border-solid border-[#fff] hover:shadow-[unset] hover:text-[#ff0000] hover:bg-[#fff];
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+  .btn.small {
+    @apply text-base px-6 py-1 border-2;
+  }

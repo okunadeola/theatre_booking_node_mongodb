@@ -1,0 +1,75 @@
+/*
+  Based on TailwindCSS recommendations,
+  consider using classes instead of the `@apply` directive
+  @see https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
+*/
+
+.logo {
+  @apply text-[2.5rem] font-semibold flex items-center ;
+}
+.logo img {
+  @apply w-[50px] mr-2.5 ;
+}
+.header {
+  @apply h-[8rem] fixed w-full z-[99] left-0 top-0 font-Poppins bg-transparent text-white/90;
+  transition: height 0.3s ease, background-color 0.3s ease;
+}
+.header.shrink {
+  @apply h-[5rem] bg-[#0f0f0f] ;
+}
+.header__wrap {
+  @apply h-full px-8 py-0 flex justify-between items-center;
+
+}
+.header__nav {
+    @apply flex items-center;
+}
+
+.header__nav > * ~ * {
+  @apply ml-8;
+}
+.header__nav li {
+  @apply font-bold relative text-2xl px-0 py-[5px] after:content-[""] after:absolute after:-translate-x-2/4 after:w-0 after:transition-[width] after:duration-500 after:ease-in-out after:h-0.5 after:bg-[#ff0000] after:left-2/4 after:bottom-0;
+}
+.header__nav li.active::after,
+.header__nav li:hover::after {
+  @apply w-full;
+}
+
+
+
+
+
+/* header  */
+.sidebar-toggle {
+  @apply w-[40px] h-[40px] cursor-pointer lg:hidden flex items-center justify-center;
+}
+/* .sidebar-toggle i {
+  @apply text-5xl text-[#8624DB];
+} */
+
+/* .header__nav {
+  @apply fixed h-20 w-full bg-[#0f0f0f] shadow-[rgba(100_100_111_0.2)] ml-0 px-8 py-0 left-0 bottom-0 flex justify-between items-center;
+} */
+
+
+
+
+.footer {
+    @apply relative bg-top bg-cover bg-no-repeat px-8 py-24;
+  }
+  .footer__content {
+    @apply max-w-[1000px];
+  }
+  .footer__content__logo {
+    @apply mb-12 flex justify-between items-center;
+  }
+  .footer__content__menus {
+    @apply grid md:grid-cols-[repeat(3,1fr)] grid-cols-[repeat(2,1fr)];
+  }
+  .footer__content__menu {
+    @apply flex flex-col text-2xl font-semibold mt-4  items-start justify-start;
+  }
+  .footer__content__menu > * ~ * {
+    @apply mt-4;
+  }
