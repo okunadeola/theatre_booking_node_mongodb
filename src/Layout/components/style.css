@@ -73,3 +73,11 @@
   .footer__content__menu > * ~ * {
     @apply mt-4;
   }
+
+
+
+
+
+  .animat {
+   transition-duration: 4s !important;;
+  }

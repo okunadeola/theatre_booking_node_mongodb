@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 
-import { LongArrowRight } from "../../../../assets/icons/long-arrow-right";
-import { LongArrowUp } from "../../../../assets/icons/long-arrow-up";
-import { GasIcon } from "../../../../assets/icons/gas-icon";
-import { QuestionIcon } from "../../../../assets/icons/question-icon";
+import { LongArrowRight } from "../../../assets/icons/long-arrow-right";
+import { LongArrowUp } from "../../../assets/icons/long-arrow-up";
+import { GasIcon } from "../../../assets/icons/gas-icon";
+import { QuestionIcon } from "../../../assets/icons/question-icon";
+import { cn } from "../../../lib/utils";
 
 // type CardProps = {
 //   name: string;
@@ -20,7 +21,7 @@ import { QuestionIcon } from "../../../../assets/icons/question-icon";
 //   currencyType: string;
 // };
 
-export default function WalletCard({ item }) {
+export default function WalletCard({ item, onclick, withShadow }) {
   const {
     name,
     avatar,
@@ -34,10 +35,11 @@ export default function WalletCard({ item }) {
     transactionFrom,
     transactionAmount,
     transactionType,
+    id,
   } = item ?? {};
   const bgColor = transactionType === "credited" ? "#D2D786" : "#F2C672";
   return (
-    <div className="rounded-lg bg-[#171e2e] p-4 text-sm shadow-card dark:bg-light-dark sm:p-5 md:p-6">
+    <div className={cn("rounded-lg bg-white p-4 text-sm shadow-card  sm:p-5 md:p-6 cursor-pointer", withShadow && "shadow", onclick ? "cursor-pointer" : "cursor-auto")}  onClick={()=>onclick(id)}>
       <div className="flex items-center justify-between border-b border-dashed border-gray-200 pb-3.5 dark:border-gray-700 sm:pb-5">
         <div className="flex items-center font-medium gap-1 ">
           <img
@@ -47,7 +49,7 @@ export default function WalletCard({ item }) {
             height={24}
             className="rounded-full"
           />
-          <div className="truncate -tracking-wider  ltr:ml-2 rtl:mr-2 text-white">
+          <div className="truncate -tracking-wider  ltr:ml-2 rtl:mr-2 text-gray-900">
             {name}
           </div>
         </div>
@@ -70,7 +72,7 @@ export default function WalletCard({ item }) {
               />
             </div>
             <div className="flex flex-col truncate ltr:ml-2.5 rtl:mr-2.5 xl:ltr:ml-4 xl:rtl:mr-4">
-              <strong className="mb-0.5 font-medium -tracking-wider text-white">
+              <strong className="mb-0.5 font-medium -tracking-wider text-gray-900">
                 {transactionType === "credited" ? "Receive" : "Send"}
               </strong>
               <span className="text-xs text-gray-400">{transactionFrom}</span>
@@ -96,7 +98,7 @@ export default function WalletCard({ item }) {
               <span className="mb-0.5 text-xs text-gray-400">
                 +{transactionAmount}
               </span>
-              <strong className="font-medium -tracking-wider text-white">
+              <strong className="font-medium -tracking-wider text-gray-900">
                 {transactionMethod}
               </strong>
             </div>
@@ -114,7 +116,7 @@ export default function WalletCard({ item }) {
             </div>
             <div className="flex flex-col truncate ltr:ml-2.5 rtl:mr-2.5 xl:ltr:ml-4 xl:rtl:mr-4">
               <span className="mb-0.5 text-xs text-gray-400">From</span>
-              <strong className="truncate font-medium -tracking-wider flex gap-1 text-white">
+              <strong className="truncate font-medium -tracking-wider flex gap-1 text-gray-900">
                 <span>{gasFee + 40}</span>
                 <span>{currencyType}</span>
               </strong>
@@ -129,7 +131,7 @@ export default function WalletCard({ item }) {
             </div>
             <div className="flex flex-col truncate ltr:ml-2.5 rtl:mr-2.5 xl:ltr:ml-4 xl:rtl:mr-4">
               <span className="mb-0.5 text-xs text-gray-400">To</span>
-              <strong className="font-medium -tracking-wider text-white flex gap-1">
+              <strong className="font-medium -tracking-wider text-gray-900 flex gap-1">
                 <span>{gasFee}</span>
                 <span>{currencyType}</span>
               </strong>
@@ -140,3 +142,4 @@ export default function WalletCard({ item }) {
     </div>
   );
 }
+

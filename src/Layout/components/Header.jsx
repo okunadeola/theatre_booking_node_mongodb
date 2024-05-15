@@ -10,6 +10,7 @@ import { LogIn, Search } from 'lucide-react';
 import { HiMenuAlt2 } from "react-icons/hi";
 import DropdownUser from './DropdownUser';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import { BsRobot } from "react-icons/bs";
 
 
 // const headerNav = [
@@ -113,6 +114,15 @@ const Header = () => {
                         </Button>
 
                     }
+
+                    <div>
+                        <span className="relative flex h-7 w-7">
+                            <span className="animate-ping duration-4000 absolute inline-flex h-full w-full rounded-full bg-green-100 opacity-90"></span>
+                                <BsRobot className='text-3xl relative cursor-pointer hover:animate-bounce' />
+                            {/* <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span> */}
+                        </span>
+
+                    </div>
 
                     <div className="sidebar-toggle" onClick={openSidebar}>
                         <HiMenuAlt2 className='text-5xl text-white' />

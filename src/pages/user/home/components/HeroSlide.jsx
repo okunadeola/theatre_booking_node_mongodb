@@ -109,7 +109,7 @@ const HeroSlideItem = props => {
                     <div className="overview">{item.overview}</div>
                     <div className="flex items-start justify-start flex-wrap gap-5">
                         <Button onClick={() => hisrory('/user/movie/' + item.id)}>
-                            Watch now
+                            Book Now
                         </Button>
                         <OutlineButton onClick={setModalActive} className='cursor-pointer  sm:mx-0 '>
                             Watch trailers

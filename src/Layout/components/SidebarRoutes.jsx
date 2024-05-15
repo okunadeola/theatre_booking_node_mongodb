@@ -3,6 +3,10 @@ import { BarChart,  Layout, List, } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import usePathname from "../../hooks/usePathname";
 import { TbBrandCinema4D } from "react-icons/tb";
+import { GiCarSeat } from "react-icons/gi";
+import { IoWalletOutline } from "react-icons/io5";
+import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
+import { FaUsersGear } from "react-icons/fa6";
 
 const guestRoutes = [
     {
@@ -14,6 +18,26 @@ const guestRoutes = [
         icon: TbBrandCinema4D,
         label: "Movies",
         href: "/admin/movies"
+    },
+    {
+        icon: FaUsersGear,
+        label: "User",
+        href: "/admin/user"
+    },
+    {
+        icon: GiCarSeat,
+        label: "Booking",
+        href: "/admin/booking"
+    },
+    {
+        icon: IoWalletOutline,
+        label: "Wallet",
+        href: "/admin/wallet"
+    },
+    {
+        icon: HiOutlineChatBubbleLeftRight,
+        label: "Ticket",
+        href: "/admin/ticket"
     },
 ]
 

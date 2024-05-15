@@ -16,6 +16,10 @@ import Reserve from "./pages/user/reserve";
 import Wallet from "./pages/user/wallet";
 import Ticket from "./pages/user/Ticket";
 import Profile from "./pages/user/profile";
+import AdminBooking from "./pages/admin/booking";
+import AdminWallet from "./pages/admin/Wallet";
+import AdminTicket from "./pages/admin/ticket";
+import AdminUser from "./pages/admin/user";
 
 function App() {
   const { userData, removeCurrentUser } = useCurrentUser();
@@ -43,13 +47,18 @@ function App() {
 
   return (
     <Routes>
-      {/* <Route path='/' element={<HomePage />} /> */}
+
       <Route path="/" element={<Navigate to="/user" />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+
       <Route path="/admin" element={<RootLayout />}>
         <Route path="/admin/" element={<Dashboard />} />
         <Route path="/admin/movies" element={<Movies />} />
+        <Route path="/admin/booking" element={<AdminBooking />} />
+        <Route path="/admin/user" element={<AdminUser />} />
+        <Route path="/admin/wallet" element={<AdminWallet />} />
+        <Route path="/admin/ticket" element={<AdminTicket />} />
       </Route>
 
       <Route path="/user" element={<UserRootLayout />}>
@@ -60,6 +69,7 @@ function App() {
         <Route path="/user/ticket" element={<Ticket />} />
         <Route path="/user/profile" element={<Profile />} />
       </Route>
+
     </Routes>
   );
 }

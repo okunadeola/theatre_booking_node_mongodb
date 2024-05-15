@@ -2,7 +2,7 @@
 // import {Input} from 'antd'
 
 
-const InputCustom = ({type, register, errors, id, required}) => {
+const InputCustom = ({type, register, errors, id, required, placeholder,}) => {
 
   return (
     <div>
@@ -11,6 +11,7 @@ const InputCustom = ({type, register, errors, id, required}) => {
             id={id}
             name={id}
             autoComplete={id}
+            placeholder={placeholder}
             className={`w-full rounded-lg  p-4 pe-12 text-sm ${
                 errors[id]
                 ? "focus:outline-none focus:ring-1  ring-1  focus:ring-red-500 border-red-500"

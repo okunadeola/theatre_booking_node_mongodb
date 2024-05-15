@@ -1,10 +1,11 @@
-import { cn } from "../../../../lib/utils";
+import { Avatar } from "@nextui-org/react";
+import { cn } from "../../../lib/utils";
 import { MdQrCode2 } from "react-icons/md";
 
-const ReserveCard = () => {
+const BookingCard = () => {
   return (
-    <div className="rounded-lg  bg-[#25272a] shadow-2xl shadow-slate-950 font-Montserrat  ">
-      <div className="p-3 pb-4 relative">
+    <div className="rounded-lg  bg-white shadow shadow-slate-300 font-Montserrat  ">
+      <div className="p-3 pb-2 relative">
         <div className="mb-4 flex items-start justify-between">
           <div className="text-sm font-medium uppercase w-full">
             <div className="w-[70%]">
@@ -17,13 +18,7 @@ const ReserveCard = () => {
 
           <img
             src="https://image.tmdb.org/t/p/original/qrGtVFxaD8c7et0jUtaYhyTzzPg.jpg"
-            className="absolute top-2 right-2 w-18 h-18 rounded-md"
-            alt="ticket_img"
-          />
-
-          <img
-            src="https://image.tmdb.org/t/p/original/qrGtVFxaD8c7et0jUtaYhyTzzPg.jpg"
-            className="absolute top-24 right-12 w-6 h-6 rounded-full  filter grayscale blur-md contrast-200"
+            className="absolute top-2 right-2 w-[4rem] h-[4rem] rounded-md opacity-70"
             alt="ticket_img"
           />
         </div>
@@ -35,21 +30,26 @@ const ReserveCard = () => {
             </p>
           </div>
         </div>
-
+        <div className="flex items-end mt-2 gap-1">
+          <Avatar classNames={{
+            icon: 'text-gray-100'
+          }} size="sm" className=" w-5 h-5"/> <span className="text-gray-400 text-xs">@user1</span>
+        </div>
       </div>
       <p
         className={cn(
-          "flex items-center justify-center gap-2 border-t border-stone-700 p-3 text-sm font-normal dark:border-light-dark  ",
-          "text-[#ffd33d] !font-Poppins "
+          "flex items-center justify-center gap-2 border-t border-dashed border-gray-200   p-3 text-sm font-normal  ",
+          "text-[#5a5853] !font-Poppins  "
         )}
       >
-        <span className="bg-[#323336] px-4 py-1 rounded-large hover:animate-pulse cursor-pointer  flex items-center gap-1">
+        <span className="bg-slate-200 backdrop-blur hover:animate-bounce px-4 py-1 rounded-large  cursor-pointer  flex items-center gap-1">
           <MdQrCode2 />
-          View
+
+          <span>View</span>
         </span>
       </p>
     </div>
   );
 };
 
-export default ReserveCard;
+export default BookingCard;
