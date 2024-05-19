@@ -14,11 +14,16 @@ import { useRef, useState } from "react";
 
 
 import Currency from "react-currency-formatter"
+import { Rating } from "@smastrom/react-rating";
+import '@smastrom/react-rating/style.css'
 
 
 
 const Receipt = ({isOpen, onClose, data}) => {
         const [isPrinting, setIsPrinting] = useState(false)
+        const [rating, setRating] = useState(0) // Initial value
+
+
     const componentRef = useRef()
 
     // useEffect(() => {
@@ -78,8 +83,14 @@ const Receipt = ({isOpen, onClose, data}) => {
   return (
     <>
      
-      <Drawer placement="right" size={'large'} onClose={onClose} open={isOpen}  maskClosable={false} style={{backgroundImage: "linear-gradient(to bottom,rgba(0,0,0,0.2), rgba(1,1,2,0.8), rgba(1,1,2,0.8), rgba(1,1,2,0.8),rgba(0,0,0,0.2)"}} className="bg-gray-500 overflow-hidden font-Poppins   bg-[linear-gradient(to_bottom,rgba(1,1,2,0.8),rgba(0,0,0,0.2))] " >
+      <Drawer placement="right" size={'large'} onClose={onClose} open={isOpen}  maskClosable={false} style={{backgroundImage: "linear-gradient(to bottom,rgba(0,0,0,0.2), rgba(1,1,2,0.8), rgba(1,1,2,0.8), rgba(1,1,2,0.8),rgba(0,0,0,0.2)"}} className="bg-gray-500 overflow-hidden font-Poppins   bg-[linear-gradient(to_bottom,rgba(1,1,2,0.8),rgba(0,0,0,0.2))] "  >
+        <div className="flex gap-2 justify-end pb-4">
+            <span className="text-stone-800">Rate Movie</span>
+
+        <Rating style={{ maxWidth: 105 }} value={rating} onChange={setRating} /> 
+        </div>
        <div className="flex flex-col  px-2  gap-2">
+
 
         
 

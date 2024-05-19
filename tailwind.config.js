@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import { nextui } from '@nextui-org/react'
 import tailwindCssAnimated from 'tailwindcss-animate'
+import scrollbar from "tailwind-scrollbar";
 
 
 
@@ -336,5 +337,5 @@ export default {
       },
     },
   },
-  plugins: [ nextui(), tailwindCssAnimated],
+  plugins: [ nextui(), tailwindCssAnimated,     scrollbar],
 }

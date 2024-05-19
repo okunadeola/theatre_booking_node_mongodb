@@ -5,9 +5,9 @@ import { Drawer } from "antd";
 
 import { Chip, Button, Checkbox } from "@nextui-org/react";
 import toast from "react-hot-toast";
-import Header from "./Header";
-import Body from "./Body";
-import Form from "./Form";
+import Header from "../../pages/user/Ticket/components/Header";
+import Body from "../../pages/user/Ticket/components/Body";
+import Form from "../../pages/user/Ticket/components/Form";
 import { IoClose } from "react-icons/io5";
 
 import { createStyles } from 'antd-style';
@@ -25,10 +25,12 @@ const TicketModal = ({ isOpen, onClose, data }) => {
 
     const classNames = {
         mask: styles['my-drawer-mask'],
+        colorSplit: "!bg-transparent !shadow-none !border-none"
     };
     const drawerStyles = {
         mask: {
-            backdropFilter: 'blur(10px)',
+            backdropFilter: 'blur(10px) background(transparent)',
+            
         },
     };
 
@@ -45,13 +47,14 @@ const TicketModal = ({ isOpen, onClose, data }) => {
         open={isOpen}
         title={"Support Ticket"}
         maskClosable={false}
-        className={` ${data && '!bg-transparent !shadow-none w-full'} `}
+        className={` ${data && '!bg-transparent !shadow-none w-full'} !bg-transparent !border-none !shadow-none `}
         classNames={classNames}
         styles={drawerStyles}
         closeIcon={<IoClose className="text-white/50 text-4xl hover:text-red-200"/>}
+        
   
       >
-        <div className="flex flex-col gap-3 p-2 w-full h-full overflow-hidden">
+        <div className="flex flex-col gap-3 p-2 w-full h-full overflow-hidden bg-transparent border-none">
 
             {
                 data ? (

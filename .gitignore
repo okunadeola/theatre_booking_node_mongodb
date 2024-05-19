@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# src/pages/admin
+# src/pages/general
+# src/pages/user/profile
+# src/pages/user/reserve
+# src/pages/user/Ticket
+# src/pages/user/wallet

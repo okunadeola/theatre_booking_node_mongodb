@@ -1,7 +1,6 @@
 import { CiHome } from "react-icons/ci";
 import { IoReceiptOutline, IoWalletOutline } from "react-icons/io5";
 
-import { BiUser } from "react-icons/bi";
 
 import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 
@@ -33,12 +32,12 @@ const sidebarNav = [
         icon: <HiOutlineChatBubbleLeftRight size={25} />,
         text: 'Ticket'
     },
-    {
-        link: '/user/profile',
-        section: 'Profile',
-        icon: <BiUser size={25} />,
-        text: 'Profile'
-    }
+    // {
+    //     link: '/user/profile',
+    //     section: 'Profile',
+    //     icon: <BiUser size={25} />,
+    //     text: 'Profile'
+    // }
 
 ]
 

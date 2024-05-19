@@ -27,7 +27,7 @@ const navigate = useNavigate()
                 const res = await loginAction(data)
                 if(res){
                     setCurrentUser(res)
-                    navigate('/admin')
+                    navigate('/admin/')
                     reset()
                 }
             } catch (error) {

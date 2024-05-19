@@ -26,7 +26,6 @@ const AllWallet = () => {
                 <WalletCard key={card.id} item={card} onclick={openModal} />
             ))
         }
-
             <AdminWalletModal onClose={onClose} isOpen={isOpen} data={walletId} />
     </div>
   )

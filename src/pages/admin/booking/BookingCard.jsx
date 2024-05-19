@@ -1,11 +1,11 @@
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button } from "@nextui-org/react";
 import { cn } from "../../../lib/utils";
 import { MdQrCode2 } from "react-icons/md";
 
 const BookingCard = () => {
   return (
-    <div className="rounded-lg  bg-white shadow shadow-slate-300 font-Montserrat  ">
-      <div className="p-3 pb-2 relative">
+    <div className="rounded-2xl  bg-white border shadow shadow-slate-100 font-Montserrat  ">
+      <div className="p-4 pb-2 relative ">
         <div className="mb-4 flex items-start justify-between">
           <div className="text-sm font-medium uppercase w-full">
             <div className="w-[70%]">
@@ -18,7 +18,7 @@ const BookingCard = () => {
 
           <img
             src="https://image.tmdb.org/t/p/original/qrGtVFxaD8c7et0jUtaYhyTzzPg.jpg"
-            className="absolute top-2 right-2 w-[4rem] h-[4rem] rounded-md opacity-70"
+            className="absolute top-3 right-3 w-[4rem] h-[4rem] rounded-xl opacity-70"
             alt="ticket_img"
           />
         </div>
@@ -42,11 +42,11 @@ const BookingCard = () => {
           "text-[#5a5853] !font-Poppins  "
         )}
       >
-        <span className="bg-slate-200 backdrop-blur hover:animate-bounce px-4 py-1 rounded-large  cursor-pointer  flex items-center gap-1">
+        {/* <span className="bg-slate-200 backdrop-blur hover:animate-bounce px-4 py-1 rounded-large  cursor-pointer  flex items-center gap-1">
           <MdQrCode2 />
-
           <span>View</span>
-        </span>
+        </span> */}
+        <Button size="sm"  className="rounded-full gap-1 px-5"> <MdQrCode2 /> <span>View</span> </Button>
       </p>
     </div>
   );

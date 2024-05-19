@@ -126,7 +126,7 @@ const DropdownUser = ({user}) => {
               Ticket
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="/user/profile"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-stone-400 pt-4 pb-2 px-4 hover:bg-stone-300"
@@ -150,7 +150,7 @@ const DropdownUser = ({user}) => {
               </svg>
               Profile
             </Link>
-          </li>
+          </li> */}
       
        
         </ul>

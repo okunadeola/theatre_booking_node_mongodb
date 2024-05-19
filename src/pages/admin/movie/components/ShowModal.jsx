@@ -22,6 +22,7 @@ import toast from "react-hot-toast";
 
 
 
+
 const lvRating = {
   0: "⭐️",
   1: "⭐️",
@@ -608,6 +609,7 @@ const ShowModal = ({isOpen, onClose, data}) => {
     const [pickedSeat, setPickedSeat] = useState([])
     const itemRef = useRef(null);
     const containerRef = useRef(null);
+    const [rating, setRating] = useState(0) // Initial value
 
 
 
@@ -762,7 +764,8 @@ const handleAnimationIteration = () => {
     <>
      
       <Drawer placement="right" size={'large'} onClose={onClose} open={isOpen}  maskClosable={false} className="bg-gray-500 overflow-hidden font-Poppins" >
-       <div className="flex flex-col  px-2 ">
+
+        <div className="flex flex-col  px-2 ">
 
         <div className="flex gap-2 justify-between flex-wrap">
             <div className="flex flex-col overflow-ellipsis  border border-slate-200 p-2 w-36 md:w-40 rounded-lg">
@@ -795,7 +798,7 @@ const handleAnimationIteration = () => {
 
             <div className="flex bg-slate-300/50 shadow rounded h-[410px] w-full p-2 py-4 mb-2 ">
 
-                <div className="w-full flex gap-5 h-full overflow-x-scroll scrollbar-e ">
+                <div className="w-full flex gap-5 h-full overflow-x-scroll scrollbar-track-slate-400 scrollbar-thumb-black scrollbar">
                     {
                         allSeat?.map((seatBatch, i)=> (
                             <div key={i} className="flex min-w-[300px] gap-4 flex-wrap items-center justify-center mr-5  bg-stone-300 rounded-xl p-3 ">

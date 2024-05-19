@@ -13,8 +13,12 @@ import MovieList from "../home/components/MovieList";
 import Button from "../../../components/others/Button"
 import { TbCheckupList } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
+import ShowModal from "../.././../pages/admin/movie/components/ShowModal";
+import { useDisclosure } from "@nextui-org/react";
 
 const SingleMovie = () => {
+  const { onOpen, isOpen: hasOpen, onClose: isClose } = useDisclosure();
+
   const { category, id } = useParams();
 
   const [item, setItem] = useState(null);
@@ -29,6 +33,14 @@ const SingleMovie = () => {
     };
     getDetail();
   }, [category, id]);
+
+
+
+
+
+  const data = 
+    {title:item?.title || "", price: 20000 , img: apiConfig.originalImage(item?.poster_path || item?.backdrop_path )}
+  
 
   return (
     <>
@@ -75,8 +87,8 @@ const SingleMovie = () => {
                 </div>
                 <Button className='flex items-center justify-center gap-2 px-4 py-1 bg-[#77b940] shadow-[0px_0px_7px_5px_#3d3f3c] hover:shadow-[0px_0px_7px_8px_#3d3f3c]'>
                        
-                        <TbCheckupList size={21} strokeWidth={2} />
-                        <span className='font-medium'>Book</span>
+                        <TbCheckupList size={21} strokeWidth={2}  />
+                        <span className='font-medium' onClick={onOpen}>Book</span>
                 </Button>
                 
               </div>
@@ -93,6 +105,9 @@ const SingleMovie = () => {
           </div>
         </div>
       )}
+
+
+      <ShowModal onClose={isClose} isOpen={hasOpen} data={data} />
     </>
   );
 };
