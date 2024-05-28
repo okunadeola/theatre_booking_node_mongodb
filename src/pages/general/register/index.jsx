@@ -1,8 +1,60 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { useForm } from "react-hook-form";
+import toast from 'react-hot-toast'
+import {  registerAction } from "../../../API/user";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
+
 
 
 
 const Register = () => {
+  const [isShowPassword, setIsShowPassword] = useState(false)
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
+
+  const { 
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors },
+    } = useForm();
+
+
+
+    const submit = async (data)=>{
+      setLoading(true)
+          try {
+              const res = await registerAction(data)
+              if(res){
+                  reset()
+                  toast.success('user register successfully. proceed to login', {duration: 5000})
+                  navigate('/login')
+              }
+          } catch (error) {
+            
+              toast.error(error?.toString())
+          } 
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
       <section className="relative flex flex-wrap lg:h-screen lg:items-center">
 
@@ -20,79 +72,159 @@ const Register = () => {
             <h1 className="text-2xl font-bold sm:text-3xl">Get started today!</h1>
   
             <p className="mt-4 text-gray-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero
-              nulla eaque error neque ipsa culpa autem, at itaque nostrum!
+              Start by registering with us 
             </p>
           </div>
   
-          <form action="#" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+          <form onSubmit={handleSubmit(submit)} className="mx-auto mb-0 mt-8 max-w-md space-y-4">
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email
+              <label htmlFor="name" className="">
+                Name
               </label>
   
               <div className="relative">
                 <input
-                  type="email"
-                  className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                  placeholder="Enter email"
+                  type="text"
+                  className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm ${
+                    errors?.name
+                      ? "focus:outline-none focus:ring-1  focus:ring-red-500 border-red-500"
+                      : "border-slate-200 focus:outline-none focus:ring-2"
+                  }`}
+                  placeholder="Enter fullname"
+                  {...register("name", {
+                    required: {
+                      value: true,
+                      message: "Name is required",
+                    },
+                  })}
                 />
-  
-                <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="size-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                    />
-                  </svg>
-                </span>
               </div>
             </div>
-  
+
             <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-  
-              <div className="relative">
-                <input
-                  type="password"
-                  className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                  placeholder="Enter password"
-                />
-  
-                <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="size-4 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                  </svg>
-                </span>
-              </div>
+            <label htmlFor="username" className="text-gray-900">
+              Username
+            </label>
+
+            <div className="relative">
+              <input
+                type="text"
+                className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm ${
+                    errors?.username
+                      ? "focus:outline-none focus:ring-1  focus:ring-red-500 border-red-500"
+                      : "border-slate-200 focus:outline-none focus:ring-2"
+                  }`}
+                placeholder="Enter username"
+                {...register("username", {
+                    required: {
+                      value: true,
+                      message: "Username is required",
+                    },
+                  })}
+              />
             </div>
+          </div>
+          
+
+          <div>
+            <label htmlFor="phone" className="text-gray-900">
+              Phone Number
+            </label>
+
+            <div className="relative">
+              <input
+                type="text"
+                className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm ${
+                    errors?.phone
+                      ? "focus:outline-none focus:ring-1  focus:ring-red-500 border-red-500"
+                      : "border-slate-200 focus:outline-none focus:ring-2"
+                  }`}
+                placeholder="Enter phone number"
+                {...register("phone", {
+                    required: {
+                      value: true,
+                      message: "phone is required",
+                    },
+                  })}
+              />
+            </div>
+          </div>
+
+
+
+            
+          <div>
+            <label htmlFor="email" className="text-gray-900">
+              Email
+            </label>
+
+            <div className="relative">
+              <input
+                type="email"
+                className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm  ${
+                    errors?.email
+                      ? "focus:outline-none focus:ring-1  focus:ring-red-500 border-red-500"
+                      : "border-slate-200 focus:outline-none focus:ring-2"
+                  }`}
+                placeholder="Enter email"
+                {...register("email", {
+                    required: {
+                      value: true,
+                      message: "Email is required",
+                    },
+                  })}
+              />
+
+              <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="size-4 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+  
+          <div>
+            <label htmlFor="password"  className="text-gray-900">
+              Password
+            </label>
+
+            <div className="relative">
+              <input
+                 {...register("password", {
+                    required: {
+                      value: true,
+                      message: "Password is required",
+                    },
+                  })}
+                type={ isShowPassword ?  "text" : "password"}
+                className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm ${
+                    errors?.password
+                      ? "focus:outline-none focus:ring-1  focus:ring-red-500 border-red-500"
+                      : "border-slate-200 focus:outline-none focus:ring-2"
+                  }`}
+                placeholder="Enter password"
+              />
+
+              <span className="absolute inset-y-0 end-0 grid place-content-center px-4" onClick={()=>setIsShowPassword(!isShowPassword)}>
+                {
+                    isShowPassword ?
+                    <FaEyeSlash className="text-gray-500"/> : 
+                <FaEye className="text-gray-500"/>
+                }
+              </span>
+            </div>
+          </div>
   
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-500">
@@ -104,7 +236,8 @@ const Register = () => {
   
               <button
                 type="submit"
-                className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+                disabled={loading}
+                className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white disabled:cursor-not-allowed"
               >
                 Sign in
               </button>

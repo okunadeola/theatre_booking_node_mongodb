@@ -76,7 +76,7 @@ const Header = () => {
             <div className="header__wrap">
                 <div className="logo">
                     <img src={logo} alt="" />
-                    <Link to="/user" className='md:text-default text-[1.875rem] '>Cinemation</Link>
+                    <Link to="/user" className='md:text-default text-[1.2rem]  md:text-[1.875rem]  '>Cinemation</Link>
                 </div>
 
 
@@ -107,11 +107,14 @@ const Header = () => {
 
                         </div>
                         : 
-                        <Button className='items-center gap-2 px-4 py-1 bg-[#77b940] shadow-[0px_0px_7px_5px_#3d3f3c] hover:shadow-[0px_0px_7px_8px_#3d3f3c] sm:flex hidden '>
-                            {/* //474a44   4f5649 */}
-                            <LogIn size={20} />
-                            <span className='text-sm'>SIGN IN</span>
-                        </Button>
+
+                        <Link to={'/login'}>
+                            <Button className='items-center gap-2 px-4 py-1 bg-[#77b940] shadow-[0px_0px_7px_5px_#3d3f3c] hover:shadow-[0px_0px_7px_8px_#3d3f3c] sm:flex hidden '>
+                                {/* //474a44   4f5649 */}
+                                <LogIn size={20} />
+                                <span className='text-sm'>SIGN IN</span>
+                            </Button>
+                        </Link>
 
                     }
 

@@ -1,11 +1,26 @@
 /* eslint-disable react/prop-types */
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import { useEffect } from "react";
+import useCurrentUser from "../hooks/useCurrentUser";
 
 
 
 const RootLayout = () => {
+    const { userData } = useCurrentUser();
+    const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const isAdmin = userData?.data.role === "ADMIN";
+    if (!isAdmin) {
+      navigate("/user");
+    }
+  }, [userData, navigate]);
+
+
+
     return ( 
         <div className="h-full">
             <div className="h-[70px] md:pl-56 fixed inset-y-0 w-full z-50">

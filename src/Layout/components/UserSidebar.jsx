@@ -1,17 +1,19 @@
 
 import  { useEffect, useState } from 'react'
 import '../style.css'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import sidebarNav from '../../configs/sidebarNav'
 import { LogOut, X } from 'lucide-react'
 import logo from '../../assets/images/tmovie.png';
 import useCurrentUser from '../../hooks/useCurrentUser'
+import {  MdOutlineAdminPanelSettings } from 'react-icons/md'
 
 const UserSidebar = () => {
     const [activeIndex, setActiveIndex] = useState(0)
     const location = useLocation()
-    const {removeCurrentUser} = useCurrentUser
+    const {removeCurrentUser, userData} = useCurrentUser()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const curPath = window.location.pathname.split('/')[1]
@@ -31,7 +33,10 @@ const UserSidebar = () => {
 
     const logout = ()=>{
         removeCurrentUser()
+        navigate('/user')
     }
+
+
 
     return (
         <div className='sidebar'>
@@ -54,6 +59,21 @@ const UserSidebar = () => {
                         </Link>
                     ))
                 }
+                {
+                    userData?.data?.role === "ADMIN" ?
+                    <Link to="/admin/"  className={`sidebar__menu__item ${activeIndex === 4 && 'active'}`} onClick={closeSidebar}>
+                            <div className="sidebar__menu__item__icon">
+                                <MdOutlineAdminPanelSettings size={30}/>
+                            </div>
+                            <div className="sidebar__menu__item__txt text-lg">
+                                Go to Dashboard
+                            </div>
+                        </Link> : null
+                    
+                    
+                }
+          
+                
                 <div className="sidebar__menu__item" onClick={logout}>
                     <div className="sidebar__menu__item__icon">
                         <LogOut/>

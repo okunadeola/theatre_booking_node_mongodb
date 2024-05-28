@@ -69,6 +69,7 @@ export default function MovieTable() {
 
   const hasSearchFilter = Boolean(filterValue);
   const hasNextPage = Boolean(nextPage);
+  console.log(hasNextPage)
 
   const loadingState = isLoading || movieData.length === 0 ? "loading" : "idle";
 

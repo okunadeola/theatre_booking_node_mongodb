@@ -192,3 +192,43 @@
     clip-path: polygon(50px 0, 100% 0, 100% 100%, 0 100%);
   }
   
+
+
+
+  /* src/styles/scrollbar.css */
+.scroll-container {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: block; /* For Chrome, Safari, and Opera */
+}
+
+.scroll-container:hover {
+  scrollbar-width: thin; /* For Firefox */
+}
+
+.scroll-container:hover::-webkit-scrollbar {
+  display: block;
+  height: 8px;
+  width: 100%;
+}
+
+.scroll-container::-webkit-scrollbar {
+  height: 8px;
+  width: 100%;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

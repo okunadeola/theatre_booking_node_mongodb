@@ -108,12 +108,12 @@ const HeroSlideItem = props => {
             <div className="hero-slide__item__content   text-white">
                 <div className="hero-slide__item__content__info">
                     <h2 className="title">{item.title}</h2>
-                    <div className="overview">{item.overview}</div>
-                    <div className="flex items-start justify-start flex-wrap gap-5">
-                        <Button onClick={() => hisrory('/user/movie/' + item.id)}>
+                    <div className="overview sm:line-clamp-none md:line-clamp-3 xl:line-clamp-none ">{item.overview}</div>
+                    <div className="flex items-start justify-start flex-wrap gap-2 md:gap-5">
+                        <Button className='text-sm md:text-medium' onClick={() => hisrory('/user/movie/' + item.id)}>
                             Book Now
                         </Button>
-                        <OutlineButton onClick={setModalActive} className='cursor-pointer  sm:mx-0 '>
+                        <OutlineButton onClick={setModalActive} className='cursor-pointer  sm:mx-0  text-sm md:text-medium'>
                             Watch trailers
                         </OutlineButton>
                     </div>

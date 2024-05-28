@@ -90,3 +90,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+.seatScrollBar::-webkit-scrollbar-thumb {
+  @apply rounded-md w-[5rem] h-1;
+}
+.seatScrollBar::-webkit-scrollbar-thumb:hover {
+  @apply   bg-[#555];
+
+}
+
+.seatScrollBar:hover::-webkit-scrollbar {
+  @apply w-[5rem] h-1 block
+}

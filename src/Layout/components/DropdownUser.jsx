@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GiCarSeat } from "react-icons/gi";
 import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 
@@ -8,10 +8,12 @@ import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 import UserOne from '../../assets/images/user/user-01.png';
 import { IoWalletOutline } from 'react-icons/io5';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 
 const DropdownUser = ({user}) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { removeCurrentUser } = useCurrentUser();
+  const navigate= useNavigate()
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
@@ -45,6 +47,7 @@ const DropdownUser = ({user}) => {
 
   const logout = () =>{
     removeCurrentUser()
+    navigate('/user')
   }
 
   return (
@@ -59,7 +62,7 @@ const DropdownUser = ({user}) => {
           <span className="block text-sm font-medium dark:text-white">
             {user?.name}
           </span>
-          <span className="block text-xs text-boxdark">{user?.role}</span>
+          <span className="block text-xs text-slate-400">{user?.role}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -90,11 +93,11 @@ const DropdownUser = ({user}) => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(!dropdownOpen)}
         onBlur={() => setDropdownOpen(!dropdownOpen)}
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-md   bg-[#0e1012] shadow-default  ${
+        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-md   bg-[#0e1012]/90 shadow-lg overflow-clip  ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <ul className="flex flex-col border-b border-stone-500 dark:border-strokedark">
+        <ul className="flex flex-col border-b  border-stone-500/70 dark:border-strokedark overflow-clip">
          
           <li>
             <Link
@@ -126,6 +129,20 @@ const DropdownUser = ({user}) => {
               Ticket
             </Link>
           </li>
+
+          {
+            user?.role === "ADMIN" ? 
+              <li>
+                <Link
+                  to="/admin/"
+                  onClick={() => setDropdownOpen(false)}
+                  className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-stone-400 pt-4 pb-1  px-4 hover:bg-stone-300"
+                >
+                  <MdOutlineAdminPanelSettings  size={20} />
+                  Go to Dashboard
+                </Link>
+              </li> : null
+          }
           {/* <li>
             <Link
               to="/user/profile"
@@ -159,7 +176,7 @@ const DropdownUser = ({user}) => {
 
 
 
-        <button className="flex items-center gap-3.5 py-4  text-sm font-medium duration-300 ease-in-out hover:text-primary  text-stone-400 pt-4 pb-2 px-4 hover:bg-stone-500 w-full" onClick={logout}>
+        <button className="flex items-center gap-3.5 py-8 text-sm font-medium duration-300 ease-in-out hover:text-primary text-red-400   pt-4 pb-2 px-4  hover:bg-stone-500 w-full" onClick={logout}>
           <svg
             className="fill-current"
             width="18"

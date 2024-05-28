@@ -3,7 +3,7 @@
 
 /* eslint-disable react/prop-types */
 // import { useState } from "react";
-import { Drawer, } from "antd";
+import { Carousel, Drawer, Modal, } from "antd";
 
 import { Chip, Button, useDisclosure } from "@nextui-org/react";
 // import { TbSend } from "react-icons/tb";
@@ -19,6 +19,9 @@ import { useEffect, useRef, useState } from "react";
 import Receipt from "./Receipt";
 import Currency from "react-currency-formatter"
 import toast from "react-hot-toast";
+import useCurrentUser from "../../../../hooks/useCurrentUser";
+import Login from ".././../../../pages/general/login";
+import RegisterModal from "../../../user/components/RegisterModal";
 
 
 
@@ -604,36 +607,92 @@ const reservedSeat = [
 
 
 const ShowModal = ({isOpen, onClose, data}) => {
+    const {userData} = useCurrentUser();
     const { onOpen, isOpen: hasOpen, onClose: isClose } = useDisclosure();
+    const { onOpen:onModalOpen, isOpen: hasModalOpen, onClose: ModalClose } = useDisclosure();
+    const [isLogin, setIsLogin] = useState(true) 
     const [allSeat, setAllSeat] = useState([...seatArrangement])
     const [pickedSeat, setPickedSeat] = useState([])
     const itemRef = useRef(null);
     const containerRef = useRef(null);
-    const [rating, setRating] = useState(0) // Initial value
+
+
+    // scroll effect 
+    const scrollContainerRef = useRef(null);
+    const [showLeftButton, setShowLeftButton] = useState(true);
+    const [showRightButton, setShowRightButton] = useState(true);
 
 
 
 
-//   const submit = async (data) => {
+    // function
+    const handleScroll = () => {
+        const container = scrollContainerRef?.current;
+        const maxScrollLeft = container?.scrollWidth - container?.clientWidth;
+    
+        setShowLeftButton(container?.scrollLeft > 0);
+        setShowRightButton(container?.scrollLeft < maxScrollLeft);
+      };
+    
+      const scrollLeft = () => {
+        scrollContainerRef?.current?.scrollBy({
+          left: -200,
+          behavior: 'smooth',
+        });
+      };
+    
+      const scrollRight = () => {
+        scrollContainerRef?.current?.scrollBy({
+          left: 200,
+          behavior: 'smooth',
+        });
+      };
 
-//     try {
-//       const res = await createMovieAction(data);
-//       if (res) {
-//         showSuccess('movie created successfully')
-//         // reset();
-//         // onClose();
-//       }
-//     } catch (error) {
-//       toast.error(error?.toString());
-//     }
-//   };
+
+// listen for scroll event
+    useEffect(() => {
+    const container = scrollContainerRef?.current;
+    
+    if(container){
+        handleScroll(); // Initial check
+    }
+    
+    container?.addEventListener('scroll', handleScroll);
+    return () => {
+        container?.removeEventListener('scroll', handleScroll);
+    };
+    }, []);
+    
+
+    // scroll effect end 
 
 
-  // const create = async () => {
-  //   toast.loading("sending create request...", { duration: "1000" });
 
-  //   onClose();
-  // };
+
+
+
+// check login status
+    useEffect(() => {
+        if(!userData){
+            onModalOpen()
+        }
+    }, [userData]);
+// check login status
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const onseatPicked = (number)=>{
     for (let i = 0; i < allSeat.length; i++) {
         const seatBatch = allSeat[i];
@@ -757,13 +816,10 @@ const handleAnimationIteration = () => {
 
 
 
-
-
-
   return (
     <>
      
-      <Drawer placement="right" size={'large'} onClose={onClose} open={isOpen}  maskClosable={false} className="bg-gray-500 overflow-hidden font-Poppins" >
+      <Drawer placement="right" size={'large'} title={'Book Movie'} onClose={onClose} open={isOpen}  maskClosable={false} className="bg-gray-500 overflow-hidden font-Poppins" >
 
         <div className="flex flex-col  px-2 ">
 
@@ -796,19 +852,21 @@ const handleAnimationIteration = () => {
 
 
 
-            <div className="flex bg-slate-300/50 shadow rounded h-[410px] w-full p-2 py-4 mb-2 ">
+           
 
-                <div className="w-full flex gap-5 h-full overflow-x-scroll scrollbar-track-slate-400 scrollbar-thumb-black scrollbar">
+            <div className="flex bg-slate-300/50 shadow rounded h-[410px] w-full p-2 py-4 mb-2 group   relative">
+                {/* scrollbar-thin scrollbar-track-slate-400 scrollbar-thumb-black  seatScrollBar  */}
+                <div className="w-full flex gap-5 h-full overflow-x-auto scroll-container " ref={scrollContainerRef} style={{ scrollBehavior: 'smooth',}}>
                     {
                         allSeat?.map((seatBatch, i)=> (
-                            <div key={i} className="flex min-w-[300px] gap-4 flex-wrap items-center justify-center mr-5  bg-stone-300 rounded-xl p-3 ">
+                            <div key={i} className="flex min-w-[300px] gap-4 flex-wrap items-center justify-center mr-5  bg-stone-300 rounded-xl p-3  ">
                                     {
                                         seatBatch?.map(seat =>(
-                                            <Seat key={seat.number} 
-                                            status={seat.status}
-                                            tag={seat.number}
-                                            onClick={onseatPicked}
-                                            
+                                            <Seat 
+                                                key={seat.number} 
+                                                status={seat.status}
+                                                tag={seat.number}
+                                                onClick={onseatPicked}
                                             />
                                         ))
                                     }
@@ -817,7 +875,27 @@ const handleAnimationIteration = () => {
                     }
 
                 </div>
+               
+                    {showLeftButton && (
+                        <button
+                        onClick={scrollLeft}
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-r-md"
+                        >
+                        &lt;
+                        </button>
+                    )}
+                    {showRightButton && (
+                            <button
+                            onClick={scrollRight}
+                            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-l-md"
+                            >
+                            &gt;
+                            </button>
+                    )}
+            
             </div>
+
+
 
             {
                 pickedSeat?.length > 0 &&
@@ -873,6 +951,14 @@ const handleAnimationIteration = () => {
        </div>
       </Drawer>
       <Receipt onClose={isClose} isOpen={hasOpen} data={data} />
+
+      <Modal maskClosable={false} closeIcon={null} footer={null} title="Authentication" open={hasModalOpen}  onCancel={ModalClose}  classNames={{body: 'bg-transparent', header:'!bg-transparent', content: '!bg-gray-500/90', footer:'!bg-gray-500/90',}}>
+                    {
+                        isLogin ? 
+                        <Login fromModal={true} switchAuthPage={()=>setIsLogin(!isLogin)} action={ModalClose} /> :
+                        <RegisterModal switchAuthPage={()=>setIsLogin(!isLogin)}/>
+                    }
+      </Modal>
     </>
   );
 };

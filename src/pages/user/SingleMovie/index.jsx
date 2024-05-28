@@ -85,10 +85,10 @@ const SingleMovie = () => {
                 <div className="section__header">
                 
                 </div>
-                <Button className='flex items-center justify-center gap-2 px-4 py-1 bg-[#77b940] shadow-[0px_0px_7px_5px_#3d3f3c] hover:shadow-[0px_0px_7px_8px_#3d3f3c]'>
+                <Button onClick={onOpen} className='flex items-center justify-center gap-2 px-4 py-1 bg-[#77b940] shadow-[0px_0px_7px_5px_#3d3f3c] hover:shadow-[0px_0px_7px_8px_#3d3f3c]'>
                        
                         <TbCheckupList size={21} strokeWidth={2}  />
-                        <span className='font-medium' onClick={onOpen}>Book</span>
+                        <span className='font-medium' >Book</span>
                 </Button>
                 
               </div>

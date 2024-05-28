@@ -54,36 +54,39 @@ function DragImage({setFileImage}) {
   };
 
   return (
-    <div
-      className={`dropzone ${dragging ? 'dragging border-3 border-green-400' : 'border-2 border-blue-200'}  flex items-center justify-center border-dashed py-10 cursor-pointer rounded-xl`}
-      onDragEnter={handleDragEnter}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-    >
-        <div className='flex flex-col gap-2 items-center justify-center'>
-                <p>Drag & drop an image here</p>
 
-                <div className="pt-3 flex justify-between flex-wrap cursor-pointer">
-                    <label
-                    htmlFor="img2"
-                    className="px-6 py-2 rounded outline-none border inset-0  flex space-x-2 items-center cursor-pointer"
-                    >
-                    <Camera size={15} />
-                    <span className="font-semibold text-sm">Select Image</span>
-                    </label>
-                
-                </div>
+    <label htmlFor="img2">
+        <div
+          className={`dropzone ${dragging ? 'dragging border-3 border-green-400' : 'border-2 border-blue-200'}  flex items-center justify-center border-dashed py-10 cursor-pointer rounded-xl`}
+          onDragEnter={handleDragEnter}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+            <div className='flex flex-col gap-2 items-center justify-center'>
+                    <p>Drag & drop an image here</p>
+
+                    <div className="pt-3 flex justify-between flex-wrap cursor-pointer">
+                        <label
+                        htmlFor="img2"
+                        className="px-6 py-2 rounded outline-none border inset-0  flex space-x-2 items-center cursor-pointer"
+                        >
+                        <Camera size={15} />
+                        <span className="font-semibold text-sm">Select Image</span>
+                        </label>
+                    
+                    </div>
+            </div>
+
+                <input
+                    type="file"
+                    className="hidden"
+                    accept=".jpg, .jpeg, .png, .gif"
+                    id="img2"
+                    onChange={(e) => setFileImage(e.target.files[0])}
+                />
         </div>
-
-            <input
-                type="file"
-                className="hidden"
-                accept=".jpg, .jpeg, .png, .gif"
-                id="img2"
-                onChange={(e) => setFileImage(e.target.files[0])}
-            />
-    </div>
+    </label>
   );
 }
 

@@ -18,13 +18,13 @@
   @apply lg:w-[55%] z-[50] relative px-12 py-0 w-full;
 }
 .hero-slide__item__content__info > * ~ * {
-  @apply mt-12;
+  @apply mt-10 md:mt-12;
 }
 .hero-slide__item__content__info .title {
-  @apply text-[5rem] font-bold leading-none lg:text-[4rem];
+  @apply text-[2rem] font-bold leading-none lg:text-[4rem];
 }
 .hero-slide__item__content__info .overview {
-  @apply font-bold;
+  @apply font-bold text-[0.8rem] md:text-[1rem] ;
 }
 .hero-slide__item__content__info .btns > * ~ * {
   @apply ml-4;

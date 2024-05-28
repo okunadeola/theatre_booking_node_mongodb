@@ -7,27 +7,28 @@ import { TbSend } from "react-icons/tb";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import InputCustom from "../../../../components/others/Input";
-import { createMovieAction } from "../../../../API/movies";
-import { showSuccess } from "../../../../utils";
+import { createMovieAction, createMovieWithImageUrlAction } from "../../../../API/movies";
+import { showError, showSuccess } from "../../../../utils";
 import DragImage from "./DragImage";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { X } from "lucide-react";
 import axios from "axios";
 import useCurrentUser from "../../../../hooks/useCurrentUser";
+import { useNavigate } from "react-router-dom";
 
 
 const AddMovieDrawer = () => {
   const [open, setOpen] = useState(false);
   const [size, setSize] = useState();
   const [fileImage, setFileImage] = useState(null)
-  // const [base64Image, setBase64Image] = useState(null)
   const [linkImage, setLinkImage] = useState(null)
   const { userData } = useCurrentUser();
+  const navigate = useNavigate()
 
   const {
     register,
     handleSubmit,
-    // reset,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -35,18 +36,22 @@ const AddMovieDrawer = () => {
 
 
   const submit = async (data) => {
-
     try {
-      const res = await createMovieAction(data);
+      const res = await createMovieWithImageUrlAction(data);
       if (res) {
         showSuccess('movie created successfully')
-        // reset();
-        // onClose();
+        reset();
+        // navigate(0)
       }
     } catch (error) {
       toast.error(error?.toString());
     }
   };
+
+
+
+
+
 
   const showLargeDrawer = () => {
     setSize("large");
@@ -57,11 +62,6 @@ const AddMovieDrawer = () => {
     setOpen(false);
   };
 
-  // const create = async () => {
-  //   toast.loading("sending create request...", { duration: "1000" });
-
-  //   onClose();
-  // };
 
 
 
@@ -71,9 +71,16 @@ const removeImage = ()=>{
 }
 
 
-const upload = async () => {
+const upload = async (data) => {
   const formData = new FormData();
-  formData.append("file", fileImage);
+  formData.append("img", fileImage);
+  formData.append("title", data?.title);
+  formData.append("description", data?.description);
+  formData.append("price", data?.price);
+  formData.append("genre", data?.genre);
+  formData.append("movie_length", data?.movie_length);
+  formData.append("dateRelease", data?.dateRelease);
+  formData.append("trailer", data?.triler);
 
   // console.log(formData, file)
   const res = await uploadFile(formData);
@@ -87,11 +94,11 @@ const uploadFile = async (formData) => {
   try {
     const res = await axios({
       method: "post",
-      url: "http://lamp3.ncaa.gov.ng/attachment/addFile",
+      url: "http://localhost:3000/movies/create",
       data: formData,
       headers: {
         "Content-Type": "multipart/form-data",
-        token: userData?.token,
+        token:`Bearer ${userData?.token}`,
       },
     });
 
@@ -99,11 +106,8 @@ const uploadFile = async (formData) => {
       return res.data;
     }
   } catch (err) {
-    if (
-      err?.response?.data?.message !==
-      "There was an error uploading your file"
-    )
-      toast.error(err?.response?.data?.message);
+    showError(err?.response?.data?.errors?.length ?  err?.response?.data?.errors[0]?.toString()  :  err?.response?.data?.toString())
+   
   }
 };
 
@@ -148,19 +152,7 @@ const uploadFile = async (formData) => {
                 required={true}
               />
             </div>
-            <div>
-              <label htmlFor="description" className="text-gray-700">
-                Movie Description
-              </label>
-              <InputCustom
-                register={register}
-                type="text"
-                errors={errors}
-                id="description"
-                size="large"
-                required={true}
-              />
-            </div>
+           
             <div>
               <label htmlFor="price" className="text-gray-700">
                 Price
@@ -191,7 +183,7 @@ const uploadFile = async (formData) => {
             </div>
             <div>
               <label htmlFor="genre" className="text-gray-700">
-                Genre (comma seperated)
+                Genre <span className="bg-blue-100 px-1">Comma seperated</span>
               </label>
               <InputCustom
                 register={register}
@@ -232,7 +224,7 @@ const uploadFile = async (formData) => {
 
             <div>
               <label htmlFor="desc" className="text-gray-700">
-                Image (Url Link)
+                Image <span className="bg-blue-100 px-1">Url Link</span> 
               </label>
               <InputCustom
                 register={register}
@@ -243,20 +235,26 @@ const uploadFile = async (formData) => {
                 required={true}
               />
             </div>
-
-
             <div>
-              <label htmlFor="desc" className="text-gray-700">
-                Image (File)
+              <label htmlFor="description" className="text-gray-700">
+                Movie Description
               </label>
-              {/* <InputCustom
+              <InputCustom
                 register={register}
                 type="text"
                 errors={errors}
-                id="img"
+                id="description"
                 size="large"
                 required={true}
-              /> */}
+                inputType={'textarea'}
+              />
+            </div>
+
+
+            {/* <div>
+              <label htmlFor="desc" className="text-gray-700">
+                Image (File)
+              </label>
 
               {
                 fileImage ? <div className="relative max-h-[10rem]  max-w-[15rem]">
@@ -269,7 +267,8 @@ const uploadFile = async (formData) => {
                 <DragImage setFileImage={setFileImage} /> 
               }
 
-            </div>
+            </div> */}
+
           </div>
 
           <div className="flex justify-end">

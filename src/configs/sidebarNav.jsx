@@ -10,13 +10,13 @@ import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 const sidebarNav = [
     {
         link: '/user',
-        section: 'home',
+        section: 'user',
         icon: <CiHome size={27}/>,
         text: 'Home'
     },
     {
         link: '/user/reserve',
-        section: 'Reserve',
+        section: 'reserve',
         icon: <IoReceiptOutline size={25}/>,
         text: 'Reserve'
     },
@@ -34,7 +34,7 @@ const sidebarNav = [
     },
     // {
     //     link: '/user/profile',
-    //     section: 'Profile',
+    //     section: 'profile',
     //     icon: <BiUser size={25} />,
     //     text: 'Profile'
     // }

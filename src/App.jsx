@@ -25,11 +25,7 @@ function App() {
   const { userData, removeCurrentUser } = useCurrentUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!userData) {
-      navigate("/login");
-    }
-  }, [userData, navigate]);
+
 
   useEffect(() => {
     const token = userData?.accessToken;

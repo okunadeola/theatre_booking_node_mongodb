@@ -34,8 +34,8 @@ const login = async (data) => {
 
 
 
-export async function registerBookingAction(json) {
-    let data = await registerBooking(json)
+export async function registerAction(json) {
+    let data = await register(json)
         .then(async (response) => {
             return response.data;
         })
@@ -46,16 +46,16 @@ export async function registerBookingAction(json) {
     return data
 }
 
-const registerBooking = async (data) => {
+const register = async (data) => {
     const json = {
+        "name":data?.name,
+        "password":data?.password,
+        "username":data?.username,
         "phone":data?.phone,
-        "full_name":data?.fullname,
-        "password":'', //this can be empty,
         "email": data?.email,
-        "lga": data?.lga
     }
 
 
 
-    return API.post("user/register", json);
+    return API.post("users/register", json);
 }

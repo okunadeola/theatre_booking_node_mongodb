@@ -5,7 +5,7 @@
 */
 
 .logo {
-  @apply text-[2.5rem] font-semibold flex items-center ;
+  @apply text-[1.4rem] md:text-[2.5rem] font-semibold flex items-center ;
 }
 .logo img {
   @apply w-[50px] mr-2.5 ;
@@ -56,8 +56,14 @@
 
 
 .footer {
-    @apply relative bg-top bg-cover bg-no-repeat px-8 py-24;
+    @apply relative bg-top bg-cover bg-no-repeat px-8 py-24 before:content-[""] before:absolute before:w-full before:h-full before:left-0 before:top-0;
   }
+
+  .footer::before {
+    @apply bg-gradient-to-b from-[#0e1012] via-[#000]/40 to-transparent ;
+  }
+  /* from-[#000]/90 via-[#000]/40 to-[#0e1012] */
+
   .footer__content {
     @apply max-w-[1000px];
   }
@@ -68,7 +74,7 @@
     @apply grid md:grid-cols-[repeat(3,1fr)] grid-cols-[repeat(2,1fr)];
   }
   .footer__content__menu {
-    @apply flex flex-col text-2xl font-semibold mt-4  items-start justify-start;
+    @apply flex flex-col text-lg md:text-2xl font-semibold mt-4  items-start justify-start;
   }
   .footer__content__menu > * ~ * {
     @apply mt-4;
