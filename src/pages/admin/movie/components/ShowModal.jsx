@@ -615,6 +615,7 @@ const ShowModal = ({isOpen, onClose, data}) => {
     const [pickedSeat, setPickedSeat] = useState([])
     const itemRef = useRef(null);
     const containerRef = useRef(null);
+    // console.log(data)
 
 
     // scroll effect 
@@ -830,7 +831,8 @@ const handleAnimationIteration = () => {
             </div>
             <div className="flex flex-col overflow-ellipsis  border border-slate-200 p-2 w-36 md:w-40 rounded-lg items-end">
                 <span className="text-gray-600">Date, Time</span>
-                <span className=" font-medium truncate">25-Dec 2021, 20:00</span>
+          
+                <span className=" font-medium truncate"> {data?.selectedDate?.minimal || '25-Dec 2021,'} {data?.selectedDateTime?.formattedDateTime || '20:00'}</span>
             </div>
             
         </div>

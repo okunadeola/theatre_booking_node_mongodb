@@ -3,25 +3,32 @@
 
 import './style.css';
 
-import { Link } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 import Button from '../../../../components/others/Button';
 
-import { category } from '../../../../API/tmdbApi';
-import apiConfig from '../../../../API/apiConfig';
+// import { category } from '../../../../API/tmdbApi';
+// import apiConfig from '../../../../API/apiConfig';
 import { Play } from 'lucide-react';
 import { Fragment } from 'react';
 import useCurrentBg from '../../../../hooks/useCurrentBg';
 
 const MovieCard = props => {
     const {setCurrentBg} = useCurrentBg()
+    const navigate = useNavigate()
 
     const item  = props.item;
 
-    const link = '/user/' + category[props.category] + '/' + item.id;
+    const link = '/user/' + item.id;
    // console.log(link) //    const link = '/user/movie' +'/' + item.id;
 
-    const bg = apiConfig.w500Image(item.poster_path || item.backdrop_path);
+    const bg = item?.img;
+
+
+
+    const moveToDetailPage = ()=>{
+        navigate(link, {state: item})
+    }
 
 
     
@@ -34,19 +41,23 @@ const MovieCard = props => {
                     <div className="movie-card top" style={{backgroundImage: `url(${bg})`}} onClick={()=>setCurrentBg(item)}>
                     </div>
                 ) :(
-                <Link to={link} >
-                    <div className="movie-card relative" style={{backgroundImage: `url(${bg})`}}>
-                        <Button>
-                            <Play/>
-                        </Button>
 
-                        <div className='absolute bottom-0 right-5'>
-                            <span className='text-xs text-stone-300'>18th Feb</span>
+                    <div>
+                        <div className="movie-card relative" style={{backgroundImage: `url(${bg})`}}>
+                            {/* <Link to={link} > */}
+                            <Button onClick={moveToDetailPage}>
+                                <Play/>
+                            </Button>
+                            {/* </Link> */}
+    
+                            <div className='absolute bottom-0 right-5'>
+                                <span className='text-xs text-stone-300'>18th Feb</span>
+                            </div>
                         </div>
+                        
+                        <h3 className='font-bold text-white'>{item?.title}</h3>
+
                     </div>
-                    
-                    <h3 className='font-bold text-white'>{item.title || item.name}</h3>
-                </Link>
 
                 )
             }

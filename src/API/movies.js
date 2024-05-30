@@ -66,9 +66,6 @@ const createMovieWithImgUrl = async (data) => {
 
 
 
-
-
-
 export async function getPaginatedMoviesAction(json) {
     let data = await getPaginatedMovies(json)
         .then(async (response) => {
@@ -83,6 +80,45 @@ export async function getPaginatedMoviesAction(json) {
 
 const getPaginatedMovies = async (data) => {
     return API.get(`movie/paginated?page=${data?.page}&limit=${data?.limit}`);
+}
+
+
+export async function getMovieByCategoryAction(json) {
+    let data = await getMovieByCategory(json)
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getMovieByCategory = async (data) => {
+    return API.get(`movie/category/${data?.category}`);
+}
+
+
+export async function getMovieByDatesAction(json) {
+
+    let data = await getMovieByDates(json)
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getMovieByDates = async (data) => {
+    const json = {
+        start: data?.start,
+        end: data?.end,
+    }
+    return API.post(`movie/dates/`, json);
 }
 
 

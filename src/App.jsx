@@ -59,7 +59,7 @@ function App() {
 
       <Route path="/user" element={<UserRootLayout />}>
         <Route path="/user/" element={<HomePage />} />
-        <Route path="/user/:category/:id" element={<SingleMovie />} />
+        <Route path="/user/:id" element={<SingleMovie />} />
         <Route path="/user/reserve" element={<Reserve />} />
         <Route path="/user/wallet" element={<Wallet />} />
         <Route path="/user/ticket" element={<Ticket />} />
