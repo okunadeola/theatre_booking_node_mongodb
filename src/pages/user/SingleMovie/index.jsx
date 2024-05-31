@@ -14,14 +14,16 @@ import "./detail.css";
 import Button from "../../../components/others/Button"
 import { TbCheckupList } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
-import ShowModal from "../.././../pages/admin/movie/components/ShowModal";
-import { useDisclosure } from "@nextui-org/react";
+// import ShowModal from "../.././../pages/admin/movie/components/ShowModal";
+// import { useDisclosure } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { getMovieShowDateTimesAction } from "../../../API/movies";
 import { convertToAmPm, formatDateString } from "../../../utils";
+import useDrawer from "../../../hooks/useDrawer";
+import { getAllReservedAction } from "../../../API/booking";
 
 const SingleMovie = () => {
-  const { onOpen, isOpen: hasOpen, onClose: isClose } = useDisclosure();
+  // const { onOpen, isOpen: hasOpen, onClose: isClose } = useDisclosure();
 
   const location = useLocation(); 
   const { id } = useParams(); 
@@ -30,6 +32,7 @@ const SingleMovie = () => {
   const [movieDateTime, setMovieDateTime] = useState([])
   const [selectedmovieDate, setSelectedMovieDate] = useState(null)
   const [selectedmovieDateTime, setSelectedMovieDateTime] = useState(null)
+  const {openDrawer} = useDrawer()
 
   
 
@@ -85,6 +88,32 @@ const SingleMovie = () => {
     setSelectedMovieDate(dateObject)
     getDateTimes(dateObject)
   }
+
+
+
+  const getReserved = async () => {
+    // console.log('here', data)
+    if (id && selectedmovieDate?.id && selectedmovieDateTime?.id) {
+      const json = {
+        movieId: id,
+        showDateId: selectedmovieDate?.id,
+        showTimeId: selectedmovieDateTime?.id,
+      };
+      const res = await getAllReservedAction(json);
+      if (res) {
+        // console.log(res, 'allf')
+        const reserve = res?.map((each) => each.seat);
+        // reserveSeatHandler(reserve)
+
+        openDrawer("DRAWER_VIEW", {...item, selectedDate: selectedmovieDate, selectedDateTime: selectedmovieDateTime, reserve:reserve})
+
+      }
+    }
+  };
+
+
+
+
 
   return (
     <>
@@ -185,7 +214,7 @@ const SingleMovie = () => {
               <div className="cast">
                {
                 selectedmovieDateTime ?
-                  <Button onClick={onOpen} className='flex items-center justify-center gap-2 px-4 py-1 bg-[#77b940] shadow-[0px_0px_7px_5px_#3d3f3c] hover:shadow-[0px_0px_7px_8px_#3d3f3c]'>
+                  <Button onClick={getReserved} className='flex items-center justify-center gap-2 px-4 py-1 bg-[#77b940] shadow-[0px_0px_7px_5px_#3d3f3c] hover:shadow-[0px_0px_7px_8px_#3d3f3c]'>
                         
                           <TbCheckupList size={21} strokeWidth={2}  />
                           <span className='font-medium' >Book</span>
@@ -208,8 +237,8 @@ const SingleMovie = () => {
         </div>
       )}
 
-
-      <ShowModal onClose={isClose} isOpen={hasOpen} data={{...item, selectedDate: selectedmovieDate, selectedDateTime: selectedmovieDateTime}} />
+      
+      {/* <ShowModal onClose={isClose} isOpen={hasOpen} data={{...item, selectedDate: selectedmovieDate, selectedDateTime: selectedmovieDateTime}} /> */}
     </>
   );
 };

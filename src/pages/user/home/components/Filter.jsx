@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import MovieCard from "./MovieCard";
 import { getMovieByCategoryAction, getMovieByDatesAction } from "../../../../API/movies";
+import useCurrentUser from "../../../../hooks/useCurrentUser";
 
 const category = [
   "action",
@@ -27,6 +28,7 @@ const Filter = () => {
   const { RangePicker } = DatePicker;
   const [movieItemsPage, setMovieItemsPage] = useState([]);
   const [selectedCat, setSelectedCat] = useState(null);
+  const { userData } = useCurrentUser();
 
 
   // const [page, setPage] = useState(1);
@@ -117,40 +119,44 @@ const Filter = () => {
   
   return (
     <div>
-      <div className="flex  gap-2  md:gap-10 flex-wrap mb-5">
-        <div className="flex flex-col">
-          <h2 className=" text-lg  md:text-2xl font-bold mb-1">
-          Filter By Genre
-          </h2>
-          <div className="h-[0.15rem] w-[50%] bg-gradient-to-r from-[#ce4809]  to-[#0e1012]"></div>
 
-          <div className="flex gap-3 py-4 mb-4 flex-wrap">
+      {
+        userData?.data?.id &&
+        <div className="flex  gap-2  md:gap-10 flex-wrap mb-5">
+          <div className="flex flex-col">
+            <h2 className=" text-lg  md:text-2xl font-bold mb-1">
+            Filter By Genre
+            </h2>
+            <div className="h-[0.15rem] w-[50%] bg-gradient-to-r from-[#ce4809]  to-[#0e1012]"></div>
 
-            {
-                category?.map(cat=> (
-                    <div key={cat} className={`flex items-center justify-center px-4 py-2  rounded-sm cursor-pointer hover:opacity-90 ${selectedCat === cat ? 'bg-[#ce4809]': 'bg-[#272727]'}  `}  onClick={()=>selectCat(cat)}   >
-                    <span className="text-white/80 text-xs  md:text-medium font-medium">
-                        {cat?.toUpperCase()}
-                    </span>
-                    </div>
-                ))
-            }
-           
+            <div className="flex gap-3 py-4 mb-4 flex-wrap">
+
+              {
+                  category?.map(cat=> (
+                      <div key={cat} className={`flex items-center justify-center px-4 py-2  rounded-sm cursor-pointer hover:opacity-90 ${selectedCat === cat ? 'bg-[#ce4809]': 'bg-[#272727]'}  `}  onClick={()=>selectCat(cat)}   >
+                      <span className="text-white/80 text-xs  md:text-medium font-medium">
+                          {cat?.toUpperCase()}
+                      </span>
+                      </div>
+                  ))
+              }
+            
+            </div>
+          </div>
+
+          <div className="flex flex-col ">
+            <h2 className="text-lg  md:text-2xl font-bold mb-1">
+              Filter By Show Date
+            </h2>
+            <div className="h-[0.15rem] w-[50%] bg-gradient-to-r from-[#ce4809]  to-[#0e1012] "></div>
+            <RangePicker
+              disabledTime={true}
+              onChange={onDateChange}
+              className="h-fit py-[0.45rem] mt-4 bg-stone-400 text-white/80 border-stone-700 hover:bg-black active:bg-black visited:bg-black placeholder:text-white/80"
+            />
           </div>
         </div>
-
-        <div className="flex flex-col ">
-          <h2 className="text-lg  md:text-2xl font-bold mb-1">
-            Filter By Show Date
-          </h2>
-          <div className="h-[0.15rem] w-[50%] bg-gradient-to-r from-[#ce4809]  to-[#0e1012] "></div>
-          <RangePicker
-            disabledTime={true}
-            onChange={onDateChange}
-            className="h-fit py-[0.45rem] mt-4 bg-stone-400 text-white/80 border-stone-700 hover:bg-black active:bg-black visited:bg-black placeholder:text-white/80"
-          />
-        </div>
-      </div>
+      }
 
       {movieItemsPage?.length ? (
         <div className="section mb-3">

@@ -24,7 +24,7 @@ const AllMovieList = () => {
             try {
                 const res = await  getPaginatedMoviesAction({page: page, limit: 10})
                 if(res){
-                    console.log(res, 'page movie')
+                    // console.log(res, 'page movie')
                     setMovieItemsPage(res?.movies);
                     setHasMore(res?.nextPage)
                 }
@@ -45,32 +45,39 @@ const AllMovieList = () => {
 
     <div>
         <Filter/>
-        <div className="section mb-3">
-          <div className="section__header mb-2 flex text-white justify-between items-center py-4">
-            <h2 className="text-2xl font-bold">Top Rated Movies</h2>
-              
-              <OutlineButton  className="small" onClick={hasMore ? ()=>setPage(p=> p+ 1) : ()=>setPage(p=> p > 1 ? p- 1 : p)}  >{ hasMore ? 'View more' : 'view previous'}</OutlineButton>
-          </div>
 
-            <div className={`movie-list`}>
-                    <Swiper
-                        modules={[Navigation]}
-                        grabCursor={true}
-                        spaceBetween={20}
-                        slidesPerView={'auto'}
-                        className="mySwiper"
-                        navigation={true}
-                    >
-                        {
-                            movieItemsPage.map((item, i) => (
-                                <SwiperSlide key={i}>
-                                    <MovieCard item={item} />
-                                </SwiperSlide>
-                            ))
-                        }
-                    </Swiper>
+
+
+        {
+            movieItemsPage?.length > 0 &&
+            <div className="section mb-3">
+            <div className="section__header mb-2 flex text-white justify-between items-center py-4">
+                <h2 className="text-2xl font-bold">Top Rated Movies</h2>
+                
+                <OutlineButton  className="small" onClick={hasMore ? ()=>setPage(p=> p+ 1) : ()=>setPage(p=> p > 1 ? p- 1 : p)}  >{ hasMore ? 'View more' : 'view previous'}</OutlineButton>
             </div>
-        </div>
+
+                <div className={`movie-list`}>
+                        <Swiper
+                            modules={[Navigation]}
+                            grabCursor={true}
+                            spaceBetween={20}
+                            slidesPerView={'auto'}
+                            className="mySwiper"
+                            navigation={true}
+                        >
+                            {
+                                movieItemsPage.map((item, i) => (
+                                    <SwiperSlide key={i}>
+                                        <MovieCard item={item} />
+                                    </SwiperSlide>
+                                ))
+                            }
+                        </Swiper>
+                </div>
+            </div>
+        }
+
        
     </div>
   )

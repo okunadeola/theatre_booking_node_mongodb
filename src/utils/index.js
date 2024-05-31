@@ -14,7 +14,8 @@ export function showSuccess(msg){
 }
 
 
-export function showError(msg){
+export function showError(msg, option){
+  if(option) return toast.error(msg, {duration: option})
   return toast.error(msg)
 }
 
@@ -70,3 +71,14 @@ export const convertToAmPm = (time) => {
   // Return formatted time
   return `${hours12}:${minutesFormatted} ${ampm}`;
 };
+
+
+
+export const  shuffle = (array)=> {
+  let newArray = array.slice(); // Create a copy of the array
+  for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}

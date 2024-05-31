@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router';
 import useCurrentBg from '../../../../hooks/useCurrentBg';
 import toast from 'react-hot-toast';
 import { getFrontMovieAction } from '../../../../API/users';
+import { shuffle } from '../../../../utils';
 
 
 const HeroSlide = () => {
@@ -43,8 +44,8 @@ const HeroSlide = () => {
             try {
                 const res = await  getFrontMovieAction()
                 if(res){
-                    console.log(res, 'front image')
-                    setMovieItems(res.slice(1, 4));
+                    // console.log(res, 'front image')
+                    setMovieItems(shuffle(res));
                 }
             } catch {
                 console.log('error');

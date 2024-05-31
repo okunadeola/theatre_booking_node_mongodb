@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const Seat = ({status, tag, onClick}) => {
   return (
-      <div className={`w-14 h-14  rounded-2xl relative overflow-clip cursor-pointer ${status === "free" ? 'bg-white' : status === 'reserved' ? 'bg-gray-500' : 'bg-yellow-700'}`} onClick={ status === "reserved" ? ()=>{} : ()=>onClick(tag)}>
+      <div className={`w-14 h-14  rounded-2xl relative overflow-clip  ${status === "free" ? 'bg-white cursor-pointer' : status === 'reserved' ? 'bg-gray-500' : 'bg-yellow-700 cursor-pointer'}`} onClick={ status === "reserved" ? ()=>{} : ()=>onClick(tag)}>
 
         <div className="w-1 h-7 bg-gray-700 rotate-[100deg] absolute top-0 left-0"></div>
 

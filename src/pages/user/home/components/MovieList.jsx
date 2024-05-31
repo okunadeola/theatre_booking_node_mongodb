@@ -27,7 +27,7 @@ const MovieList = props => {
             try {
                 const res = await  getFrontMovieAction()
                 if(res){
-                    console.log(res, 'front image')
+                    // console.log(res, 'front image')
                     setMovieItems(res);
                 }
             } catch {
