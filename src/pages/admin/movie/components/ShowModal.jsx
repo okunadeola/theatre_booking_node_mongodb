@@ -14,6 +14,7 @@ import {  Button, useDisclosure } from "@nextui-org/react";
 // import { PlusIcon } from "./PlusIcon";
 import Seat from "./Seat";
 import "./styles.css";
+
 import { Fragment, useEffect, useRef, useState } from "react";
 import Receipt from "./Receipt";
 import Currency from "react-currency-formatter";
@@ -26,7 +27,9 @@ import PaymentOption from "./PaymentOption";
 import PaystackPayment from "../../../../pages/general/payment/PaystackPayment";
 import FlutterwavePayment from "../../../../pages/general/payment/Fltterwave";
 import useDrawer from "../../../../hooks/useDrawer";
-import { set } from "react-hook-form";
+
+import AppLoad from "./ReceiptSwiper2";
+import useReceipt from "../../../../hooks/useReceipt";
 
 
 const seatArrangement = [
@@ -581,11 +584,9 @@ const seatArrangement = [
 
 const ShowModal = () => {
   const {closeDrawer, isOpen, data,  defaultValue} = useDrawer()
+  const {openDrawer} = useReceipt()
   const { userData } = useCurrentUser();
 
-  
-  
-  const { onOpen, isOpen: hasOpen, onClose: isClose } = useDisclosure();
   const {
     onOpen: onModalOpen,
     isOpen: hasModalOpen,
@@ -593,12 +594,13 @@ const ShowModal = () => {
   } = useDisclosure();
   const [isLogin, setIsLogin] = useState(true);
   const [allSeat, setAllSeat] = useState([...seatArrangement]);
-  // const [allReservedSeat, setAllReservedSeat] = useState([...reservedSeat]) //locally
-  // const [allReservedSeat, setAllReservedSeat] = useState([]);
+
   const [pickedSeat, setPickedSeat] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState(true);
   const [failedBooking, setFailedBooking] = useState([]);
   const [successBooking, setSuccessBooking] = useState([]);
+
+
   
   
   
@@ -666,7 +668,9 @@ const submitWalletPayment = async ()=>{
   try {
      const res = pickedSeat.length > 1 ?  await MultibookingAction(json) : await bookingAction(json)
      if(res){
-      onOpen()
+      // onOpen()
+      openDrawer('RECEIPT_VIEW', data)
+        
      }
   } catch (error) {
     console.log(error)
@@ -761,7 +765,7 @@ const submitWalletPayment = async ()=>{
 
       setAllSeat(allS)
 
-      if (data && data?.selectedDate?.id && data?.selectedDateTime?.id) {
+      if (data && data?.selectedDate?.id && data?.selectedDateTime?.id && isOpen) {
         const json = {
           movieId: data?.id,
           showDateId: data?.selectedDate?.id,
@@ -1015,7 +1019,8 @@ const updateReserved = async ()=>{
             setFailedBooking(res?.unavailableSeat)
             updateReserved()
           }else{
-            onOpen()
+            // onOpen()
+            openDrawer('RECEIPT_VIEW', data)
           }
        }
     } catch (error) {
@@ -1061,7 +1066,7 @@ const exitApp = ()=>{
 
 
     <Fragment>
-      {/* {
+     {/* {
         isOpen && */}
         <Drawer
           placement="right"
@@ -1268,11 +1273,7 @@ const exitApp = ()=>{
 
       {/* } */}
 
-      {
-        isOpen &&
-        <Receipt onClose={isClose} isOpen={hasOpen} data={data} />
 
-      }
 
       {
           isOpen &&
@@ -1324,7 +1325,6 @@ const exitApp = ()=>{
                 onClose={handlePaymentClose}           
             />
         }
-
       
 
     </Fragment>

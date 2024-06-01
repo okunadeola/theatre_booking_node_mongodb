@@ -1,0 +1,263 @@
+ {/* {
+        isOpen && */}
+        <Drawer
+          placement="right"
+          size={"large"}
+          title={"Book Movie"}
+          onClose={exitApp}
+          open={isOpen}
+          maskClosable={false}
+          className="bg-gray-500 overflow-hidden font-Poppins"
+        >
+          <div className="flex flex-col  px-2 ">
+            <div className="flex gap-2 justify-between flex-wrap">
+              <div className="flex flex-col overflow-hidden  border border-slate-200 p-2 w-36 md:w-40 rounded-lg">
+                <span className="text-gray-600">Cinema</span>
+                <span className="font-medium truncate w-full">{data?.title}</span>
+              </div>
+              <div className="flex flex-col overflow-hidden  border border-slate-200 p-2 w-36 md:w-40 rounded-lg items-end">
+                <span className="text-gray-600">Date, Time</span>
+
+                <span className=" font-medium truncate w-full">
+                  {" "}
+                  {data?.selectedDate?.minimal || "25-Dec 2021,"}{" "}
+                  {data?.selectedDateTime?.formattedDateTime || "20:00"}
+                </span>
+              </div>
+            </div>
+
+            <div className="w-full flex h-[150px]  justify-center overflow-hidden wrapper mb-3">
+              <div
+                className="screen relative border-1 border-slate-400/70 rounded-t"
+                ref={containerRef}
+              >
+                <img
+                  src={data?.img}
+                  ref={itemRef}
+                  alt=""
+                  className="absolute screen-img item-paper "
+                />
+                <div
+                  className=" overflow-hidden 
+                      h-[100%] 
+                      w-[100%] 
+                      absolute 
+                      
+                      bg-[linear-gradient(to_bottom,rgba(1,1,2,0.8),rgba(0,0,0,0.2))] 
+                      z-[2]"
+                ></div>
+              </div>
+            </div>
+
+            <div className="flex bg-slate-300/50 shadow rounded h-[410px] w-full p-2 py-4 mb-2 group   relative">
+              {/* scrollbar-thin scrollbar-track-slate-400 scrollbar-thumb-black  seatScrollBar  */}
+              <div
+                className="w-full flex gap-5 h-full overflow-x-auto scroll-container "
+                ref={scrollContainerRef}
+                style={{ scrollBehavior: "smooth" }}
+              >
+                {allSeat?.map((seatBatch, i) => (
+                  <div
+                    key={i}
+                    className="flex min-w-[300px] gap-4 flex-wrap items-center justify-center mr-5  bg-stone-300 rounded-xl p-3  "
+                  >
+                    {seatBatch?.map((seat) => (
+                      <Seat
+                        key={seat.number}
+                        status={seat.status}
+                        tag={seat.number}
+                        onClick={onseatPicked}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              {showLeftButton && (
+                <button
+                  onClick={scrollLeft}
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-r-md"
+                >
+                  &lt;
+                </button>
+              )}
+              {showRightButton && (
+                <button
+                  onClick={scrollRight}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 p-2 rounded-l-md"
+                >
+                  &gt;
+                </button>
+              )}
+            </div>
+
+
+            <div className="flex justify-between gap-1  sm:flex-wrap md:flex-nowrap mb-4">
+              {/* failed booking */}
+                {pickedSeat?.length === 0 && failedBooking?.length !== 0 && (
+                <div>
+                    <div className="flex flex-col flex-1">
+                      <div className="flex flex-col py-2">
+                        <span className="text-red-600">Unavailable Seats. Equivalent amount has been added to your wallet balance. Kindly pick other seat</span>
+                        <span className="text-lg italic pl-5">
+                          {" "}
+                          {failedBooking?.map((each, i) => (
+                            <span key={each} className="text-gray-600">
+                              {each}
+                              {i + 1 < failedBooking?.length && ", "}
+                            </span>
+                          ))}
+                        </span>
+                      </div>
+                    </div>
+                </div>
+                )}
+
+
+
+
+
+              <div>
+                {pickedSeat?.length > 0 && (
+                  <div className="flex flex-col flex-1">
+                    <div className="flex flex-col py-2">
+                      <span className="text-gray-600">Your Seats</span>
+                      <span className="text-lg italic pl-5">
+                        {" "}
+                        {pickedSeat?.map((each, i) => (
+                          <span key={each.number}>
+                            {each.number}
+                            {i + 1 < pickedSeat.length && ", "}
+                          </span>
+                        ))}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="lg:flex hidden flex-col bg-stone-400 p-2 h-fit rounded-lg w-fit ">
+                <div className="flex gap-4 font-Roboto">
+                  <div className="flex gap-2 items-center">
+                    <div className="w-3 h-3 rounded-full bg-white"></div>
+                    <span className="text-white font-bold">Free</span>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <div className="w-3 h-3 rounded-full bg-gray-600"></div>
+                    <span className="text-gray-600 font-bold">Reserved</span>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <div className="w-3 h-3 rounded-full bg-yellow-700"></div>
+                    <span className="text-yellow-700 font-bold">Selected</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="flex justify-between gap-6 flex-wrap ">
+                          {/* success booking */}
+                {pickedSeat?.length === 0 && successBooking?.length !== 0 && (
+                <div>
+                    <div className="flex flex-col flex-1">
+                      <div className="flex flex-col py-2">
+                        <span className="text-green-600">Successfully Booked Seats.</span>
+                        <span className="text-lg italic pl-5">
+                          {" "}
+                          {successBooking?.map((each, i) => (
+                            <span key={each} className="text-gray-600">
+                              {each}
+                              {i + 1 < successBooking?.length && ", "}
+                            </span>
+                          ))}
+                        </span>
+                      </div>
+                    </div>
+                </div>
+                )}
+
+              {
+                pickedSeat.length > 0 && (
+                  <PaymentOption method={setPaymentMethod}/>
+                )
+              }
+
+              {pickedSeat.length > 0 && (
+                <div className="flex justify-center">
+                  <Button
+                    variant="solid"
+                    color="success"
+                    onClick={startBooking}
+                    className="text-white text-lg"
+                    size="lg"
+                  >
+                    <span>Buy Ticket</span>
+                    <Currency
+                      quantity={data?.price * pickedSeat.length || 0}
+                      currency="NGN"
+                    />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </Drawer>
+
+      {/* } */}
+
+      {
+        isOpen &&
+        <Receipt onClose={isClose} isOpen={hasOpen} data={data} />
+
+      }
+
+      {
+          isOpen &&
+      <Modal
+        maskClosable={false}
+        closeIcon={null}
+        footer={null}
+        title="Authentication"
+        open={hasModalOpen}
+        onCancel={ModalClose}
+        classNames={{
+          body: "bg-transparent",
+          header: "!bg-transparent",
+          content: "!bg-gray-500/90",
+          footer: "!bg-gray-500/90",
+        }}
+      >
+        {isLogin ? (
+          <Login
+            fromModal={true}
+            switchAuthPage={() => setIsLogin(!isLogin)}
+            action={ModalClose}
+          />
+        ) : (
+          <RegisterModal switchAuthPage={() => setIsLogin(!isLogin)} />
+        )}
+      </Modal>
+      }
+
+        {
+              isOpen &&
+        
+            <PaystackPayment
+                ref={paystackButtonRef}
+                email={userData?.data?.email}  // Replace with customer's email
+                amount={(pickedSeat.length * data?.price) * 100}  // Amount in kobo (2000 kobo = 20 NGN)
+                onSuccess={handlePaymentSuccess}
+                onClose={handlePaymentClose}           
+            />
+        }
+
+        {
+            isOpen &&
+            <FlutterwavePayment
+                ref={flutterWaveButtonRef}
+                email={userData?.data?.email}  // Replace with customer's email
+                amount={(pickedSeat.length * data?.price)}  
+                onSuccess={handlePaymentSuccess}
+                onClose={handlePaymentClose}           
+            />
+        }

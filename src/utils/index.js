@@ -49,6 +49,32 @@ export const formatDateString = (dateString) => {
 };
 
 
+export const formatDateString2 = (dateString) => {
+  // Create a Date object from the ISO date string
+  const date = new Date(dateString);
+  
+  // Array of day names to format the day of the week
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  // Array of month names to format the month
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
+  // Get the day of the week (0-6)
+  const dayOfWeek = dayNames[date.getUTCDay()];
+  
+  // Get the date of the month (1-31)
+  const dayOfMonth = date.getUTCDate();
+
+  // Get the month (0-11)
+  const month = monthNames[date.getUTCMonth()];
+  
+  // Format the date as "DayOfWeek DayOfMonth"
+  const newdate = `${dayOfWeek}, ${dayOfMonth}-${month}`
+  
+  return newdate;
+};  
+
+
 export const convertToAmPm = (time) => {
   // Split the time string
   const [hours, minutes, seconds] = time.split(':');

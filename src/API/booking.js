@@ -87,8 +87,8 @@ const Multibooking = async (data) => {
 
 
 
-export async function getBookingAction() {
-    let data = await getBooking()
+export async function getBookingAction(val) {
+    let data = await getBooking(val)
         .then(async (response) => {
             return response.data;
         })
@@ -99,8 +99,14 @@ export async function getBookingAction() {
     return data
 }
 
-const getBooking = async () => {
-    return API.get("booking/user/all/");
+const getBooking = async (data) => {
+    const json ={
+        movieId: data?.movieId,
+        showDateId: data?.showDateId,
+        showTimeId: data?.showTimeId,
+    }
+
+    return API.post("booking/date-time/all/", json );
 }
 
 

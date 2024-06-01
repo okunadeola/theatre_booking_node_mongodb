@@ -231,13 +231,13 @@ const SingleMovie = () => {
               <div className="section__header mb-2">
                 <h2>Similar</h2>
               </div>
-              {/* <MovieList category={category} type="similar" id={item.id} /> */}
             </div>
           </div>
         </div>
       )}
 
       
+      {/* <MovieList category={category} type="similar" id={item.id} /> */}
       {/* <ShowModal onClose={isClose} isOpen={hasOpen} data={{...item, selectedDate: selectedmovieDate, selectedDateTime: selectedmovieDateTime}} /> */}
     </>
   );
