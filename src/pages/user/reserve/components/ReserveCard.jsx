@@ -1,7 +1,20 @@
 import { cn } from "../../../../lib/utils";
 import { MdQrCode2 } from "react-icons/md";
 
-const ReserveCard = () => {
+import PropTypes from 'prop-types';
+import { convertToAmPm, formatDateString2 } from "../../../../utils";
+import Currency from "react-currency-formatter";
+import useReceipt from "../../../../hooks/useReceipt";
+
+const ReserveCard = ({data}) => {
+  const {openDrawer} = useReceipt()
+
+  const time = convertToAmPm(data?.showTime?.time)
+  const date = formatDateString2(data?.showDate?.date)
+
+
+
+
   return (
     <div className="rounded-lg  bg-[#25272a] shadow-2xl shadow-slate-950 font-Montserrat  ">
       <div className="p-3 pb-4 relative">
@@ -9,14 +22,20 @@ const ReserveCard = () => {
           <div className="text-sm font-medium uppercase w-full">
             <div className="w-[70%]">
               <h2 className="mb-1 text-[#708fd2] dark:text-white truncate ">
-                Movie Name
+               {data?.movie?.title}
               </h2>
             </div>
-            <p className="text-gray-400 dark:text-gray-400">#25.521</p>
+            <p className="text-gray-400 dark:text-gray-400">
+            <Currency
+              quantity={data?.movie?.price || 0}
+              currency="NGN"
+            />
+            </p>
           </div>
 
           <img
-            src="https://image.tmdb.org/t/p/original/qrGtVFxaD8c7et0jUtaYhyTzzPg.jpg"
+            // src="https://image.tmdb.org/t/p/original/qrGtVFxaD8c7et0jUtaYhyTzzPg.jpg"
+            src={data?.movie?.img}
             className="absolute top-2 right-2 w-18 h-18 rounded-md"
             alt="ticket_img"
           />
@@ -29,9 +48,9 @@ const ReserveCard = () => {
         </div>
         <div className="flex flex-wrap gap-4">
           <div className="text-xs font-normal uppercase">
-            <p className="text-gray-400">1 ticket</p>
+            <p className="text-gray-400">{data?.seat}</p>
             <p className="text-[#708fd2] dark:text-white">
-              On 23rd May 2024 - 12:30AM
+            {date} - {time}
             </p>
           </div>
         </div>
@@ -43,7 +62,7 @@ const ReserveCard = () => {
           "text-[#ffd33d] !font-Poppins "
         )}
       >
-        <span className="bg-[#323336] px-4 py-1 rounded-large hover:animate-pulse cursor-pointer  flex items-center gap-1">
+        <span onClick={()=>openDrawer("RECEIPT_VIEW_SINGLE", data)} className="bg-[#323336] px-4 py-1 rounded-large hover:animate-pulse cursor-pointer  flex items-center gap-1">
           <MdQrCode2 />
           View
         </span>
@@ -52,4 +71,9 @@ const ReserveCard = () => {
   );
 };
 
+
+
+ReserveCard.propTypes = {
+  data: PropTypes.object,
+}
 export default ReserveCard;

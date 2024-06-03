@@ -20,7 +20,7 @@ const ReceiptCard = ({data}) => {
     const componentRef = useRef();
 
 
-    const time = convertToAmPm(data?.showTime?.time)
+    const time = convertToAmPm(data?.showTime?.time) 
     const date = formatDateString2(data?.showDate?.date)
 
     const print = () => {

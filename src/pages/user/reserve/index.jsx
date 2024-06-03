@@ -2,12 +2,15 @@
 import { useState } from "react";
 import bg from "../../../assets/images/footer-bg.jpg";
 import ReserveCard from "./components/ReserveCard";
+import { useEffect } from "react";
+import { getUserBookingAction } from "../../../API/booking";
 
 const Reserve = () => {
 
   const [searchValue, setSearchValue] = useState('hello')
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
+  const [allBooking, setAllBooking] = useState([])
 
 
 
@@ -40,6 +43,25 @@ const Reserve = () => {
 
 
 
+    useEffect(() => {
+      
+      const getUserBooking = async ()=>{
+          try {
+               const res = await getUserBookingAction()
+               if(res){
+                console.log(res)
+                setAllBooking(res)
+               }
+          } catch (error) {
+            console.log(error)
+          }
+      }
+    
+      getUserBooking()
+
+    }, [])
+    
+
 
 
 
@@ -69,16 +91,12 @@ const Reserve = () => {
         />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <ReserveCard />
-          <ReserveCard />
-          <ReserveCard />
-          <ReserveCard />
-          <ReserveCard />
-          <ReserveCard />
-          <ReserveCard />
-          <ReserveCard />
-          <ReserveCard />
-          <ReserveCard />
+          {
+            allBooking?.map(book =>(
+              <ReserveCard key={book?.id} data={book}/>
+            ))
+          }
+    
         </div>
       </div>
     </div>

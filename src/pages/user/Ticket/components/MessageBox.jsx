@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 
+import useCurrentUser from "../../../../hooks/useCurrentUser";
 import { Avatar } from "@nextui-org/react";
 import clsx from "clsx";
 import { format } from "date-fns";
@@ -8,13 +9,15 @@ import { format } from "date-fns";
 
 
 const MessageBox = ({ data }) => {
+  const {userData} = useCurrentUser()
 
 
 
 
-  const isOwn = data?.sender === 'Tailer'
+  const isOwn = data?.userId === userData?.data?.id
 
-  const tooMany  = data.body.length > 50
+
+  const tooMany  = data?.message?.length > 50
   const container = clsx('flex gap-3 p-4 px-7', isOwn && 'justify-end');
   const avatar = clsx(isOwn && 'order-2');
   const body = clsx('flex flex-col gap-2', isOwn && 'items-end');
@@ -28,19 +31,19 @@ const MessageBox = ({ data }) => {
   return ( 
     <div className={container}>
       <div className={avatar}>
-        <Avatar user={data.sender} />
+        <Avatar user={isOwn ? userData?.data?.name : 'Admin'} className="w-4 h-4" />
       </div>
       <div className={body}>
         <div className="flex items-center gap-1">
           <div className="text-sm text-gray-500">
-            {data.sender}
+            {isOwn ? userData?.data?.name : 'Admin' }
           </div>
           <div className="text-xs text-gray-400">
-            {format(new Date(data.createdAt), 'p')}
+            {format(new Date(data?.createdAt), 'p')}
           </div>
         </div>
         <div className={message}>
-            <div>{data.body}</div>
+            <div>{data?.message}</div>
         </div>
       </div>
     </div>

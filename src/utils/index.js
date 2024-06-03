@@ -2,6 +2,29 @@
 
 import toast from 'react-hot-toast'
 
+import { format } from 'date-fns';
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return format(date, "MMMM d, yyyy, h:mm a");
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export function capitalize(str) {

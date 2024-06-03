@@ -4,11 +4,8 @@
 
 import { Drawer } from "antd";
 import "./styles.css";
-// import QRCode from "react-qr-code";
-// import { FaDownload } from "react-icons/fa6";
-import { useReactToPrint } from "react-to-print";
 // eslint-disable-next-line no-unused-vars
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 // import TinderCard from "react-tinder-card";
 
 // import Currency from "react-currency-formatter";
@@ -19,16 +16,19 @@ import React from "react";
 // import ReceiptCard from "./ReceiptCard";
 import AppLoad from "./ReceiptSwiper2";
 import useReceipt from "../../../../hooks/useReceipt";
+import { createRatingAction, getRatingAction } from "../../../../API/rating";
+import { showSuccess } from "../../../../utils";
 
 const Receipt = () => {
-    const {closeDrawer, isOpen, data} = useReceipt()
+    const {closeDrawer, isOpen, data, view} = useReceipt()
 
   const [rating, setRating] = useState(0); // Initial value
+  const [hasRate, setHasRate] = useState(false); // Initial value
   const [myBooking, setMyBooking] = useState([]); // Initial value
 
   useEffect(() => {
     const getReserved = async () => {
-      if (data && data?.selectedDate?.id && data?.selectedDateTime?.id && isOpen) {
+      if (data && data?.selectedDate?.id && data?.selectedDateTime?.id && isOpen && view === "RECEIPT_VIEW") {
         const json = {
           movieId: data?.id,
           showDateId: data?.selectedDate?.id,
@@ -36,7 +36,6 @@ const Receipt = () => {
         };
         const res = await getBookingAction(json);
         if (res) {
-          console.log(res);
           setMyBooking(res);
         }
       }
@@ -44,15 +43,76 @@ const Receipt = () => {
 
     getReserved();
 
-    return () => {
-      //   setFailedBooking([])
-      //   setSuccessBooking([])
-      //   setAllSeat([...defaultValue])
-      //   setPickedSeat([])
+  }, [data, isOpen, view]);
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    const getReserved =  () => {
+      if (data && isOpen && view === "RECEIPT_VIEW_SINGLE") {
+          setMyBooking([data]);
+      }
+
     };
-  }, [data, isOpen]);
+    getReserved();
+
+  }, [data, isOpen, view]);
 
 
+
+
+  useEffect(() => {
+    
+    const getRating = async ()=>{
+      if(data && isOpen &&  view){
+        try {
+          const movieId = view === "RECEIPT_VIEW_SINGLE" ? data?.movie?.id :  data[0]?.movie?.id 
+
+          if(data && isOpen && movieId){
+            const res = await getRatingAction(movieId)
+            if(res){
+              setRating(res[0]?.rating)
+              setHasRate(res?.length > 0)
+            }
+          }
+      } catch (error) {
+        console.log('error')
+      }
+      }
+    }
+    
+
+    getRating()
+
+  }, [data, isOpen, view])
+  
+
+
+  const rateMovie =  async (number)=>{
+      setRating(number)
+
+      try {
+        const movieId = view === "RECEIPT_VIEW_SINGLE" ? data?.movie?.id :  data[0]?.movie?.id 
+
+          const json = {
+            "rating":number,
+            "movieId": movieId,
+        }
+
+        const res = await createRatingAction(json)
+        if(res){
+          setHasRate(true)
+          showSuccess('Thank You for rating the movie. Enjoy the Show!')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+  }
 
 
 
@@ -79,7 +139,8 @@ const Receipt = () => {
           <Rating
             style={{ maxWidth: 105 }}
             value={rating}
-            onChange={setRating}
+            onChange={(e)=>rateMovie(e)}
+            readOnly={hasRate}
           />
         </div>
 

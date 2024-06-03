@@ -21,16 +21,6 @@
   }
 
   .screen {
-    /* background-color: #fff; */
-    /* height: 150px;
-    width: 100%;
-    margin: 15px 0;
-    transform: rotateX(-48deg);
-    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7); */
-
-    /* transform: perspective(500px)  */
-
-    /* background-color: #000; */
     height: 150px;
     width: 90%;
     margin: 15px 0;
@@ -52,7 +42,6 @@
 
   
   .item-paper {
-    /* position: absolute; */
     width: 30%;
     height: 50px;
 
@@ -61,41 +50,6 @@
   }
   
   @keyframes move {
-    /* 0% {
-      left: 0;
-    }
-    100% {
-      left: calc(100% - 200px);
-    } */
-    /* 0% {
-        transform: translateX(-50%);
-      }
-      100% {
-        transform: translateZ(calc(100% + 50px)) ; /* Move the object across the screen linearly */
-      /* }  */
-
-
-      /* 0% {
-        top: 0;
-        left: 0;
-      }
-      25% {
-        top: 0;
-        left: calc(100% - 50px);
-      }
-      50% {
-        top: calc(100% - 50px);
-        left: calc(100% - 50px);
-      }
-      75% {
-        top: calc(100% - 50px);
-        left: 0;
-      }
-      100% {
-        top: 0;
-        left: 0;
-      } */
-
       0% {
         top: 0;
         left: 0;
@@ -104,10 +58,6 @@
         top: 100%;
         left: 100%;
       }
-
-
-
-    
   }
 
 

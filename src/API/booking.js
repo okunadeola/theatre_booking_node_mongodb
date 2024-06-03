@@ -110,3 +110,21 @@ const getBooking = async (data) => {
 }
 
 
+
+export async function getUserBookingAction() {
+    let data = await getUserBooking()
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getUserBooking = async () => {
+    return API.get("booking/user/all/");
+}
+
+

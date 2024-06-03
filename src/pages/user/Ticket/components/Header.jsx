@@ -5,6 +5,7 @@ import { HiChevronLeft } from 'react-icons/hi'
 import { HiEllipsisHorizontal } from 'react-icons/hi2';
 import { Avatar } from '@nextui-org/react';
 import { Dropdown } from 'antd';
+import useCurrentUser from '../../../../hooks/useCurrentUser';
 
 
 
@@ -17,7 +18,8 @@ import { Dropdown } from 'antd';
 
 
 
-const Header = ({ conversation }) => {
+const Header = ({ conversation , initialMessages}) => {
+  const {userData} = useCurrentUser()
 
   // const { members } = useActiveList();
   // const isActive = members.indexOf(otherUser?.email!) !== -1;
@@ -81,24 +83,28 @@ const items = [
           <Avatar user={'otherUser'} />
         
         <div className="flex flex-col justify-start">
-          <div>{'name'}</div>
+          <div>{userData?.data?.userId === initialMessages?.userId ?   'Admin' : userData?.data?.name }</div>
           <div className="text-sm font-light text-neutral-500">
-            {'others'}
+       
           </div>
         </div>
       </div>
 
-      <Dropdown menu={{items} }  >
-      <HiEllipsisHorizontal
-        size={32}
-        className="
-          text-sky-500
-          cursor-pointer
-          hover:text-sky-600
-          transition
-        "
-      />
-    </Dropdown>
+
+    {
+       userData?.data?.role === "ADMIN" &&
+        <Dropdown menu={{items} }  >
+        <HiEllipsisHorizontal
+          size={32}
+          className="
+            text-sky-500
+            cursor-pointer
+            hover:text-sky-600
+            transition
+          "
+        />
+      </Dropdown>
+    }
 
 
 

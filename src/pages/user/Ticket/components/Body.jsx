@@ -52,12 +52,20 @@ const data = [
 ]
 
 
-const Body = ({ initialMessages = [] }) => {
+const Body = ({ initialMessages  }) => {
   const bottomRef = useRef(null);
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState([]);
+
+
+
   
 
 
+
+
+  useEffect(() => {
+    setMessages([...initialMessages])
+  }, [initialMessages]);
 
 
   useEffect(() => {
@@ -66,10 +74,10 @@ const Body = ({ initialMessages = [] }) => {
 
   return ( 
     <div className="flex-1 overflow-y-auto bg-white ">
-      {data.map((message, i) => (
+      {messages?.map((message, i) => (
         <MessageBox 
-          isLast={i === data.length - 1} 
-          key={message.id} 
+          isLast={i === messages.length - 1} 
+          key={message?.id} 
           data={message}
 
         />
