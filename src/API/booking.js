@@ -128,3 +128,93 @@ const getUserBooking = async () => {
 }
 
 
+
+export async function getAllBookingForAdminAction(json) {
+    let data = await getAllBookingForAdmin(json)
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getAllBookingForAdmin = async (data) => {
+    return API.get(`booking/paginated?page=${data?.page}&limit=${data?.limit}`);
+}
+
+
+export async function getAllBookingByMovieForAdminAction(json) {
+    let data = await getAllBookingByMovieForAdmin(json)
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getAllBookingByMovieForAdmin = async (data) => {
+    return API.get(`booking/by_movie/paginated?page=${data?.page}&limit=${data?.limit}&movieId=${data?.movieId}`);
+}
+
+
+export async function getAllBookingByUserForAdminAction(json) {
+    let data = await getAllBookingByUserForAdmin(json)
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getAllBookingByUserForAdmin = async (data) => {
+    return API.get(`booking/by_user/paginated?page=${data?.page}&limit=${data?.limit}&userId=${data?.userId}`);
+}
+
+
+
+
+export async function getAllBookingMoviesForAdminAction() {
+    let data = await getAllBookingMoviesForAdmin()
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getAllBookingMoviesForAdmin = async () => {
+    return API.get(`movie/by_booking`);
+}
+
+
+
+
+export async function getAllBookingUsersForAdminAction() {
+    let data = await getAllBookingUsersForAdmin()
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getAllBookingUsersForAdmin = async () => {
+    return API.get(`users/by_booking`);
+}
+
+

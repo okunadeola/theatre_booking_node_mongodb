@@ -20,7 +20,7 @@ const useStyle = createStyles(({ token }) => ({
   },
 }));
 
-const TicketModal = ({ isOpen, onClose, data, isInitial, setInitial }) => {
+const TicketModal = ({ isOpen, onClose, data, isInitial, setInitial, otherUser }) => {
   const [messages, setMessages] = useState([]);
   const [initialMessage, setInitialMessage] = useState(null);
 
@@ -151,10 +151,10 @@ const addMessage = (msg)=>{
                 </div>
                 {
                   messages?.length !== 0 &&
-                <Header initialMessages={messages} conversation={[]} />
+                <Header initialMessages={messages} conversation={[]} otherUser={otherUser} />
                 }
                 
-                <Body initialMessages={messages} />
+                <Body initialMessages={messages} otherUser={otherUser} />
                 {
                   isInitial && <div className="bg-white flex items-center justify-center font-bold text-xl">Create A Ticket</div>
                 }

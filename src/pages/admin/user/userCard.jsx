@@ -1,38 +1,56 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import {Card, CardHeader, CardBody, Image,  Button} from "@nextui-org/react";
-import { Edit } from "lucide-react";
+import { Edit, Eye } from "lucide-react";
+import { MdBalance, MdPayment } from "react-icons/md";
 
-export default function UserCard() {
+import Currency from "react-currency-formatter"
+import { FaMoneyBill } from "react-icons/fa6";
+import TransferPopup from "./TransferPopup";
+
+
+
+
+
+
+
+export default function UserCard({data, onClick}) {
+
+
+
+
+
+
   return (
-    <Card className="py-4  gap-4">
-      <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-        <p className="text-tiny uppercase font-bold">Daily Mix</p>
-        <small className="text-default-500">12 Tracks</small>
-        <h4 className="font-bold text-large">Frontend Radio</h4>
-      </CardHeader>
+    <Card className="py-4  gap-4" >
+     <CardHeader className="pb-0 pt-2 px-4 gap-1 flex-col items-start">
+        <p className="text-tiny uppercase font-bold">{data?.name}</p>
+        <small className="text-default-500">{data?.email}</small>
+     
+    </CardHeader>
       <CardBody className="overflow-visible h-30 py-2">
-        <Image
+      <Image
           alt="Card background"
           className="object-cover rounded-xl"
-          src="https://nextui.org/images/hero-card-complete.jpeg"
-          width={270}
-        />
+          src={`https://ui-avatars.com/api/?name=${data?.username}`}
+          width={100}
+          />
       </CardBody>
 
+      <div className="  flex mt-10   z-10  gap-5 px-4">
+    
+        <Button  className="text-tiny text-black/80 cursor-none" variant="light"  radius="lg" size="sm">
+          <MdPayment size={15}/>
 
-      {/* <CardFooter className="justify-between border-white/20 border-t-1 overflow-hidden mt-4  h-10    z-10">
-
-        <p className="text-tiny text-white/80 w-[270px] ">Available soon.</p>
-        <Button className="text-tiny text-white bg-black/20" variant="flat" color="default" radius="lg" size="sm">
-         Edit
+         <Currency
+                            quantity={data?.account_balance || 0}
+                            currency="NGN"
+                        />
         </Button>
-      </CardFooter> */}
-
-
-      <div className="justify-between  mt-10   z-10 flex px-4">
-      <p className="text-tiny text-white/80 w-[270px] ">Available soon.</p>
-        <Button className="text-tiny text-black/80 bg-black/20" variant="flat" color="default" radius="lg" size="sm">
-          <Edit/>
-         Edit
+       <TransferPopup user={data}/>
+        <Button className="text-tiny text-black/80 bg-black/20" variant="flat" color="default" radius="lg" size="sm" onClick={onClick}>
+          <Eye size={15}/>
+         Ticket
         </Button>
       </div>
     </Card>

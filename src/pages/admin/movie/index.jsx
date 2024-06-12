@@ -6,24 +6,7 @@ import MovieTable from "./MovieTable"
 const Movies = () => {
   return (
     <div>
-
       <MovieTable/>
-      {/* <hr />
-      <hr />
-      <br />
-      <hr />
-      <hr />
-
-
-
-      <TableDefault/>
-
-      <hr />
-      <hr />
-      <br />
-      <hr />
-      <hr />
-      <TablePaginated/> */}
     </div>
   )
 }

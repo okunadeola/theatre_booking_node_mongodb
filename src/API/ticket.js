@@ -103,6 +103,26 @@ const filterTicketByPriority = async (data) => {
 }
 
 
+export async function getAllUserTicketAction(json) {
+    let data = await getAllUserTicket(json)
+        .then(async (response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            showError(error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString())
+        });
+
+    return data
+}
+
+const getAllUserTicket = async () => {    
+    return API.get(`ticket/getAll/`, );
+}
+
+
+
+
+
 
 
 

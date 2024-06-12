@@ -11,7 +11,7 @@ import {
 } from "react-hook-form";
 import { createTicketAction, replyTicketAction } from "../../../../API/ticket";
 import { useEffect, useState } from "react";
-import PriorityOption from "./priorityOption";
+import PriorityOption from "./PriorityOption";
 import { Button } from "@nextui-org/react";
 import { Input } from "antd";
 import { showSuccess } from "../../../../utils";

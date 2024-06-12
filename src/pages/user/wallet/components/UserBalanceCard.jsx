@@ -65,7 +65,7 @@ const BgImage = styled.img`
   right: 0;
 `;
 
-const MoneyBalanceCard = ({ balance }) => {
+const MoneyBalanceCard = ({ balance, fromAdmin }) => {
   return (
     <Card>
       <Header>
@@ -75,14 +75,20 @@ const MoneyBalanceCard = ({ balance }) => {
       <BgImage src={CargBg} alt='bg' className=' -rotate-90 opacity-20 -top-24 '/>
       <Balance className=' z-10'>
          <Currency
-              quantity={balance || 0}
+              quantity={Number(balance) || 0}
               currency="NGN"
             />
         </Balance>
+        {
+          fromAdmin ?
+      <Footer className=' z-10'>
+    
+      </Footer> : 
       <Footer className=' z-10'>
         <Button>Deposit</Button>
         <Button>Withdraw</Button>
       </Footer>
+        }
     </Card>
   );
 };

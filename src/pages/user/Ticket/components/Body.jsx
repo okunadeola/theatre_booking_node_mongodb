@@ -52,7 +52,7 @@ const data = [
 ]
 
 
-const Body = ({ initialMessages  }) => {
+const Body = ({ initialMessages, otherUser }) => {
   const bottomRef = useRef(null);
   const [messages, setMessages] = useState([]);
 
@@ -79,6 +79,7 @@ const Body = ({ initialMessages  }) => {
           isLast={i === messages.length - 1} 
           key={message?.id} 
           data={message}
+          otherUser={otherUser}
 
         />
       ))}

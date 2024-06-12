@@ -36,7 +36,7 @@ export default function WalletCard({ item }) {
             className="rounded-full"
           /> */}
           <div className="truncate -tracking-wider  ltr:ml-2 rtl:mr-2 text-white">
-            {'#wallet'}
+            {'#user'}
           </div>
         </div>
         <div className="truncate text-xs -tracking-wide ltr:pl-2 rtl:pr-2 text-gray-400 xs:text-sm flex gap-1 ">
@@ -73,7 +73,7 @@ export default function WalletCard({ item }) {
             </div>
             <div className="flex flex-col truncate ltr:ml-2.5 rtl:mr-2.5 xl:ltr:ml-4 xl:rtl:mr-4">
               <span className="mb-0.5 text-xs text-gray-400">
-                {isInflow && '+'}{amount}
+                {isInflow && '+'}{amount ? amount : 'wallet'}
               </span>
               <strong className="font-medium -tracking-wider text-white">
                 {note}

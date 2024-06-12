@@ -8,7 +8,7 @@ import './button.css';
 const Button = props => {
     return (
         <button
-        
+            id={props?.id}
             className={`btn ${props.className}`}
             onClick={props.onClick ? () => props.onClick() : null}
         >
@@ -20,7 +20,7 @@ const Button = props => {
 export const OutlineButton = props => {
     return (
         <Button
-            
+            id={props?.id}
             className={`btn-outline ${props.className}`}
             onClick={props.onClick ? () => props.onClick() : null}
         >
@@ -32,13 +32,15 @@ export const OutlineButton = props => {
 OutlineButton.propTypes = {
     onClick: PropTypes.func,
     className: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
+    id: PropTypes.string
 }
 
 Button.propTypes = {
     onClick: PropTypes.func,
     className: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
+    id: PropTypes.string
 }
 
 export default Button;

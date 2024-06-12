@@ -97,11 +97,12 @@ const HeroSlideItem = props => {
         const modal = document.querySelector(`#modal_${item.id}`);
 
         // const videos = await tmdbApi.getVideos(category.movie, item.id);
-        const videSrc = item?.trailer
+        const videSrc = item?.trailer + '?autoplay=1'
    
         if (videSrc) {
             // const videSrc = 'https://www.youtube.com/embed/' + videos.results[0].key;
             modal.querySelector('.modal__content > iframe').setAttribute('src', videSrc);
+            modal.querySelector('.modal__content > iframe').setAttribute('allow', 'autoplay; encrypted-media');
             modal.classList.toggle('active');
         } else {
             toast.error('No Trailer')
@@ -124,10 +125,10 @@ const HeroSlideItem = props => {
                     <h2 className="title">{item?.title}</h2>
                     <div className="overview sm:line-clamp-none md:line-clamp-3 xl:line-clamp-none ">{item?.description}</div>
                     <div className="flex items-start justify-start flex-wrap gap-2 md:gap-5">
-                        <Button className='text-sm md:text-medium' onClick={ moveToDetailPage}>
+                        <Button className='text-sm md:text-medium' id="home_booking_btn"  onClick={ moveToDetailPage}>
                             Book Now
                         </Button>
-                        <OutlineButton onClick={setModalActive} className='cursor-pointer  sm:mx-0  text-sm md:text-medium'>
+                        <OutlineButton  id="home_trailer_btn" onClick={setModalActive} className='cursor-pointer  sm:mx-0  text-sm md:text-medium'>
                             Watch trailers
                         </OutlineButton>
                     </div>
@@ -154,7 +155,7 @@ const TrailerModal = props => {
     return (
         <Modal  active={false} id={`modal_${item.id}`} >
             <ModalContent onClose={onClose}>
-                <iframe ref={iframeRef} width="100%" height="500px" title="trailer"></iframe>
+                <iframe ref={iframeRef} width="100%" id="trailer_frame" height="500px" title="trailer" allow='autoplay; encrypted-media'></iframe>
             
             </ModalContent>
         </Modal>

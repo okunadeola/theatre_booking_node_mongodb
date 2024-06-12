@@ -40,7 +40,7 @@ export const ModalContent = props => {
     }
 
     return (
-        <div ref={contentRef} className="modal__content text-white">
+        <div ref={contentRef} id="modal__content" className="modal__content text-white">
        
                 {props.children}    
 

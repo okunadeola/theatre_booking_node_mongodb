@@ -50,9 +50,9 @@ const MovieCard = props => {
                             </Button>
                             {/* </Link> */}
     
-                            <div className='absolute bottom-0 right-5'>
+                            {/* <div className='absolute bottom-0 right-5'>
                                 <span className='text-xs text-stone-300'>18th Feb</span>
-                            </div>
+                            </div> */}
                         </div>
                         
                         <h3 className='font-bold text-white'>{item?.title}</h3>

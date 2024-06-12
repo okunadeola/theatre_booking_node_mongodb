@@ -18,7 +18,7 @@ import useCurrentUser from '../../../../hooks/useCurrentUser';
 
 
 
-const Header = ({ conversation , initialMessages}) => {
+const Header = ({ conversation , initialMessages, otherUser}) => {
   const {userData} = useCurrentUser()
 
   // const { members } = useActiveList();
@@ -30,6 +30,8 @@ const Header = ({ conversation , initialMessages}) => {
 
   //   return isActive ? 'Active' : 'Offline'
   // }, [conversation, isActive]);
+
+
 
 
 
@@ -83,7 +85,7 @@ const items = [
           <Avatar user={'otherUser'} />
         
         <div className="flex flex-col justify-start">
-          <div>{userData?.data?.userId === initialMessages?.userId ?   'Admin' : userData?.data?.name }</div>
+          <div>{otherUser !==  null  ? otherUser :   userData?.data?.id === initialMessages?.userId ?   'Admin' : userData?.data?.name }</div>
           <div className="text-sm font-light text-neutral-500">
        
           </div>

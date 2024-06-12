@@ -21,7 +21,7 @@ import {
 export function ExpandedDrawer() {
   return (
     <div className="grid grid-cols-2 gap-2">
-        <Sheet className="w-[600px] sm:w-[540px]">
+        <Sheet className="w-[600px] sm:w-[540px]" >
           <SheetTrigger asChild>
             <Button variant="ghost">test drawer</Button>
           </SheetTrigger>

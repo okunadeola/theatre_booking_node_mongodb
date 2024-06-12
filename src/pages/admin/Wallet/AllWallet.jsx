@@ -11,12 +11,13 @@ const AllWallet = () => {
     const { onOpen, isOpen, onClose } = useDisclosure();
     const [walletId, setWalletId] = useState(null)
 
-
     const openModal = (id)=>{
         setWalletId(id)
         onOpen()
     }
 
+
+    
 
 
   return (

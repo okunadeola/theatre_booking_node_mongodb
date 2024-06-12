@@ -46,7 +46,7 @@ const TicketCard = ({value, onClick}) => {
                             : "secondary"
                         }
                         size="sm"
-                        className=" capitalize"
+                        className="capitalize"
                       >
                         {value?.status}
                       </Chip>
