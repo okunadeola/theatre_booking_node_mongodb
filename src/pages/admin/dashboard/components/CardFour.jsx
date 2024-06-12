@@ -28,13 +28,13 @@ const CardFour = () => {
       <div className="mt-4 flex items-end justify-between">
         <div>
           <h4 className="text-title-md font-bold text-black dark:text-white">
-            3.456
+            5
           </h4>
           <span className="text-sm font-medium">Total Users</span>
         </div>
 
         <span className="flex items-center gap-1 text-sm font-medium text-meta-5">
-          0.95%
+          5%
           <svg
             className="fill-meta-5"
             width="10"

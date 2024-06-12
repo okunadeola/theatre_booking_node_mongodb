@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useEffect } from "react";
@@ -19,7 +20,6 @@ import {
   Pagination,
   Avatar, useDisclosure
 } from "@nextui-org/react";
-// import {PlusIcon} from "./components/PlusIcon";
 import {VerticalDotsIcon} from "./components/VerticalDotsIcon";
 import {SearchIcon} from "./components/SearchIcon";
 import {ChevronDownIcon} from "./components/ChevronDownIcon";
@@ -40,10 +40,6 @@ const statusColorMap = {
 };
 
 const INITIAL_VISIBLE_COLUMNS = ["img", "title", "price", "rating", "genre", "actions"];
-
-
-
-
 
 
 export default function MovieTable() {
@@ -69,7 +65,7 @@ export default function MovieTable() {
 
   const hasSearchFilter = Boolean(filterValue);
   const hasNextPage = Boolean(nextPage);
-  console.log(hasNextPage)
+
 
   const loadingState = isLoading || movieData.length === 0 ? "loading" : "idle";
 
@@ -103,7 +99,6 @@ export default function MovieTable() {
         setIsLoading(true)
         const res = await getPaginatedMoviesAction({page:next ||page, limit: 5})
         if(res){
-           // console.log(res)
            setMovieData(res?.movies)
            setTotalCount(res?.totalCount)
            setNextPage(res?.nextPage)
@@ -154,8 +149,17 @@ export default function MovieTable() {
       );
     }
     if (statusFilter !== "all" && Array.from(statusFilter).length !== movieStatusOptions.length) {
-        filteredMovies = filteredMovies.filter((mv) =>
-        Array.from(statusFilter).includes(mv.averageRating),
+        const val = []
+        Array.from(statusFilter)?.map(elm => {
+          movieStatusOptions?.map(e =>{
+            if(e.uid === elm){
+              val.push(e.name)
+              return e
+            }
+            return elm
+          })
+        })        
+        filteredMovies = filteredMovies.filter((mv) => val.includes(mv.averageRating ),
       );
     }
 
@@ -179,8 +183,9 @@ export default function MovieTable() {
 
   const sortedItems = React.useMemo(() => {
     return [...movieData].sort((a, b) => {
-      const first = a[sortDescriptor.column];
-      const second = b[sortDescriptor.column];
+     const  first = sortDescriptor.column === 'rating' ?  a.averageRating :  a[sortDescriptor.column];
+      const second = sortDescriptor.column === 'rating' ?  b.averageRating : b[sortDescriptor.column];
+
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
@@ -252,7 +257,7 @@ export default function MovieTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
                   Status
@@ -272,7 +277,7 @@ export default function MovieTable() {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">

@@ -39,7 +39,7 @@ const movieColumns = [
   {name: "DESCRIPTION", uid: "description", sortable: true},
   {name: "GENRE", uid: "genre", sortable: true},
   {name: "PRICE", uid: "price", sortable: true},
-  {name: "AVERAGE RATING", uid: "rating"},
+  {name: "AVERAGE RATING", uid: "rating", sortable: true},
   {name: "ACTIONS", uid: "actions"},
 ];
 
