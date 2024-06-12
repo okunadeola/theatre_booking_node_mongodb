@@ -5,8 +5,12 @@ import CardTwo from "./components/CardTwo"
 // import ChartOne from "../components/ChartOne"
 import ChartThree from "./components/ChartThree"
 import ChartTwo from "./components/ChartTwo"
+import AppTable2 from "./components/ReactTable3"
+import AppTable3 from "./components/ReactTable4"
 import { DataTableDemo } from "./components/Table"
 import TableOne from "./components/TableOne"
+import AppTable from "./components/react-table2"
+import ReactTable from "./components/reactTable"
 
 
 const Dashboard = () => {
@@ -42,6 +46,18 @@ const Dashboard = () => {
 
       <div>
         <DataTableDemo/>
+      </div>
+      <div>
+        <ReactTable/>
+      </div>
+      <div>
+        <AppTable/>
+      </div>
+      <div className="mb-20">
+        <AppTable2/>
+      </div>
+      <div className="mb-20">
+        <AppTable3/>
       </div>
     </div>
   )
