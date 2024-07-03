@@ -1,0 +1,166 @@
+1. Basic Aggregation
+Example 1: Basic match and group Operations
+Let's assume you have a collection called orders with documents like this:
+
+{
+  "_id": ObjectId("..."),
+  "product": "Apple",
+  "quantity": 10,
+  "price": 2.5
+}
+You want to calculate the total quantity of each product.
+
+
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+
+const orderSchema = new Schema({
+  product: String,
+  quantity: Number,
+  price: Number
+});
+
+const Order = mongoose.model('Order', orderSchema);
+
+Order.aggregate([
+  {
+    $group: {
+      _id: "$product",
+      totalQuantity: { $sum: "$quantity" }
+    }
+  }
+]).then(result => {
+  console.log(result);
+}).catch(err => {
+  console.error(err);
+});
+
+2. Intermediate Aggregation
+Example 2: Filtering and Sorting
+Let's filter orders with quantity greater than 5 and sort by total quantity in descending order.
+
+
+Order.aggregate([
+  {
+    $match: {
+      quantity: { $gt: 5 }
+    }
+  },
+  {
+    $group: {
+      _id: "$product",
+      totalQuantity: { $sum: "$quantity" }
+    }
+  },
+  {
+    $sort: {
+      totalQuantity: -1
+    }
+  }
+]).then(result => {
+  console.log(result);
+}).catch(err => {
+  console.error(err);
+});
+
+
+3. Advanced Aggregation
+Example 3: Lookup (Joining Collections)
+Assume you have another collection called customers and you want to join orders with customer information.
+
+
+const customerSchema = new Schema({
+  name: String,
+  email: String
+});
+
+const Customer = mongoose.model('Customer', customerSchema);
+
+Order.aggregate([
+  {
+    $lookup: {
+      from: "customers",
+      localField: "customerId",
+      foreignField: "_id",
+      as: "customerInfo"
+    }
+  },
+  {
+    $unwind: "$customerInfo"
+  }
+]).then(result => {
+  console.log(result);
+}).catch(err => {
+  console.error(err);
+});
+
+
+
+
+Example 4: Complex Calculations and Multiple Stages
+Let's calculate the total revenue (quantity * price) for each product and sort them.
+
+
+
+Order.aggregate([
+  {
+    $group: {
+      _id: "$product",
+      totalRevenue: { $sum: { $multiply: ["$quantity", "$price"] } }
+    }
+  },
+  {
+    $sort: {
+      totalRevenue: -1
+    }
+  }
+]).then(result => {
+  console.log(result);
+}).catch(err => { 
+  console.error(err);
+});
+
+
+
+4. Full Example
+Combining multiple stages to filter, group, sort, and project fields.
+
+
+Order.aggregate([
+  {
+    $match: {
+      quantity: { $gt: 5 }
+    }
+  },
+  {
+    $group: {
+      _id: "$product",
+      totalQuantity: { $sum: "$quantity" },
+      totalRevenue: { $sum: { $multiply: ["$quantity", "$price"] } }
+    }
+  },
+  {
+    $sort: {
+      totalRevenue: -1
+    }
+  },
+  {
+    $project: {
+      product: "$_id",
+      totalQuantity: 1,
+      totalRevenue: 1,
+      _id: 0
+    }
+  }
+]).then(result => {
+  console.log(result);
+}).catch(err => {
+  console.error(err);
+});
+Summary of Aggregation Stages
+$match: Filters the documents to pass only those that match the specified condition(s).
+$group: Groups input documents by a specified identifier expression and applies the accumulator expressions.
+$sort: Sorts all input documents and returns them in the specified order.
+$project: Passes along the documents with the requested fields and newly computed fields.
+$lookup: Performs a left outer join to another collection in the same database to filter in documents from the "joined" collection for processing.
+$unwind: Deconstructs an array field from the input documents to output a document for each element.
