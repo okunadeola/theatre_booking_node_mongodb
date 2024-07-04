@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { Pagination } from "@nextui-org/react"
+import { Button, Pagination } from "@nextui-org/react"
 import AllBooking from "./AllBooking"
 
 import Search from "../../../components/others/Search"
@@ -12,6 +12,7 @@ import { getAllBookingByMovieForAdminAction, getAllBookingByUserForAdminAction, 
 import MovieCardList from "./components/MovieCardList"
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md"
 import UserList from "./components/UserList"
+import ClaimModal from "./ClaimBooking"
 
 
 const tabs = [
@@ -204,7 +205,10 @@ const AdminBooking = () => {
       <div className="flex flex-col bg-stone-100 p-4 py-6  gap-4 rounded">
         <div className="flex gap-2 flex-wrap justify-between">
           <SwitchTab tabs={tabs} selected={selectedTab} setSelected={setSelectedTab} /> 
-          <Search/>
+          <div className="flex gap-2">
+             <Search/>
+             <ClaimModal/>
+          </div>
         </div>
         {
           selectedTab === 'all' && (

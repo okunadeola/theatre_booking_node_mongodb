@@ -218,3 +218,23 @@ const getAllBookingUsersForAdmin = async () => {
 }
 
 
+export async function claimBookingAction(bookingId) {
+    let data = await claimBooking(bookingId)
+        .then(async (response) => {
+            return {data: response.data, success: true};
+        })
+        .catch((error) => {
+            const err = error?.response?.data?.errors?.length ?  error?.response?.data?.errors[0]?.toString()  :  error?.response?.data?.toString()
+
+            showError(err)
+            return {data: err, success:false};
+        });
+
+    return data
+}
+
+const claimBooking = async bookingId => {
+    return API.patch(`booking/update-booking-claim/${bookingId}`);
+}
+
+

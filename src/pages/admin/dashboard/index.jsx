@@ -7,6 +7,9 @@ import ChartThree from "./components/ChartThree"
 import ChartTwo from "./components/ChartTwo"
 import AppTable2 from "./components/ReactTable3"
 import AppTable3 from "./components/ReactTable4"
+import ReactTable5 from "./components/ReactTable5"
+import ReactTable6 from "./components/ReactTable6"
+import ReactTable7 from "./components/ReactTable7"
 import { DataTableDemo } from "./components/Table"
 import TableOne from "./components/TableOne"
 import AppTable from "./components/react-table2"
@@ -46,6 +49,15 @@ const Dashboard = () => {
 
       <div>
         <DataTableDemo/>
+      </div>
+      <div>
+        <ReactTable7/>
+      </div>
+      <div>
+        <ReactTable6/>
+      </div>
+      <div>
+        <ReactTable5/>
       </div>
       <div>
         <ReactTable/>

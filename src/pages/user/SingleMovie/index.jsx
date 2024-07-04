@@ -237,8 +237,7 @@ const SingleMovie = () => {
       )}
 
       
-      {/* <MovieList category={category} type="similar" id={item.id} /> */}
-      {/* <ShowModal onClose={isClose} isOpen={hasOpen} data={{...item, selectedDate: selectedmovieDate, selectedDateTime: selectedmovieDateTime}} /> */}
+    
     </>
   );
 };

@@ -20,6 +20,7 @@ import AdminBooking from "./pages/admin/booking";
 import AdminWallet from "./pages/admin/Wallet";
 import AdminTicket from "./pages/admin/ticket";
 import AdminUser from "./pages/admin/user";
+import GlobalModals from "./components/core/GlobalModals";
 
 function App() {
   const { userData, removeCurrentUser } = useCurrentUser();
@@ -42,31 +43,35 @@ function App() {
   }, [userData, navigate, removeCurrentUser]);
 
   return (
-    <Routes>
 
-      <Route path="/" element={<Navigate to="/user" />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+    <>
+        <Routes>
 
-      <Route path="/admin" element={<RootLayout />}>
-        <Route path="/admin/" element={<Dashboard />} />
-        <Route path="/admin/movies" element={<Movies />} />
-        <Route path="/admin/booking" element={<AdminBooking />} />
-        <Route path="/admin/user" element={<AdminUser />} />
-        <Route path="/admin/wallet" element={<AdminWallet />} />
-        <Route path="/admin/ticket" element={<AdminTicket />} />
-      </Route>
+          <Route path="/" element={<Navigate to="/user" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-      <Route path="/user" element={<UserRootLayout />}>
-        <Route path="/user/" element={<HomePage />} />
-        <Route path="/user/:id" element={<SingleMovie />} />
-        <Route path="/user/reserve" element={<Reserve />} />
-        <Route path="/user/wallet" element={<Wallet />} />
-        <Route path="/user/ticket" element={<Ticket />} />
-        <Route path="/user/profile" element={<Profile />} />
-      </Route>
+          <Route path="/admin" element={<RootLayout />}>
+            <Route path="/admin/" element={<Dashboard />} />
+            <Route path="/admin/movies" element={<Movies />} />
+            <Route path="/admin/booking" element={<AdminBooking />} />
+            <Route path="/admin/user" element={<AdminUser />} />
+            <Route path="/admin/wallet" element={<AdminWallet />} />
+            <Route path="/admin/ticket" element={<AdminTicket />} />
+          </Route>
 
-    </Routes>
+          <Route path="/user" element={<UserRootLayout />}>
+            <Route path="/user/" element={<HomePage />} />
+            <Route path="/user/:id" element={<SingleMovie />} />
+            <Route path="/user/reserve" element={<Reserve />} />
+            <Route path="/user/wallet" element={<Wallet />} />
+            <Route path="/user/ticket" element={<Ticket />} />
+            <Route path="/user/profile" element={<Profile />} />
+          </Route>
+
+        </Routes>
+        <GlobalModals/>
+    </>
   );
 }
 

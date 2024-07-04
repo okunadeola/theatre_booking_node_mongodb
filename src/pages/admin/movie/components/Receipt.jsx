@@ -116,7 +116,6 @@ const Receipt = () => {
 
 
 
-//   AppLoad
 
   return (
     <>
