@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-// src/components/VoiceCommand.js
+
 import  { useEffect, useRef } from 'react';
 
 const VoiceCommand = ({ onCommand }) => {
@@ -14,18 +14,7 @@ const VoiceCommand = ({ onCommand }) => {
         recognitionRef.current.onresult = (event) => {
           const transcript = event.results[event.resultIndex][0].transcript.trim();
           onCommand(transcript);
-        };
-  
-        // recognitionRef.current.onend = () => {
-        //   console.log('Recognition ended. Restarting...');
-        //   startRecognition();
-        // };
-  
-        // recognitionRef.current.onerror = (event) => {
-        //   console.error('Recognition error:', event.error);
-        //   startRecognition();
-        // };
-  
+        };  
         recognitionRef.current.start();
       };
   

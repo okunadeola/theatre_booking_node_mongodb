@@ -1,16 +1,11 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import {Card, CardHeader, CardBody, Image,  Button} from "@nextui-org/react";
-import { Edit, Eye } from "lucide-react";
-import { MdBalance, MdPayment } from "react-icons/md";
+import { Eye } from "lucide-react";
+import {  MdPayment } from "react-icons/md";
 
 import Currency from "react-currency-formatter"
-import { FaMoneyBill } from "react-icons/fa6";
 import TransferPopup from "./TransferPopup";
-
-
-
-
 
 
 

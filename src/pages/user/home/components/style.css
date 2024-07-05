@@ -10,7 +10,7 @@
   @apply bg-gradient-to-b 
                 from-[#000]/90 via-[#000]/40 to-[#0e1012];
 }
-/* hero-slide__item__content */
+
 .hero-slide__item__content {
   @apply relative flex items-center justify-center w-full;
 }

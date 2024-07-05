@@ -2,6 +2,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
+//*** this zustand state manager is use for managing authenticated user data ***//
 const useCurrentUser = create(
   persist(
     (set) => ({

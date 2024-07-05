@@ -8,6 +8,9 @@ import styles from './styles.module.css'
 import PropTypes from 'prop-types';
 import ReceiptCard from './ReceiptCard';
 
+
+// THIS IS RESPONSIBLE FOR THE ANIMATED RECEIPT CARD
+
 // const cards = [
 //   'https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg',
 //   'https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg',
@@ -25,6 +28,8 @@ const to = (i) => ({
   rot: -10 + Math.random() * 20,
   delay: i * 100,
 })
+
+
 const from = (_i) => ({ x: 0, rot: 0, scale: 1.5, y: -1000 })
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r, s) =>
@@ -61,12 +66,20 @@ function Deck({cards}) {
         api.start(i => to(i))
       }, 600)
   })
+
+
+
+
+
   // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
   return (
     <>
       {props?.map(({ x, y, rot, scale }, i) => (
         <animated.div className={styles.deck} key={i} style={{ x, y }}>
           {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
+
+
+          {/* DEFAULT EXAMPLE */}
           {/* <animated.div
             {...bind(i)}
             style={{
@@ -74,6 +87,7 @@ function Deck({cards}) {
                 backgroundImage: `url(${cards[i]})`,
             }}
           /> */}
+
           <animated.div
             {...bind(i)}
             style={{
@@ -96,7 +110,7 @@ Deck.propTypes = {
     cards: PropTypes.array,
 }
 
-export default function AppLoad({cards}) {
+export default function ReceiptLoad({cards}) {
   return (
     <div className={styles.containers}>
       <Deck cards={cards} />
@@ -104,6 +118,6 @@ export default function AppLoad({cards}) {
   )
 }
 
-AppLoad.propTypes = {
+ReceiptLoad.propTypes = {
     cards: PropTypes.array,
 }

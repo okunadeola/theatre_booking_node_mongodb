@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 import './style.css';
 import { X } from 'lucide-react';
 
+
+
+
+
+//*** Trailer modal ***//
 const Modal = props => {
 
     const [active, setActive] = useState(false);
@@ -14,9 +19,6 @@ const Modal = props => {
         setActive(props.active);
     }, [props.active]);
 
-
-
-    
 
     return (
         <div ref={contentRef}  id={props.id} className={`modal ${active ? 'active' : ''} text-white`}>
@@ -41,10 +43,7 @@ export const ModalContent = props => {
 
     return (
         <div ref={contentRef} id="modal__content" className="modal__content text-white">
-       
                 {props.children}    
-
-
             <div className="modal__content__close" onClick={closeModal}>
                 <X className='text-white/50 hover:text-[#ff0000]'/>
             </div>

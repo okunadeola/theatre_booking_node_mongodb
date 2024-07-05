@@ -54,8 +54,6 @@ export default function TablePaginated() {
           </div>
         ) : null
       }
-      // eslint-disable-next-line no-undef
-    //   {...args}
     >
       <TableHeader>
         <TableColumn key="name">Name</TableColumn>

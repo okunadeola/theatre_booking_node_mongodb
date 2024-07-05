@@ -16,7 +16,6 @@ const SidebarItem = ({href, icon:Icon, label, closeBar}) => {
 
     const onClick = ()=>{
         navigate(href)
-
         isTablet && closeBar()
     }
 

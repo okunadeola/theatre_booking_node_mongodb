@@ -167,17 +167,7 @@ export default function MovieTable() {
   }, [movieData, filterValue, statusFilter]);
 
 
-
-//   const pages = Math.ceil(filteredItems.length / rowsPerPage);
   const pages = Math.ceil(totalCount / rowsPerPage);
-
-
-//   const items = React.useMemo(() => {
-//     const start = (page - 1) * rowsPerPage;
-//     const end = start + rowsPerPage;
-
-//     return filteredItems.slice(start, end);
-//   }, [page, filteredItems, rowsPerPage]);
 
 
 
@@ -257,27 +247,7 @@ export default function MovieTable() {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            {/* <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {movieStatusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.star)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown> */}
+           
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
@@ -299,9 +269,7 @@ export default function MovieTable() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            {/* <Button color="primary" endContent={<PlusIcon />}>
-              Add New
-            </Button> */}
+           
             <AddMovieDrawer/>
           </div>
         </div>
@@ -344,15 +312,9 @@ export default function MovieTable() {
     var startEntry = (currentPage - 1) * entriesPerPage + 1;
     var endEntry = Math.min(currentPage * entriesPerPage, totalCount);
 
-    // console.log(( hasNextPage ?  movieData?.length * page : totalCount) )
-    // page === 1 ? 1 : hasNextPage  ? page + 9   : page + 5
     return (
       <div className="py-2 px-2 flex justify-between items-center">
         <span className="w-[30%] text-small text-default-400">
-          {/* {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`} */}
-            {/* Showing 1 to 10 of 10 entries */}
           {movieData?.length ?      `Showing  ${startEntry} to ${endEntry}    of ${totalCount} entries` : ''}
 
         </span>
@@ -412,13 +374,6 @@ export default function MovieTable() {
         return (
           <p className="text-bold text-tiny capitalize text-default-400">{cellValue}</p>
         );
-    //   case "role":
-    //     return (
-    //       <div className="flex flex-col">
-    //         <p className="text-bold text-small capitalize">{cellValue}</p>
-    //         <p className="text-bold text-tiny capitalize text-default-400">{mv.team}</p>
-    //       </div>
-    //     );
       case "rating":
         return (
           <Chip className="capitalize text-center" color={statusColorMap[mv.averageRating
@@ -465,7 +420,6 @@ export default function MovieTable() {
           wrapper: "max-h-[482px]",
         }}
         selectedKeys={selectedKeys}
-      //   selectionMode="multiple"
         sortDescriptor={sortDescriptor}
         topContent={topContent}
         topContentPlacement="outside"

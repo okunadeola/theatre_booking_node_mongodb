@@ -1,21 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useLocation } from "react-router-dom";
-
-// import tmdbApi from "../../../API/tmdbApi";
-// import apiConfig from "../../../API/apiConfig";
-
 import "./detail.css";
-// import CastList from './components/CastList';
-// import VideoList from './VideoList';
-
-// import MovieList from "../home/components/MovieList";
-
 import Button from "../../../components/others/Button"
 import { TbCheckupList } from "react-icons/tb";
 import { CiCalendarDate } from "react-icons/ci";
-// import ShowModal from "../.././../pages/admin/movie/components/ShowModal";
-// import { useDisclosure } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { getMovieShowDateTimesAction } from "../../../API/movies";
 import { convertToAmPm, formatDateString } from "../../../utils";
@@ -23,8 +12,6 @@ import useDrawer from "../../../hooks/useDrawer";
 import { getAllReservedAction } from "../../../API/booking";
 
 const SingleMovie = () => {
-  // const { onOpen, isOpen: hasOpen, onClose: isClose } = useDisclosure();
-
   const location = useLocation(); 
   const { id } = useParams(); 
 
@@ -58,8 +45,6 @@ const SingleMovie = () => {
 
 
 
-
-
   const getDateTimes = async (dateObject) => {
     if(dateObject){
       const res = await getMovieShowDateTimesAction({dateId:dateObject?.id})
@@ -74,16 +59,6 @@ const SingleMovie = () => {
 }
 
 
-
-
-
-
-
-
-
-
-
-
   const onSelectDate = (dateObject)=>{
     setSelectedMovieDate(dateObject)
     getDateTimes(dateObject)
@@ -92,7 +67,6 @@ const SingleMovie = () => {
 
 
   const getReserved = async () => {
-    // console.log('here', data)
     if (id && selectedmovieDate?.id && selectedmovieDateTime?.id) {
       const json = {
         movieId: id,
@@ -101,10 +75,8 @@ const SingleMovie = () => {
       };
       const res = await getAllReservedAction(json);
       if (res) {
-        // console.log(res, 'allf')
         const reserve = res?.map((each) => each.seat);
-        // reserveSeatHandler(reserve)
-
+        // open reservation drawer
         openDrawer("DRAWER_VIEW", {...item, selectedDate: selectedmovieDate, selectedDateTime: selectedmovieDateTime, reserve:reserve})
 
       }
@@ -189,27 +161,6 @@ const SingleMovie = () => {
                     }
                 </div>
               }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
               <div className="cast">
                {

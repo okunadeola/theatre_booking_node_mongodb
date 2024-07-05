@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import useCurrentUser from "../hooks/useCurrentUser";
 
 
-
+//*** admin page wrapper ***//
 const RootLayout = () => {
     const { userData } = useCurrentUser();
     const navigate = useNavigate();
@@ -27,14 +27,10 @@ const RootLayout = () => {
                     <Navbar/>
             </div>
 
-
-
             <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
                     <Sidebar closeBar={()=>{}}/>
             </div>
 
-
-            {/* pages */}
             <main className="md:pl-56 h-full pt-[115px] mx-8">
                 <div>  <Outlet/></div>
             </main>

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useDisclosure } from "@nextui-org/react";
 import TicketCard from "./TicketCard"
-import TicketModal from "../../../components/others/TicketModal";
+import TicketModal from "../../general/TicketModal";
 import { useEffect, useState } from "react";
 import { getAllUserTicketAction } from "../../../API/ticket";
 

@@ -1,18 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { create } from 'zustand'
 
-
-
-
-
-// interface ModalStore {
-//     view: MODAL_VIEW | null;
-//     isOpen: boolean;
-//     data?: any 
-//     openModal: (name: MODAL_VIEW,  data?: any) => void;
-//     closeModal: () => void;
-//   }
-
+//*** this  state manager is use for managing seat booking drawer data ***//
 const initialArrangement = [
     [
       {
@@ -425,6 +414,7 @@ const initialArrangement = [
       },
     ],
   ];
+
 const seatArrangement = [
     [
       {

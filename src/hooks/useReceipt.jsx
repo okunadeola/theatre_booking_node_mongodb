@@ -4,7 +4,7 @@ import { create } from 'zustand'
 
 
 
-
+//*** this state manager is use for managing booking ticket modal view ***//
 const useReceipt = create(
     (set) => ({
       isOpen: false,

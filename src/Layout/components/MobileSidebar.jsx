@@ -10,7 +10,6 @@ const MobileSidebar = () => {
 
 
     const closeBar = ()=>{
-        // console.log(closeRef.current)  
         closeRef.current.click() 
     }
 
@@ -23,7 +22,6 @@ const MobileSidebar = () => {
                 <SheetContent side="left" className="p-0 bg-white">
                     <Sidebar closeBar={closeBar}/>
                 </SheetContent>
-
 
                 <div className=" hidden">
                     <SheetClose asChild ref={closeRef}>

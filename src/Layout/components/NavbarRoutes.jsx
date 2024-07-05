@@ -5,12 +5,12 @@ import { Users, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import DropdownUser from "./DropdownUser";
 
+
+//*** admin  user page switcher ***//
 const NavbarRoutes = () => {
     const pathname = usePathname()
 
     const isUserPage = pathname?.includes("/user")
-    // const isAdminPage = pathname?.includes("/admin")
-
 
     return ( 
         <div className="flex gap-x-2 ml-auto  ">
@@ -24,8 +24,6 @@ const NavbarRoutes = () => {
                     
                     </Link>
                 ) :
-
-                
                     <Link  to="/user/">
                         <Button size="sm" variant="ghost">
                         <Users className="h-4 w-4 mr-2"/>
@@ -33,7 +31,6 @@ const NavbarRoutes = () => {
                         </Button>
                     
                     </Link>
-                
             }
         </div>
      );

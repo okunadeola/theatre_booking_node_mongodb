@@ -11,8 +11,6 @@ const Search = ({roundedSm}) => {
     />
   )
 }
-
-
 Search.propTypes = {
   roundedSm : PropTypes.string
 }

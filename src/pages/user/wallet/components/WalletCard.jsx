@@ -28,20 +28,12 @@ export default function WalletCard({ item }) {
       <div className="flex items-center justify-between border-b border-dashed border-gray-200 pb-3.5 dark:border-gray-700 sm:pb-5">
         <div className="flex items-center font-medium gap-1 ">
         
-          {/* <img
-            src={avatar}
-            alt="wallet"
-            width={24}
-            height={24}
-            className="rounded-full"
-          /> */}
           <div className="truncate -tracking-wider  ltr:ml-2 rtl:mr-2 text-white">
             {'#user'}
           </div>
         </div>
         <div className="truncate text-xs -tracking-wide ltr:pl-2 rtl:pr-2 text-gray-400 xs:text-sm flex gap-1 ">
           <span>{date}</span>
-          {/* <span className="text-xs text-gray-400">{time}</span> */}
         </div>
       </div>
       <div className="grid grid-cols-8 gap-x-5 pt-4 md:gap-x-12 md:pt-6 w-full ">

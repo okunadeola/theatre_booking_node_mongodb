@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import bg from '../../assets/images/footer-bg.jpg';
 import logo from '../../assets/images/tmovie.png';
 
+
+
+//*** user footer page ***//
 const Footer = () => {
     return (
         <div className="footer" style={{backgroundImage: `url(${bg})`}}>

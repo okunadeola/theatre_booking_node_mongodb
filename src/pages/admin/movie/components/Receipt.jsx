@@ -1,33 +1,28 @@
 /* eslint-disable no-unused-vars */
-
 /* eslint-disable react/prop-types */
+// eslint-disable-next-line no-unused-vars
 
 import { Drawer } from "antd";
 import "./styles.css";
-// eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from "react";
-// import TinderCard from "react-tinder-card";
-
-// import Currency from "react-currency-formatter";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { getBookingAction } from "../../../../API/booking";
 import React from "react";
-// import ReceiptCard from "./ReceiptCard";
-import AppLoad from "./ReceiptSwiper2";
+import ReceiptLoad from "./ReceiptSwiper2";
 import useReceipt from "../../../../hooks/useReceipt";
 import { createRatingAction, getRatingAction } from "../../../../API/rating";
 import { showSuccess } from "../../../../utils";
 
 const Receipt = () => {
     const {closeDrawer, isOpen, data, view} = useReceipt()
-
   const [rating, setRating] = useState(0); // Initial value
   const [hasRate, setHasRate] = useState(false); // Initial value
   const [myBooking, setMyBooking] = useState([]); // Initial value
 
   useEffect(() => {
     const getReserved = async () => {
+      // view === "RECEIPT_VIEW" the zustand view is changeable to display different drawer
       if (data && data?.selectedDate?.id && data?.selectedDateTime?.id && isOpen && view === "RECEIPT_VIEW") {
         const json = {
           movieId: data?.id,
@@ -146,7 +141,7 @@ const Receipt = () => {
 
         {myBooking.length !== 0 && (
           <div className="">
-            <AppLoad cards={myBooking}/>
+            <ReceiptLoad cards={myBooking}/>
           </div>
         )}
 

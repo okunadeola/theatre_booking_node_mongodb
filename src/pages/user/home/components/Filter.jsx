@@ -30,27 +30,6 @@ const Filter = () => {
   const [selectedCat, setSelectedCat] = useState(null);
   const { userData } = useCurrentUser();
 
-
-  // const [page, setPage] = useState(1);
-  // const [hasMore, setHasMore] = useState(false);
-  // const [filters, setFilters]= useState(null)
-
-  // useEffect(() => {
-  //     const getMovies = async () => {
-  //         try {
-  //             const res = await  getPaginatedMoviesAction({page: page, limit: 10})
-  //             if(res){
-  //                 console.log(res, 'search/filter movie')
-  //                 setMovieItemsPage(res?.movies);
-  //                 setHasMore(res?.nextPage)
-  //             }
-  //         } catch {
-  //             console.log('error');
-  //         }
-  //     }
-  //     getMovies();
-  // }, [page]);
-
   const onDateChange = (dates) => {
     if (dates?.length) {
       const date = new Date(dates[0]?.$d);
@@ -162,8 +141,6 @@ const Filter = () => {
         <div className="section mb-3">
           <div className="section__header mb-2 flex text-white justify-between items-center py-4">
             <h2 className="text-2xl font-bold">Sesrch Result {selectedCat && 'for'}  {selectedCat}</h2> 
-
-            {/* <OutlineButton  className="small" onClick={hasMore ? ()=>setPage(p=> p+ 1) : ()=>setPage(p=> p > 1 ? p- 1 : p)}  >{ hasMore ? 'View more' : 'view previous'}</OutlineButton> */}
           </div>
 
           <div className={`movie-list`}>

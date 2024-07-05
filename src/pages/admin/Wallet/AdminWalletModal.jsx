@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-
-// import { transactionHistory } from "../../../components/others/data"
 import { Drawer } from "antd"
 import WalletCard from "./WalletCard"
 

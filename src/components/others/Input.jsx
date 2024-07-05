@@ -10,8 +10,6 @@ const InputCustom = ({type, register, errors, id, required, placeholder,inputTyp
 
 
     <Fragment>
-
-
       {
         inputType === 'textarea' ?  (
           <div>
@@ -25,13 +23,8 @@ const InputCustom = ({type, register, errors, id, required, placeholder,inputTyp
                   : "border-slate-200 ring-1  focus:outline-none focus:ring-2"
               }`}
               {...register(id, { required: required })}
-            
-            
-            
             ></textarea>
              <span className='text-red-400'>{errors[id] && `${id} is required`}</span>
-
-
           </div>
         ) : (
             <div>
@@ -47,13 +40,9 @@ const InputCustom = ({type, register, errors, id, required, placeholder,inputTyp
                         : "border-slate-200 ring-1  focus:outline-none focus:ring-2"
                     }`}
                     {...register(id, { required: required })}
-                    
-
                 />
                     <span className='text-red-400'>{errors[id] && `${id} is required`}</span>
-                
             </div>
-
         )
       }
 

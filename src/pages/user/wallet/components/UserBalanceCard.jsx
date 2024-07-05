@@ -6,6 +6,8 @@ import Currency from "react-currency-formatter";
 import CargBg from '../../../../assets/images/cardbg.png'
 // background: url('https://source.unsplash.com/featured/?cute') no-repeat center center;
 const Card = styled.div`
+
+
   width: 350px;
   height: 200px;
   border-radius: 15px;
@@ -65,6 +67,7 @@ const BgImage = styled.img`
   right: 0;
 `;
 
+// styled component based view
 const MoneyBalanceCard = ({ balance, fromAdmin }) => {
   return (
     <Card>

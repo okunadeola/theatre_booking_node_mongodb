@@ -3,20 +3,11 @@
 /* eslint-disable react/prop-types */
 // import { useState } from "react";
 import { Drawer, Modal } from "antd";
-
 import {  Button, useDisclosure } from "@nextui-org/react";
-// import { TbSend } from "react-icons/tb";
-// import toast from "react-hot-toast";
-// import { useForm } from "react-hook-form";
-// import InputCustom from "../../../../components/others/Input";
-// import { createMovieAction } from "../../../../API/movies";
-// import { showSuccess } from "../../../../utils";
-// import { PlusIcon } from "./PlusIcon";
 import Seat from "./Seat";
 import "./styles.css";
 
 import { Fragment, useEffect, useRef, useState } from "react";
-import Receipt from "./Receipt";
 import Currency from "react-currency-formatter";
 import toast from "react-hot-toast";
 import useCurrentUser from "../../../../hooks/useCurrentUser";
@@ -27,8 +18,6 @@ import PaymentOption from "./PaymentOption";
 import PaystackPayment from "../../../../pages/general/payment/PaystackPayment";
 import FlutterwavePayment from "../../../../pages/general/payment/Fltterwave";
 import useDrawer from "../../../../hooks/useDrawer";
-
-import AppLoad from "./ReceiptSwiper2";
 import useReceipt from "../../../../hooks/useReceipt";
 
 
@@ -607,17 +596,11 @@ const ShowModal = () => {
   const itemRef = useRef(null);
   const containerRef = useRef(null);
   const allSeatRef = useRef([]);
-  // console.log(data)
-  // console.log(all, allSeatRef)
 
   // scroll effect
   const scrollContainerRef = useRef(null);
   const [showLeftButton, setShowLeftButton] = useState(true);
   const [showRightButton, setShowRightButton] = useState(true);
-
-
-
-
 
 
 
@@ -633,7 +616,7 @@ const ShowModal = () => {
 
 
   
-
+      //start payment
   const handleTriggerPayment = () => {
 
     if( !paymentMethod){
@@ -642,17 +625,18 @@ const ShowModal = () => {
       // } 
 
       if (flutterWaveButtonRef.current) {
-        flutterWaveButtonRef.current?.click();
+        flutterWaveButtonRef.current?.click(); // pay with card
       }
 
     }else{
-      //bbok with wallet
+      //book with wallet
       // console.log('booking with wallet')
       submitWalletPayment()
     }
 };
 
 
+// booking with wallet payment
 const submitWalletPayment = async ()=>{
   const getSeats = pickedSeat?.map(s=> s.number)
 
@@ -668,9 +652,7 @@ const submitWalletPayment = async ()=>{
   try {
      const res = pickedSeat.length > 1 ?  await MultibookingAction(json) : await bookingAction(json)
      if(res){
-      // onOpen()
-      openDrawer('RECEIPT_VIEW', data)
-        
+      openDrawer('RECEIPT_VIEW', data)  // once successful, show receipt drawer
      }
   } catch (error) {
     console.log(error)
@@ -693,7 +675,7 @@ const submitWalletPayment = async ()=>{
 
 
 
-  // function
+  // function for scrolling
   const handleScroll = () => {
     const container = scrollContainerRef?.current;
     const maxScrollLeft = container?.scrollWidth - container?.clientWidth;
@@ -749,9 +731,8 @@ const submitWalletPayment = async ()=>{
   
 
 
+// initial page load method to check for any reserved seat
   useEffect(() => {
-
-
     const getReserved = async () => {
       const allS = [...defaultValue.map(each => {
           each?.map(lv2=> {
@@ -801,7 +782,7 @@ const submitWalletPayment = async ()=>{
 
 
 
-
+// when a free or pick seet is clicked
   const onseatPicked = (number) => {
     for (let i = 0; i < allSeat.length; i++) {
       const seatBatch = allSeat[i];
@@ -825,6 +806,8 @@ const submitWalletPayment = async ()=>{
     }
   };
 
+
+  // reserve organizer
   const reserveSeatHandler = (allReserved) => {
 
     for (let i = 0; i < allReserved?.length; i++) {
@@ -851,6 +834,7 @@ const submitWalletPayment = async ()=>{
   };
 
 
+    // get reserve
   const confirmReserved = async ()=>{
 
     if(data?.id && data?.selectedDate?.id && data?.selectedDateTime?.id ){
@@ -904,7 +888,7 @@ const updateReserved = async ()=>{
 
 
 
-
+// booking function / button manager
   const startBooking = async  () => {
     setFailedBooking([])//clearing initial failed booking
     setSuccessBooking([])//clearing initial success booking
@@ -941,6 +925,10 @@ const updateReserved = async ()=>{
     }
   };
 
+
+
+
+  // for controlling the TV animation
   useEffect(() => {
     const item = itemRef.current;
     const container = containerRef.current;
@@ -987,6 +975,7 @@ const updateReserved = async ()=>{
 
 
 
+  // card paymant method
   const submitCardPayment = async (reference)=>{
 
     const getSeats = pickedSeat?.map(s=> s.number)

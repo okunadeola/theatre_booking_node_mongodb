@@ -5,7 +5,7 @@ import { IoReceiptOutline, IoWalletOutline } from "react-icons/io5";
 import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 
 
-
+//*** user background sidebar data ***//
 
 const sidebarNav = [
     {

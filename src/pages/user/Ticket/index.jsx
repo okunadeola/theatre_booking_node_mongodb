@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import bg from "../../../assets/images/footer-bg.jpg";
 import TicketCard from "./components/TicketCard";
 import { Button, useDisclosure } from "@nextui-org/react";
-import TicketModal from "../../../components/others/TicketModal";
+import TicketModal from "../../general/TicketModal";
 import { filterTicketByPriorityAction, filterTicketByStatusAction, getUserTicketAction } from "../../../API/ticket";
 
 

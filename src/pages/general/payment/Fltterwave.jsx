@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 
-// import { useRef } from 'react';
 import { forwardRef } from 'react';
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 

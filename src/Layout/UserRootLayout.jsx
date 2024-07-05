@@ -6,18 +6,15 @@ import Footer from "./components/Footer";
 import UserSidebar from "./components/UserSidebar";
 import "./style.css";
 import VoiceCommand from "../pages/general/ai/VoiceCommand";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const UserRootLayout = () => {
-  const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
 
+//*** users page wrapper ***//
+const UserRootLayout = () => {
   const navigate = useNavigate()
 
   const handleCommand = (command) => {
     console.log(command, '...');
-
     if (command.includes("scroll down")) {
       window.scrollBy(0, window.innerHeight);
     } else if (command.includes("scroll up")) {
@@ -88,28 +85,9 @@ const UserRootLayout = () => {
   };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <UserSidebar />
-
       <div className="main">
         <div className="main__content">
           <div className="h-full bg-[#0e1012]">

@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
 
+
+  // *** react query setup. alternative method of calling API ***/
 const qc = new QueryClient({
   defaultOptions: {
     queries: {

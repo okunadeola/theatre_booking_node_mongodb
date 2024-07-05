@@ -34,7 +34,6 @@ const ReserveCard = ({data}) => {
           </div>
 
           <img
-            // src="https://image.tmdb.org/t/p/original/qrGtVFxaD8c7et0jUtaYhyTzzPg.jpg"
             src={data?.movie?.img}
             className="absolute top-2 right-2 w-18 h-18 rounded-md"
             alt="ticket_img"
@@ -62,6 +61,7 @@ const ReserveCard = ({data}) => {
           "text-[#ffd33d] !font-Poppins "
         )}
       >
+        {/* open receipt drawer */}
         <span onClick={()=>openDrawer("RECEIPT_VIEW_SINGLE", data)} className="bg-[#323336] px-4 py-1 rounded-large hover:animate-pulse cursor-pointer  flex items-center gap-1">
           <MdQrCode2 />
           View

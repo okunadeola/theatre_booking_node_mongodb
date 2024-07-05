@@ -6,9 +6,6 @@ import './style.css';
 import {  useNavigate } from 'react-router-dom';
 
 import Button from '../../../../components/others/Button';
-
-// import { category } from '../../../../API/tmdbApi';
-// import apiConfig from '../../../../API/apiConfig';
 import { Play } from 'lucide-react';
 import { Fragment } from 'react';
 import useCurrentBg from '../../../../hooks/useCurrentBg';
@@ -20,7 +17,6 @@ const MovieCard = props => {
     const item  = props.item;
 
     const link = '/user/' + item.id;
-   // console.log(link) //    const link = '/user/movie' +'/' + item.id;
 
     const bg = item?.img;
 
@@ -44,11 +40,9 @@ const MovieCard = props => {
 
                     <div>
                         <div className="movie-card relative" style={{backgroundImage: `url(${bg})`}}>
-                            {/* <Link to={link} > */}
                             <Button onClick={moveToDetailPage}>
                                 <Play/>
                             </Button>
-                            {/* </Link> */}
     
                             {/* <div className='absolute bottom-0 right-5'>
                                 <span className='text-xs text-stone-300'>18th Feb</span>

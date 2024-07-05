@@ -28,13 +28,11 @@ function App() {
 
 
 
+  // check for token expiry status and logout user
   useEffect(() => {
     const token = userData?.accessToken;
-
     if (token) {
       const decodedToken = jwtDecode(token);
-      // console.log(decodedToken.exp * 1000)
-      // console.log(new Date().getTime())
       if (decodedToken.exp * 1000 < new Date().getTime()) {
         removeCurrentUser();
         navigate("/login");

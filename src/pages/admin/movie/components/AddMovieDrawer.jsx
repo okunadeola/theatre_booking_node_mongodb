@@ -36,12 +36,20 @@ const AddMovieDrawer = () => {
 
 
   const submit = async (data) => {
+    // // if you are using form data approach  
+    // if(!fileImage){
+    //   toast.error('image is required')
+    //   return // return will stop the operation.  
+    // }
+    // await upload(data)
+
+    // OR 
+
     try {
       const res = await createMovieWithImageUrlAction(data);
       if (res) {
         showSuccess('movie created successfully')
         reset();
-        // navigate(0)
       }
     } catch (error) {
       toast.error(error?.toString());
@@ -103,7 +111,9 @@ const uploadFile = async (formData) => {
     });
 
     if (res) {
-      return res.data;
+      showSuccess('movie created successfully')
+      reset();
+      return res?.data;
     }
   } catch (err) {
     showError(err?.response?.data?.errors?.length ?  err?.response?.data?.errors[0]?.toString()  :  err?.response?.data?.toString())
@@ -251,6 +261,8 @@ const uploadFile = async (formData) => {
             </div>
 
 
+
+            {/* if you want to use file image. you can hide  (Image Url Link input wrapper) and uncomment the div below. In this case you will create movie with the method (upload) above. For this you need to validate img (fileImage) and ensure it is not null before you go ahead */}
             {/* <div>
               <label htmlFor="desc" className="text-gray-700">
                 Image (File)

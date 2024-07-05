@@ -1,18 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-// import { useState } from "react";
-// import InputCustom from "../../../../components/others/Input";
-// import { TbSend } from "react-icons/tb";
+
 import { DatePicker, Drawer } from "antd";
 
 import { Chip, Button, useDisclosure } from "@nextui-org/react";
-import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
-import { createMovieAction, createShowDateAction, createShowDateTimeAction, getMovieShowDateAction, getMovieShowDateTimesAction } from "../../../../API/movies";
+
+import { createShowDateAction, createShowDateTimeAction, getMovieShowDateAction, getMovieShowDateTimesAction } from "../../../../API/movies";
 import { convertToAmPm, formatDateString, showSuccess } from "../../../../utils";
 import { PlusIcon } from "./PlusIcon";
 import ShowModal from "./ShowModal";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Currency from "react-currency-formatter"
 
@@ -36,40 +33,9 @@ const MovieModal = ({ isOpen, onClose, data }) => {
   const [selectedmovieDate, setSelectedMovieDate] = useState(null)
   // console.log(selectedmovieDate)
 
-  const {
-    register,
-    handleSubmit,
-    // reset,
-    formState: { errors },
-  } = useForm();
-
-  const submit = async (data) => {
-    try {
-      const res = await createMovieAction(data);
-      if (res) {
-        showSuccess("movie created successfully");
-        // reset();
-        // onClose();
-      }
-    } catch (error) {
-      toast.error(error?.toString());
-    }
-  };
-
-  // const create = async () => {
-  //   toast.loading("sending create request...", { duration: "1000" });
-
-  //   onClose();
-  // };
-
   const openShow = () => {
     onOpen();
   };
-
-
-
-
-
 
   const handleDate = (date2)=>{
     if(date2){
@@ -83,9 +49,6 @@ const MovieModal = ({ isOpen, onClose, data }) => {
       setCinemaDate(fordate)
     }
   }
-
-
-
 
 
   const getDate = async () => {
@@ -170,12 +133,6 @@ const MovieModal = ({ isOpen, onClose, data }) => {
   }
 
 
-
-
-
-
-
-
   const createDateTime = async ()=>{
     if(data && cinemaDateTime && selectedmovieDate ){
       // console.log(selectedmovieDate, cinemaDateTime)
@@ -196,22 +153,10 @@ const MovieModal = ({ isOpen, onClose, data }) => {
   }
 
 
-
-
-
-
-
-
   const onSelectDate = (dateObject)=>{
     setSelectedMovieDate(dateObject)
     getDateTimes(dateObject)
   } 
-
-
-  
-
-
-
 
 
   return (
@@ -335,9 +280,9 @@ const MovieModal = ({ isOpen, onClose, data }) => {
 
 
                 <div className="flex gap-3 overflow-x-auto w-full scrollbar-hide p-2">
-                  { movieDateTime?.length > 0 ? movieDateTime?.map((mv) => (
+                  { movieDateTime?.length > 0 ? movieDateTime?.map((mv, i) => (
                     <div
-                      key={mv}
+                      key={i}
                       onClick={openShow}
                       className="rounded-xl min-w-36 h-12 bg-gray-600/90 p-2 px-4 items-center text-lg flex flex-col gap-4 cursor-pointer"
                     >

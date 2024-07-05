@@ -2,6 +2,10 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
+
+
+//*** this zustand state manager is use for updating/changing the user home page banner per slider clicked ***//
+//*** (persist) wrapper is only need if you intend to store the state in local databases else the code should start (create(set()=>({}))) ***//
 const useCurrentBg = create(
   persist(
     (set) => ({

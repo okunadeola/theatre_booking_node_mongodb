@@ -8,8 +8,6 @@ import 'swiper/css'
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-// import Button from '../../../../components/others/Button';
-
 
 import MovieCard from './MovieCard';
 import {EffectCoverflow, Autoplay, } from 'swiper/modules';
@@ -17,8 +15,6 @@ import { getFrontMovieAction } from '../../../../API/users';
 
 
 const MovieList = props => {
-
-    // const [items, setItems] = useState([]);
     const [movieItems, setMovieItems] = useState([]);
 
 
@@ -27,7 +23,6 @@ const MovieList = props => {
             try {
                 const res = await  getFrontMovieAction()
                 if(res){
-                    // console.log(res, 'front image')
                     setMovieItems(res);
                 }
             } catch {
@@ -37,31 +32,6 @@ const MovieList = props => {
         getMovies();
     }, []);
 
-
-
-
-
-
-    // useEffect(() => {
-    //     const getList = async () => {
-    //         let response = null;
-    //         const params = {};
-
-    //         if (props.type !== 'similar') {
-    //             switch(props.category) {
-    //                 case category.movie:
-    //                     response = await tmdbApi.getMoviesList(props.type, {params});
-    //                     break;
-    //                 default:
-    //                     response = await tmdbApi.getTvList(props.type, {params});
-    //             }
-    //         } else {
-    //             response = await tmdbApi.similar(props.category, props.id);
-    //         }
-    //         setItems(response.results);
-    //     }
-    //     getList();
-    // }, [props]);
 
     return (
         <div className={`movie-list ${props.variant}`}>

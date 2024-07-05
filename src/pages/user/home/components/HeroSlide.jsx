@@ -1,21 +1,13 @@
 /* eslint-disable react/prop-types */
 import  { useState, useEffect, useRef } from 'react';
 
-// import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import {Autoplay} from 'swiper/modules'
 import 'swiper/css';
-// EffectCoverflow
-
 import Button, { OutlineButton } from '../../../../components/others/Button';
 import Modal, { ModalContent } from '../../../../components/others/Modal';
 
-// import tmdbApi, { category, movieType } from '../../../../API/tmdbApi';
-// import apiConfig from '';
-
 import './style.css';
 import { useNavigate } from 'react-router';
-// import apiConfig from '../../../../API/apiConfig';
 import useCurrentBg from '../../../../hooks/useCurrentBg';
 import toast from 'react-hot-toast';
 import { getFrontMovieAction } from '../../../../API/users';
@@ -25,7 +17,6 @@ import { shuffle } from '../../../../utils';
 const HeroSlide = () => {
     const {currentBg} = useCurrentBg()
 
-    // const [movieItems, setMovieItems] = useState([]);
     const [movieItems, setMovieItems] = useState([]);
 
 
@@ -38,13 +29,9 @@ const HeroSlide = () => {
 
     useEffect(() => {
         const getMovies = async () => {
-            // const params = {page: 1}
-            // const response = await tmdbApi.getMoviesList(movieType.popular, {params});
-            // setMovieItems(response.results.slice(1, 4));
             try {
                 const res = await  getFrontMovieAction()
                 if(res){
-                    // console.log(res, 'front image')
                     setMovieItems(shuffle(res));
                 }
             } catch {
@@ -90,17 +77,14 @@ const HeroSlideItem = props => {
 
     const item = props.item;
 
-    // const background = apiConfig.originalImage(item.backdrop_path ? item.backdrop_path : item.poster_path);
     const background = item?.img;
 
     const setModalActive = async () => {
         const modal = document.querySelector(`#modal_${item.id}`);
 
-        // const videos = await tmdbApi.getVideos(category.movie, item.id);
         const videSrc = item?.trailer + '?autoplay=1'
    
         if (videSrc) {
-            // const videSrc = 'https://www.youtube.com/embed/' + videos.results[0].key;
             modal.querySelector('.modal__content > iframe').setAttribute('src', videSrc);
             modal.querySelector('.modal__content > iframe').setAttribute('allow', 'autoplay; encrypted-media');
             modal.classList.toggle('active');

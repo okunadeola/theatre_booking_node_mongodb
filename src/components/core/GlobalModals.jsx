@@ -5,10 +5,8 @@ import ShowModal from '../../pages/admin/movie/components/ShowModal'
 const GlobalModals = () => {
   return (
     <>
-
         <ShowModal/>
         <Receipt />
-      
     </>
   )
 }

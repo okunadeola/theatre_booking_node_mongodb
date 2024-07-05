@@ -10,33 +10,17 @@ export const formatDate = (dateString) => {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
 
+  // *** show success toaster ***/
 export function showSuccess(msg){
   return toast.success(msg)
 }
 
-
+  // *** show error toaster with duration option ***/
 export function showError(msg, option){
   if(option) return toast.error(msg, {duration: option})
   return toast.error(msg)
@@ -44,7 +28,7 @@ export function showError(msg, option){
 
 
 
-
+  // *** format date string ***/
 export const formatDateString = (dateString) => {
   // Create a Date object from the ISO date string
   const date = new Date(dateString);
@@ -122,7 +106,7 @@ export const convertToAmPm = (time) => {
 };
 
 
-
+  // *** re-arrange array element ***/
 export const  shuffle = (array)=> {
   let newArray = array.slice(); // Create a copy of the array
   for (let i = newArray.length - 1; i > 0; i--) {

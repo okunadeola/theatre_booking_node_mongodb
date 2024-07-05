@@ -15,7 +15,7 @@ const TransferPopup = ({user}) => {
   const [note, setNote] = useState('');
   const [amount, setAmount] = useState('');
   const [openWarningModal, setOpenWarningModal] = useState(false);
-  const {mutateAsync: transfer, isPending, error} = useTransferFundMutation()
+  const {mutateAsync: transfer, isPending, error} = useTransferFundMutation() //react-query method of calling POST (mutate) related api
 
   const showDrawer = () => {
     setOpen(true);
@@ -45,7 +45,7 @@ const handleSend = async  ()=>{
         currency: "NGN",
         status: "successful",
       }
-      // const res = await updateWalletBalanceAction(json)
+
       const res = await transfer(json)
         if(res){
           toast.success('Fund successfully transfer to user account!')

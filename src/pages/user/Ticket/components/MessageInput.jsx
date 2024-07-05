@@ -1,15 +1,6 @@
 /* eslint-disable react/prop-types */
 
 
-// interface MessageInputProps {
-//   placeholder?: string;
-//   id: string;
-//   type?: string;
-//   required?: boolean;
-//   register: UseFormRegister<FieldValues>,
-//   errors: FieldErrors
-// }
-
 const MessageInput = ({ 
   placeholder, 
   id, 

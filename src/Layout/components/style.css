@@ -1,8 +1,3 @@
-/*
-  Based on TailwindCSS recommendations,
-  consider using classes instead of the `@apply` directive
-  @see https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
-*/
 
 .logo {
   @apply text-[1.4rem] md:text-[2.5rem] font-semibold flex items-center ;
@@ -38,21 +33,10 @@
 
 
 
-
-
 /* header  */
 .sidebar-toggle {
   @apply w-[40px] h-[40px] cursor-pointer lg:hidden flex items-center justify-center;
 }
-/* .sidebar-toggle i {
-  @apply text-5xl text-[#8624DB];
-} */
-
-/* .header__nav {
-  @apply fixed h-20 w-full bg-[#0f0f0f] shadow-[rgba(100_100_111_0.2)] ml-0 px-8 py-0 left-0 bottom-0 flex justify-between items-center;
-} */
-
-
 
 
 .footer {
@@ -62,7 +46,6 @@
   .footer::before {
     @apply bg-gradient-to-b from-[#0e1012] via-[#000]/40 to-transparent ;
   }
-  /* from-[#000]/90 via-[#000]/40 to-[#0e1012] */
 
   .footer__content {
     @apply max-w-[1000px];
@@ -79,9 +62,6 @@
   .footer__content__menu > * ~ * {
     @apply mt-4;
   }
-
-
-
 
 
   .animat {
