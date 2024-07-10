@@ -3,6 +3,7 @@ import mongoose, { Schema, model } from 'mongoose';
 import ShowDate from '@/resources/date/date.model';
 import movieModel from '@/resources/movies/movie.model';
 import ShowTime from '@/resources/time/time.interface';
+import { boolean } from 'joi';
 
 
 const ShowTimeSchema : Schema = new Schema(
@@ -19,6 +20,10 @@ const ShowTimeSchema : Schema = new Schema(
         },
         time: {
             type: String,
+        },
+        isExpired: {
+            type: Boolean,
+            default: false
         },
     },
     { timestamps: true }

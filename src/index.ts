@@ -8,7 +8,7 @@ import BookingController from './resources/booking/booking.controller';
 import WalletController from './resources/wallet/wallet.controller';
 import RatingController from './resources/ratings/rating.controller';
 import TicketController from './resources/ticket/ticket.controller';
-
+import './resources/schedular/UpdateExpiredShows';
 
 validateEnv();
 
