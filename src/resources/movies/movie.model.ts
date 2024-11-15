@@ -39,11 +39,5 @@ const MovieSchema = new Schema(
 );
 
 
-// MovieSchema.virtual('bookings', {
-//     ref: 'Booking',
-//     localField: '_id',
-//     foreignField: 'movieId',
-//   });
-
 
 export default model<Movie>('Movie', MovieSchema);

@@ -83,9 +83,30 @@ class UserService {
 
     public async getAllBybook(): Promise< Array<any>  | Error> {
         try {
-            const result = await this.user.find().populate([
-                {path: 'bookings', select: '_id'}
-            ]).exec();
+            // const result = await this.user.find().populate([
+            //     {path: 'bookings', select: '_id'}
+            // ]).exec();
+
+            const result = await this.user.aggregate([
+                {
+                  $lookup: {
+                    from: 'bookings',  // The bookings collection name
+                    localField: '_id',
+                    foreignField: 'userId',
+                    pipeline: [
+                      {
+                        $project: {
+                          _id: 1  // Only include the _id field
+                        }
+                      }
+                    ],
+                    as: 'bookings'
+                  }
+                }
+              ]);
+            
+
+
             return result;
         } catch (error: HttpException | any) {
             throw  error  

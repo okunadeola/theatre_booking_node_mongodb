@@ -140,13 +140,64 @@ class MovieService {
 
     public async getByDate(start: string | any, end: string | any): Promise<Array<any> | Error> {
         try {
+            const allMovies = await this.movies.aggregate([
+                {
+                    $lookup: {
+                        from: 'showdates',
+                        localField: '_id',
+                        foreignField: 'movie',
+                        as: 'showDates'
+                    }
+                },
+                {
+                    $addFields: {
+                        showDates: {
+                            $filter: {
+                                input: '$showDates',
+                                as: 'showDate',
+                                cond: {
+                                    $and: [
+                                        { $gte: ['$$showDate.date', new Date(start)] },
+                                        { $lte: ['$$showDate.date', new Date(end)] }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    $match: {
+                        showDates: { $exists: true, $not: { $size: 0 } } // Only include movies with showDates in the specified range
+                    }
+                },
+                {
+                    $project: {
+                        title: 1,
+                        description: 1,
+                        img: 1,
+                        trailer: 1,
+                        genre: 1,
+                        dateRelease: 1,
+                        movie_length: 1,
+                        price: 1,
+                        showDates: 1
+                    }
+                }
+            ]);
+            
+            return allMovies;
+            
 
-            const all = await this.showDate.find({
-                date: { $in: [start, end] }
-            })
-            .populate({path:'movie' }).exec();
+            // const all = await this.showDate.find({
+            //     // date: { $in: [start, end] }
+            //     date: {
+            //         $gte: start, 
+            //         $lte: end
+            //      }
+            // })
+            // .populate({path:'movie' }).exec();
 
-            return all;
+            // return all;
         } catch (error) {
             throw new Error("Unable to get movie")
         }
@@ -195,7 +246,118 @@ class MovieService {
 
 
 
-    public async getAllPaginated(pageQ: string | any, limitQ:string | any): Promise<Object | Error> {
+
+
+    public async getAllPaginated(
+        pageQ: string | any, 
+        limitQ: string | any
+      ): Promise<Object | Error> {
+        try {
+          const page = parseInt((pageQ || 1).toString());
+          const limit = parseInt((limitQ || 10).toString());
+          const skip = (page - 1) * limit;
+      
+          // Using aggregation pipeline for efficient querying
+          const [result] = await this.movies.aggregate([
+            // First get the total count
+            {
+              $facet: {
+                totalCount: [{ $count: 'count' }],
+                movies: [
+                  // Lookup ratings
+                  {
+                    $lookup: {
+                      from: 'ratings',
+                      localField: '_id',
+                      foreignField: 'movieId',
+                      as: 'ratings'
+                    }
+                  },
+                  // Lookup show dates
+                  {
+                    $lookup: {
+                      from: 'showdates',
+                      localField: '_id',
+                      foreignField: 'movie',
+                      as: 'showDates'
+                    }
+                  },
+                  // Calculate average rating
+                  {
+                    $addFields: {
+                      averageRating: {
+                        $cond: [
+                          { $gt: [{ $size: '$ratings' }, 0] },
+                          { 
+                            $divide: [
+                              { $reduce: {
+                                  input: '$ratings',
+                                  initialValue: 0,
+                                  in: { $add: ['$$value', '$$this.rating'] }
+                                }
+                              },
+                              { $size: '$ratings' }
+                            ]
+                          },
+                          0
+                        ]
+                      },
+                      ratingsCount: { $size: '$ratings' }
+                    }
+                  },
+                  // Project only needed fields from ratings etc
+                  {
+                    $project: {
+                      title: 1,
+                      description: 1,
+                      img: 1,
+                      trailer: 1,
+                      genre: 1,
+                      dateRelease: 1,
+                      movie_length: 1,
+                      price: 1,
+                      // Add other movie fields you need
+                      showDates: 1,
+                      averageRating: 1,
+                      ratingsCount: 1,
+                      'ratings': {
+                        $map: {
+                          input: '$ratings',
+                          as: 'rating',
+                          in: {
+                            rating: '$$rating.rating',
+                            userId: '$$rating.userId'
+                          }
+                        }
+                      }
+                    }
+                  },
+                  // Pagination
+                  { $skip: skip },
+                  { $limit: limit }
+                ]
+              }
+            }
+          ]).exec();
+      
+          const totalCount = result.totalCount[0]?.count || 0;
+          const nextPage = (page * limit) < totalCount ? page + 1 : null;
+
+
+      
+          return {
+            movies: result.movies,
+            totalCount,
+            nextPage
+          };
+        } catch (error) {
+          throw new Error(`Unable to get movies: ${(error as any)?.message}`);
+        }
+      }
+      
+
+
+    public async getAllPaginated2(pageQ: string | any, limitQ:string | any): Promise<Object | Error> {
         try {
 
             const page = parseInt((pageQ || 1).toString())
@@ -204,11 +366,16 @@ class MovieService {
 
             const totalCount = await this.movies.countDocuments()
 
+            // console.log(totalCount)
+
             const all = await this.movies.find()   
             .limit(limit)
             .skip(skip)
             .populate([{path: "ratings", select: "rating, userId"}, {path:"showDates"}])
             .exec();
+
+
+            // console.log(totalCount, all)
 
             all?.forEach(movie => {
                 let totalStars = 0;
@@ -248,13 +415,20 @@ class MovieService {
         movie:string, date: Date): Promise<Movie | Error> {
         try {
 
+
+            const findDate = await this.showDate.findOne({ date : date})
+
+            if(findDate){
+                throw new HttpException(403, "Show with same date already exist") 
+            }
+
             const movieDate = await this.showDate.create({
                 movie, date
             })
 
             return movieDate.toJSON();
-        } catch (error) {
-            throw new Error("Unable to create a movie show date")
+        } catch (error: HttpException | any) {
+            throw error
         }
     }
 
@@ -307,7 +481,8 @@ class MovieService {
             //date = 2024-04-09 00:00:00 
             const findDate = await this.showDate.findOne({ date : dateString})
 
-            const findTime= await this.showTime.findOne({ time : `${time}:00`})
+            // const findTime= await this.showTime.findOne({ time : `${time}:00`})
+            const findTime= await this.showTime.findOne({ time : `${time}`})
 
             if(findDate && findTime){
                 throw new HttpException(403, "Show with same date and time already exist") 

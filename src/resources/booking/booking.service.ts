@@ -4,6 +4,7 @@ import BookingModel from "@/resources/booking/booking.model";
 import UserModel from "@/resources/user/user.model";
 import WalletModel from "@/resources/wallet/wallet.model";
 import Booking from "@/resources/booking/booking.interface";
+import mongoose from "mongoose";
 
 
 class BookingService {
@@ -73,7 +74,7 @@ class BookingService {
             }
 
             if(paymentMethod === "wallet"){
-                console.log('here', userBalance)
+                // console.log('here', userBalance)
 
                 if(userBalance! < Number(mv?.price) ){
                     throw new HttpException(403, "Your current account balance is low to book seat")
@@ -277,7 +278,86 @@ class BookingService {
 
             const totalCount = await this.bookingModel.countDocuments({movieId})
 
-            const all = await this.bookingModel.find({movieId}).limit(limit).skip(skip).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+            // const all = await this.bookingModel.find({movieId}).limit(limit).skip(skip).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+            const all = await this.bookingModel.aggregate([ 
+
+                {
+                    $match: {
+                        movieId: new mongoose.Types.ObjectId(movieId)
+                    }
+                  },
+
+
+                // Lookup (similar to populate) for movieId
+                {
+                  $lookup: {
+                    from: "movies", // Your movies collection name
+                    localField: "movieId",
+                    foreignField: "_id",
+                    as: "movie"
+                  }
+                },
+                
+                // Lookup for showDateId
+                {
+                  $lookup: {
+                    from: "showdates", // Your show dates collection name
+                    localField: "showDateId",
+                    foreignField: "_id",
+                    as: "showDate"
+                  }
+                },
+                
+                // Lookup for showTimeId
+                {
+                  $lookup: {
+                    from: "showtimes", // Your show times collection name
+                    localField: "showTimeId",
+                    foreignField: "_id",
+                    as: "showTime"
+                  }
+                },
+                
+                // Unwind the arrays created by lookups to get single objects
+                {
+                  $unwind: {
+                    path: "$movie",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showDate",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showTime",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                
+                // Project to reshape the output if needed
+                {
+                  $project: {
+                    _id: 1,
+                    userId: 1,
+                    movie: "$movie",
+                    showDate: "$showDate",
+                    showTime: "$showTime",
+                    createdAt: 1,
+                    seat: 1,
+                    paymentMethod: 1,
+                    paymentReference: 1,
+                    isClaimed: 1
+                    // Add any other fields you need
+                  }
+                },
+
+                { $skip: skip },
+                { $limit: limit }
+              ]);
                 
 
             const nextPage = (page * limit) <= totalCount  ? page + 1 : null;
@@ -299,7 +379,87 @@ class BookingService {
 
             const totalCount = await this.bookingModel.countDocuments({userId})
 
-            const all = await this.bookingModel.find({userId}).limit(limit).skip(skip).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+           // const all = await this.bookingModel.find({userId}).limit(limit).skip(skip).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+
+            const all = await this.bookingModel.aggregate([ 
+
+                {
+                    $match: {
+                        userId: new mongoose.Types.ObjectId(userId)
+                    }
+                  },
+
+
+                // Lookup (similar to populate) for movieId
+                {
+                  $lookup: {
+                    from: "movies", // Your movies collection name
+                    localField: "movieId",
+                    foreignField: "_id",
+                    as: "movie"
+                  }
+                },
+                
+                // Lookup for showDateId
+                {
+                  $lookup: {
+                    from: "showdates", // Your show dates collection name
+                    localField: "showDateId",
+                    foreignField: "_id",
+                    as: "showDate"
+                  }
+                },
+                
+                // Lookup for showTimeId
+                {
+                  $lookup: {
+                    from: "showtimes", // Your show times collection name
+                    localField: "showTimeId",
+                    foreignField: "_id",
+                    as: "showTime"
+                  }
+                },
+                
+                // Unwind the arrays created by lookups to get single objects
+                {
+                  $unwind: {
+                    path: "$movie",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showDate",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showTime",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                
+                // Project to reshape the output if needed
+                {
+                  $project: {
+                    _id: 1,
+                    userId: 1,
+                    movie: "$movie",
+                    showDate: "$showDate",
+                    showTime: "$showTime",
+                    createdAt: 1,
+                    seat: 1,
+                    paymentMethod: 1,
+                    paymentReference: 1,
+                    isClaimed: 1
+                    // Add any other fields you need
+                  }
+                },
+
+                { $skip: skip },
+                { $limit: limit }
+              ]);
 
                 const nextPage = (page * limit) <= totalCount  ? page + 1 : null;
 
@@ -320,11 +480,106 @@ class BookingService {
 
             const totalCount = await this.bookingModel.countDocuments()
 
-            const all =await this.bookingModel.find().limit(limit).skip(skip).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+            // const all =await this.bookingModel.find().limit(limit).skip(skip).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+            const all = await this.bookingModel.aggregate([ 
+                // Lookup (similar to populate) for movieId
+                {
+                  $lookup: {
+                    from: "movies", // Your movies collection name
+                    localField: "movieId",
+                    foreignField: "_id",
+                    as: "movie"
+                  }
+                },
+                
+                // Lookup for showDateId
+                {
+                  $lookup: {
+                    from: "showdates", // Your show dates collection name
+                    localField: "showDateId",
+                    foreignField: "_id",
+                    as: "showDate"
+                  }
+                },
+                
+                // Lookup for showTimeId
+                {
+                  $lookup: {
+                    from: "showtimes", // Your show times collection name
+                    localField: "showTimeId",
+                    foreignField: "_id",
+                    as: "showTime"
+                  }
+                },
+                
+                // Unwind the arrays created by lookups to get single objects
+                {
+                  $unwind: {
+                    path: "$movie",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showDate",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showTime",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                
+                // Project to reshape the output if needed
+                {
+                  $project: {
+                    _id: 1,
+                    userId: 1,
+                    movie: "$movie",
+                    showDate: "$showDate",
+                    showTime: "$showTime",
+                    createdAt: 1,
+                    seat: 1,
+                    paymentMethod: 1,
+                    paymentReference: 1,
+                    isClaimed: 1 //its included only if its true
+                  }
+                },
+                { $skip: skip },
+                { $limit: limit }
+              ]);
+
+              // console.log(totalCount, all.length)
 
                 const nextPage = (page * limit) <= totalCount  ? page + 1 : null;
 
             return  {data: all, totalCount, nextPage};
+
+
+            // {
+            //   $project: {
+            //     paymentReference: 1,
+            //     isClaimed: {
+            //       $ifNull: ["$isClaimed", false]  // If isClaimed is null/missing, default to false
+            //     }
+            //   }
+            // }
+            
+            // // Alternative approach using $cond
+            // {
+            //   $project: {
+            //     paymentReference: 1,
+            //     isClaimed: {
+            //       $cond: {
+            //         if: { $eq: ["$isClaimed", true] },
+            //         then: true,
+            //         else: false
+            //       }
+            //     }
+            //   }
+            // }
         } catch (error) {
             throw new Error("Unable to get booking")
         }
@@ -336,7 +591,82 @@ class BookingService {
     public async getBookingById(id: string): Promise<Array<any> | Error> {
         try {
 
-            const all = await this.bookingModel.find({id}).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+            // const all = await this.bookingModel.find({id}).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+
+            const all = await this.bookingModel.aggregate([
+                // Match documents for the specific user
+                {
+                  $match: {
+                    id: new mongoose.Types.ObjectId(id)
+                  }
+                },
+                
+                // Lookup (similar to populate) for movieId
+                {
+                  $lookup: {
+                    from: "movies", // Your movies collection name
+                    localField: "movieId",
+                    foreignField: "_id",
+                    as: "movie"
+                  }
+                },
+                
+                // Lookup for showDateId
+                {
+                  $lookup: {
+                    from: "showdates", // Your show dates collection name
+                    localField: "showDateId",
+                    foreignField: "_id",
+                    as: "showDate"
+                  }
+                },
+                
+                // Lookup for showTimeId
+                {
+                  $lookup: {
+                    from: "showtimes", // Your show times collection name
+                    localField: "showTimeId",
+                    foreignField: "_id",
+                    as: "showTime"
+                  }
+                },
+                
+                // Unwind the arrays created by lookups to get single objects
+                {
+                  $unwind: {
+                    path: "$movie",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showDate",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showTime",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                // Project to reshape the output if needed
+                {
+                  $project: {
+                    _id: 1,
+                    userId: 1,
+                    movie: "$movie",
+                    showDate: "$showDate",
+                    showTime: "$showTime",
+                    createdAt: 1,
+                    seat: 1,
+                    paymentMethod: 1,
+                    paymentReference: 1,
+                    isClaimed: 1
+                    // Add any other fields you need
+                  }
+                }
+              ]);
 
             return all;
         } catch (error) {
@@ -349,9 +679,96 @@ class BookingService {
     public async getAllUserBooking(userId: string): Promise<Array<any> | Error> {
         try {
 
-            const all = await this.bookingModel.find({userId}).sort({ createdAt: -1 }).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+            // const all = await this.bookingModel.find({userId}).sort({ createdAt: -1 }).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
 
-            return all;
+            // return all;
+
+            const all = await this.bookingModel.aggregate([
+                // Match documents for the specific user
+                {
+                  $match: {
+                    userId: new mongoose.Types.ObjectId(userId)
+                  }
+                },
+                
+                // Lookup (similar to populate) for movieId
+                {
+                  $lookup: {
+                    from: "movies", // Your movies collection name
+                    localField: "movieId",
+                    foreignField: "_id",
+                    as: "movie"
+                  }
+                },
+                
+                // Lookup for showDateId
+                {
+                  $lookup: {
+                    from: "showdates", // Your show dates collection name
+                    localField: "showDateId",
+                    foreignField: "_id",
+                    as: "showDate"
+                  }
+                },
+                
+                // Lookup for showTimeId
+                {
+                  $lookup: {
+                    from: "showtimes", // Your show times collection name
+                    localField: "showTimeId",
+                    foreignField: "_id",
+                    as: "showTime"
+                  }
+                },
+                
+                // Unwind the arrays created by lookups to get single objects
+                {
+                  $unwind: {
+                    path: "$movie",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showDate",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                {
+                  $unwind: {
+                    path: "$showTime",
+                    preserveNullAndEmptyArrays: true
+                  }
+                },
+                
+                // Sort by createdAt in descending order
+                {
+                  $sort: {
+                    createdAt: -1
+                  }
+                },
+                
+                // Project to reshape the output if needed
+                {
+                  $project: {
+                    _id: 1,
+                    userId: 1,
+                    movie: "$movie",
+                    showDate: "$showDate",
+                    showTime: "$showTime",
+                    createdAt: 1,
+                    seat: 1,
+                    paymentMethod: 1,
+                    paymentReference: 1,
+                    isClaimed: 1
+                    // Add any other fields you need
+                  }
+                }
+              ]);
+            
+              return all;
+
+              
         } catch (error) {
             throw new Error("Unable to get movie")
         }
@@ -366,9 +783,87 @@ class BookingService {
     ): Promise<Array<any> | Error> {
         try {
 
-            const reservedSeat =  await this.bookingModel.find({movieId, showDateId, showTimeId, userId}).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
+            // const reservedSeat =  await this.bookingModel.find({movieId, showDateId, showTimeId, userId}).populate([{ path: 'movieId' }, { path: 'showDateId' }, { path: 'showTimeId' } ]).exec()
 
-            return reservedSeat;
+            const bookingReceipts = await this.bookingModel.aggregate([
+                    {
+                        $match: {
+                            userId: new mongoose.Types.ObjectId(userId),
+                            movieId: new mongoose.Types.ObjectId(movieId),
+                            showDateId: new mongoose.Types.ObjectId(showDateId),
+                            showTimeId: new mongoose.Types.ObjectId(showTimeId),
+                        }
+                    },
+
+                    {
+                        $lookup: {
+                                from: 'movies',
+                                localField:"movieId",
+                                foreignField: "_id",
+                                as: "movie"
+                        }
+
+                    },
+                    // Lookup for showDateId
+                {
+                    $lookup: {
+                      from: "showdates", // Your show dates collection name
+                      localField: "showDateId",
+                      foreignField: "_id",
+                      as: "showDate"
+                    }
+                  },
+                  
+                  // Lookup for showTimeId
+                  {
+                    $lookup: {
+                      from: "showtimes", // Your show times collection name
+                      localField: "showTimeId",
+                      foreignField: "_id",
+                      as: "showTime"
+                    }
+                  },
+                   // Unwind the arrays created by lookups to get single objects
+                {
+                    $unwind: {
+                      path: "$movie",
+                      preserveNullAndEmptyArrays: true
+                    }
+                  },
+                  {
+                    $unwind: {
+                      path: "$showDate",
+                      preserveNullAndEmptyArrays: true
+                    }
+                  },
+                  {
+                    $unwind: {
+                      path: "$showTime",
+                      preserveNullAndEmptyArrays: true
+                    }
+                  },
+
+                  {
+                    $project: {
+                      _id: 1,
+                      userId: 1,
+                      movie: "$movie",
+                      showDate: "$showDate",
+                      showTime: "$showTime",
+                      createdAt: 1,
+                      seat: 1,
+                      paymentMethod: 1,
+                      paymentReference: 1,
+                      isClaimed: 1
+                      // Add any other fields you need
+                    }
+                  }
+
+
+
+            ])
+
+            return bookingReceipts;
         } catch (error) {
             throw new Error("Unable to get a booking record")
         }

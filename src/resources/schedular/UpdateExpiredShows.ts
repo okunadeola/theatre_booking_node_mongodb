@@ -66,7 +66,7 @@ const updateExpiredShows = async () => {
                 }
             }
 
-        console.log('Expired show dates and times updated successfully.');
+        // console.log('Expired show dates and times updated successfully.');
     } catch (error) {
         console.error('Error updating expired shows:', error);
     }

@@ -37,7 +37,7 @@ const UserSchema = new Schema(
             default: "USER"
         },
     },
-    { timestamps: true }
+    { timestamps: true, } // toJSON: { virtuals: true }// 
 );
 
 UserSchema.pre<User>('save', async function (next) {
@@ -58,11 +58,15 @@ UserSchema.methods.isValidPassword = async function (
     return await bcrypt.compare(password, this.password);
 };
 
-UserSchema.virtual('bookings', {
-    ref: 'Booking',
-    localField: '_id',
-    foreignField: 'userId',
-  });
+
+
+// instead of the aggregate cariied out in the user service folder which fetch user related booking. this virtual method together with the toJSON option at the top and the mongoose statement for [getAllBybook] method
+// UserSchema.virtual('bookings', {
+//     ref: 'Booking',
+//     localField: '_id',
+//     foreignField: 'userId',
+//     justOne: false
+//   });
 
 export default model<User>('User', UserSchema);
 

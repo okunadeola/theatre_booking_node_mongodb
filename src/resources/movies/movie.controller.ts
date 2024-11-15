@@ -159,6 +159,8 @@ class MovieController implements Controller {
         try {
 
             const {page, limit} = req.query
+
+
             
             const data = await this.MovieService.getAllPaginated(page, limit)
 
@@ -259,7 +261,8 @@ class MovieController implements Controller {
 
             res.status(200).json({data})
         } catch (error: any) {
-            return res.status(400).send(error.message);
+           const er =  new Error("Unable to create a movie show date")
+            return res.status(400).send(error.message || er.message);
         }
     }
 
