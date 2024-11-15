@@ -20,7 +20,7 @@ const AllUser = () => {
 
   const getUserWallet = async (value)=>{
     try {
-        const res = await getAllWalletByIDAction(value?.id)
+        const res = await getAllWalletByIDAction(value?._id)
         if(res){
           setUserWallet([...res])
 
@@ -34,11 +34,11 @@ const AllUser = () => {
 
   return (
 
-    <div className="flex flex-col">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="flex flex-col w-full">
+        <div className="flex gap-3  w-full">
           {
             data?.map(vl => (
-              <UserCard key={vl?.id}  data={vl} onClick={()=>openWallet(vl)}/>
+              <UserCard key={vl?._id}  data={vl} onClick={()=>openWallet(vl)}/>
             ))
           }
         </div>

@@ -16,18 +16,18 @@ import { showSuccess } from "../../../../utils";
 
 const Receipt = () => {
     const {closeDrawer, isOpen, data, view} = useReceipt()
-  const [rating, setRating] = useState(0); // Initial value
-  const [hasRate, setHasRate] = useState(false); // Initial value
-  const [myBooking, setMyBooking] = useState([]); // Initial value
+  const [rating, setRating] = useState(0);
+  const [hasRate, setHasRate] = useState(false)
+  const [myBooking, setMyBooking] = useState([]); 
 
   useEffect(() => {
     const getReserved = async () => {
       // view === "RECEIPT_VIEW" the zustand view is changeable to display different drawer
-      if (data && data?.selectedDate?.id && data?.selectedDateTime?.id && isOpen && view === "RECEIPT_VIEW") {
+      if (data && data?.selectedDate?._id && data?.selectedDateTime?._id && isOpen && view === "RECEIPT_VIEW") {
         const json = {
-          movieId: data?.id,
-          showDateId: data?.selectedDate?.id,
-          showTimeId: data?.selectedDateTime?.id,
+          movieId: data?._id,
+          showDateId: data?.selectedDate?._id,
+          showTimeId: data?.selectedDateTime?._id,
         };
         const res = await getBookingAction(json);
         if (res) {
@@ -66,13 +66,14 @@ const Receipt = () => {
     const getRating = async ()=>{
       if(data && isOpen &&  view){
         try {
-          const movieId = view === "RECEIPT_VIEW_SINGLE" ? data?.movie?.id :  data[0]?.movie?.id 
+          const movieId = view === "RECEIPT_VIEW_SINGLE" ? data?.movie?._id :  data?._id 
 
           if(data && isOpen && movieId){
             const res = await getRatingAction(movieId)
             if(res){
+              // console.log(res)
               setRating(res[0]?.rating)
-              setHasRate(res?.length > 0)
+              setHasRate(res?.length > 0) 
             }
           }
       } catch (error) {
@@ -92,12 +93,14 @@ const Receipt = () => {
       setRating(number)
 
       try {
-        const movieId = view === "RECEIPT_VIEW_SINGLE" ? data?.movie?.id :  data[0]?.movie?.id 
+        // console.log(data)
+        const movieId = view === "RECEIPT_VIEW_SINGLE" ? data?.movie?._id :  data?._id 
 
           const json = {
             "rating":number,
             "movieId": movieId,
         }
+        // console.log(json)
 
         const res = await createRatingAction(json)
         if(res){

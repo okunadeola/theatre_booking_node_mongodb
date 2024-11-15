@@ -132,7 +132,7 @@ const Wallet = () => {
         <div className="grid grid-cols-1 gap-5 xl:grid-cols-2  bg-[#25272a] border-t-8 border-[#2d2f31] rounded-lg  px-5 md:px-10 py-12 w-full md:w-[95%] mx-auto ">
           {
             (searchValue ? filteredData : allWallet)?.map(cd => (
-              <WalletCard key={cd.id} item={cd} />
+              <WalletCard key={cd._id} item={cd} />
             ))
           }
         </div>

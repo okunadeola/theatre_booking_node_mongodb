@@ -22,7 +22,7 @@ const TicketCard = ({value, onClick}) => {
                 <div className="flex gap-2 items-center justify-between">
                     <div className="flex gap-2 items-center">
                         <Avatar size="sm"/>
-                        <span className="text-sm font-medium">{userData?.data?.name}</span>
+                        <span className="text-sm font-medium">{userData?.data?.user?.name}</span>
                     </div>
                     <span className="text-gray-300 text-xs">
                         {format(new Date(value?.createdAt), 'pa')}

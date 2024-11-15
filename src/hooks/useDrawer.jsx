@@ -819,7 +819,7 @@ const seatArrangement = [
       },
       {
         number: "J8",
-        status: "free",
+        status: "free", 
       },
       {
         number: "J9",

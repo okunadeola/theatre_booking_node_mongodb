@@ -5,7 +5,8 @@ import './style.css';
 import { Link } from 'react-router-dom';
 
 import bg from '../../assets/images/footer-bg.jpg';
-import logo from '../../assets/images/tmovie.png';
+// import logo from '../../assets/images/tmovie.png';
+import { TbBrandCinema4D } from 'react-icons/tb';
 
 
 
@@ -15,10 +16,13 @@ const Footer = () => {
         <div className="footer" style={{backgroundImage: `url(${bg})`}}>
             <div className="footer__content container">
                 <div className="footer__content__logo text-white">
-                    <div className="logo">
+                <div className="flex items-end gap-1">
+                    <TbBrandCinema4D size={40} className=" animate-spin  duration-4000"/> <span className="  font-bold animate-blink">Cinemation</span>
+                </div>
+                    {/* <div className="logo">
                         <img src={logo} alt="" />
                         <Link to="#">Cinemation</Link>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="footer__content__menus text-white">
                     <div className="footer__content__menu text-white">

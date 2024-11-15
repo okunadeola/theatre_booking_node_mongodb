@@ -5,9 +5,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import sidebarNav from '../../configs/sidebarNav'
 import { LogOut, X } from 'lucide-react'
-import logo from '../../assets/images/tmovie.png';
+// import logo from '../../assets/images/tmovie.png';
 import useCurrentUser from '../../hooks/useCurrentUser'
 import {  MdOutlineAdminPanelSettings } from 'react-icons/md'
+import { TbBrandCinema4D } from 'react-icons/tb'
 
 const UserSidebar = () => {
     const [activeIndex, setActiveIndex] = useState(0)
@@ -36,12 +37,15 @@ const UserSidebar = () => {
         navigate('/user')
     }
 
-
+// console.log(userData)
 
     return (
         <div className='sidebar'>
             <div className="sidebar__logo">
-                    <img src={logo} alt="" />
+                    {/* <img src={logo} alt="" /> */}
+                    <div className="flex items-end gap-1">
+                    <TbBrandCinema4D size={40} className=" animate-spin  duration-4000"/> 
+                </div>
                 <div className="sidebar-close" onClick={closeSidebar}>
                     <X className='text-5xl text-white i' />
                 </div>
@@ -60,7 +64,7 @@ const UserSidebar = () => {
                     ))
                 }
                 {
-                    userData?.data?.role === "ADMIN" ?
+                    userData?.data?.user?.role === "ADMIN" ?
                     <Link to="/admin/"  className={`sidebar__menu__item ${activeIndex === 4 && 'active'}`} onClick={closeSidebar}>
                             <div className="sidebar__menu__item__icon">
                                 <MdOutlineAdminPanelSettings size={30}/>

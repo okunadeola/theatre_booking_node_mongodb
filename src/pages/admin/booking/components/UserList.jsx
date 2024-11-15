@@ -25,8 +25,8 @@ const getBooking = (userId)=>{
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
                 {
                     data?.map(user =>(
-                    <div   key={user.id}>
-                        <div className={cn("relative", user?.bookings?.length && 'cursor-pointer'  )} style={{backgroundImage: `url(${user?.img})`}} onClick={()=> user?.bookings?.length ? getBooking(user?.id) :  {}}>
+                    <div   key={user._id}>
+                        <div className={cn("relative", user?.bookings?.length && 'cursor-pointer'  )} style={{backgroundImage: `url(${user?.img})`}} onClick={()=> user?.bookings?.length ? getBooking(user?._id) :  {}}>
                            
                             <Card className="py-4  gap-4">
                             <CardHeader className="pb-0 pt-2 px-4 gap-1 flex-col items-start">

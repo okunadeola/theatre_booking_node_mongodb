@@ -77,7 +77,7 @@ const items = [
           <Avatar user={'otherUser'} />
         
         <div className="flex flex-col justify-start">
-          <div>{otherUser !==  null  ? otherUser :   userData?.data?.id === initialMessages?.userId ?   'Admin' : userData?.data?.name }</div>
+          <div>{otherUser !==  null  ? otherUser :   userData?.data?.user?._id === initialMessages?.userId ?   'Admin' : userData?.data?.user?.name }</div>
           <div className="text-sm font-light text-neutral-500">
        
           </div>
@@ -86,7 +86,7 @@ const items = [
 
 
     {
-       userData?.data?.role === "ADMIN" &&
+       userData?.data?.user?.role === "ADMIN" &&
         <Dropdown menu={{items} }  >
         <HiEllipsisHorizontal
           size={32}

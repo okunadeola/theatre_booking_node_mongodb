@@ -2,7 +2,7 @@
 
 import { Link } from 'react-router-dom';
 import './style.css';
-import logo from '../../assets/images/tmovie.png';
+// import logo from '../../assets/images/tmovie.png';
 import { useEffect, useRef } from 'react';
 import Button from '../../components/others/Button';
 import { LogIn, Search } from 'lucide-react';
@@ -10,6 +10,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import DropdownUser from './DropdownUser';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { BsRobot } from "react-icons/bs";
+import { TbBrandCinema4D } from 'react-icons/tb';
 
 
 
@@ -45,10 +46,14 @@ const Header = () => {
     return (
         <div ref={headerRef} className="header">
             <div className="header__wrap">
-                <div className="logo">
-                    <img src={logo} alt="" />
-                    <Link to="/user" className='md:text-default text-[1.2rem]  md:text-[1.875rem]  '>Cinemation</Link>
+                {/* <div className="logo"> */}
+                <div className="flex items-end gap-1">
+                    <TbBrandCinema4D size={40} className=" animate-spin  duration-4000"/> <Link to="/"><span className="  font-bold animate-blink">Cinemation</span>
+                    </Link> 
                 </div>
+                    {/* <img src={logo} alt="" />
+                    <Link to="/user" className='md:text-default text-[1.2rem]  md:text-[1.875rem]  '>Cinemation</Link> */}
+                {/* </div> */}
 
                 <div className='flex gap-6 items-center '>
                     <div className=' gap-2 border border-stone-700 rounded px-1 py-2 items-center mr-8 lg:flex hidden '>
@@ -60,7 +65,7 @@ const Header = () => {
                     {
                         userData?.data ? 
                         <div className='sm:flex hidden'>
-                            <DropdownUser user={userData?.data}/> 
+                            <DropdownUser user={userData?.data?.user}/> 
                         </div>
                         : 
 

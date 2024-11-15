@@ -22,7 +22,7 @@ export default function ClaimModal() {
 
 
   const getCapture =(captured)=>{
-    console.log({file:captured?.capturedImageBlob});
+    // console.log({file:captured?.capturedImageBlob});
     setFile(captured?.capturedImageBlob)
     setTimeout(() => {
         readQRCode(captured?.capturedImageBlob)
@@ -48,6 +48,7 @@ export default function ClaimModal() {
             toast.success('successfully claim booking')
             setMessgae({type: 'success', data: `Booking Claimed Successfully!`})
             setFile(null)
+            setTakePicture(false)
         }else{
             setFile(null)
             if(res && res.success === false){

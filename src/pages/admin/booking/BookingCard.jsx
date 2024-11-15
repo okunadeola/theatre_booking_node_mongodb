@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import { Avatar, Button } from "@nextui-org/react";
+import { Avatar, Button, Tooltip } from "@nextui-org/react";
 import { cn } from "../../../lib/utils";
 import { MdQrCode2 } from "react-icons/md";
 import useReceipt from "../../../hooks/useReceipt";
 import { convertToAmPm, formatDateString2 } from "../../../utils";
 import Currency from "react-currency-formatter";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 const BookingCard = ({data}) => {
   const {openDrawer} = useReceipt()
@@ -55,6 +56,12 @@ const BookingCard = ({data}) => {
           <Avatar classNames={{
             icon: 'text-gray-100'
           }} size="sm" className=" w-5 h-5"/> <span className="text-gray-400 text-xs">@user{data?.userId?.slice(0, 5)}</span>
+
+        <Tooltip showArrow content={data?.isClaimed ? "CLAIMED" : !data.isClaimed && data?.showDate?.isExpired ? "EXPIRED" :  "NOT CLAIMED"}>
+           <div className="ml-auto cursor-pointer">
+            <IoMdCheckmarkCircleOutline strokeWidth={3} size={22} className={cn("ml-auto cursor-pointer", data?.isClaimed ? "text-green-600" : !data.isClaimed && data?.showDate?.isExpired ? "text-red-600" :  "text-gray-400")}/>
+           </div>
+        </Tooltip>
         </div>
       </div>
       <p

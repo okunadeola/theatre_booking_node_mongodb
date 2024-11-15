@@ -641,9 +641,9 @@ const submitWalletPayment = async ()=>{
   const getSeats = pickedSeat?.map(s=> s.number)
 
   const json = {
-    movieId: data?.id,
-    showDateId: data?.selectedDate?.id,
-    showTimeId: data?.selectedDateTime?.id,
+    movieId: data?._id,
+    showDateId: data?.selectedDate?._id,
+    showTimeId: data?.selectedDateTime?._id,
     seat: pickedSeat.length > 1 ? getSeats : pickedSeat[0]?.number,
     paymentMethod: "wallet",
     paymentReference: "wallet",
@@ -652,6 +652,7 @@ const submitWalletPayment = async ()=>{
   try {
      const res = pickedSeat.length > 1 ?  await MultibookingAction(json) : await bookingAction(json)
      if(res){
+      closeDrawer()
       openDrawer('RECEIPT_VIEW', data)  // once successful, show receipt drawer
      }
   } catch (error) {
@@ -719,7 +720,7 @@ const submitWalletPayment = async ()=>{
     if (!userData) {
       onModalOpen();
     }
-  }, [userData]);
+  }, [userData, onModalOpen]);
   // check login status
 
 
@@ -746,11 +747,11 @@ const submitWalletPayment = async ()=>{
 
       setAllSeat(allS)
 
-      if (data && data?.selectedDate?.id && data?.selectedDateTime?.id && isOpen) {
+      if (data && data?.selectedDate?._id && data?.selectedDateTime?._id && isOpen) {
         const json = {
-          movieId: data?.id,
-          showDateId: data?.selectedDate?.id,
-          showTimeId: data?.selectedDateTime?.id,
+          movieId: data?._id,
+          showDateId: data?.selectedDate?._id,
+          showTimeId: data?.selectedDateTime?._id,
         };
         const res = await getAllReservedAction(json);
         if (res) {
@@ -837,11 +838,11 @@ const submitWalletPayment = async ()=>{
     // get reserve
   const confirmReserved = async ()=>{
 
-    if(data?.id && data?.selectedDate?.id && data?.selectedDateTime?.id ){
+    if(data?._id && data?.selectedDate?._id && data?.selectedDateTime?._id ){
       const json = {
-          movieId: data?.id,
-          showDateId: data?.selectedDate?.id,
-          showTimeId: data?.selectedDateTime?.id,
+          movieId: data?._id,
+          showDateId: data?.selectedDate?._id,
+          showTimeId: data?.selectedDateTime?._id,
         };
         const res = await getAllReservedAction(json);
   
@@ -981,9 +982,9 @@ const updateReserved = async ()=>{
     const getSeats = pickedSeat?.map(s=> s.number)
 
     const json = {
-      movieId: data?.id,
-      showDateId: data?.selectedDate?.id,
-      showTimeId: data?.selectedDateTime?.id,
+      movieId: data?._id,
+      showDateId: data?.selectedDate?._id,
+      showTimeId: data?.selectedDateTime?._id,
       seat: pickedSeat.length > 1 ? getSeats : pickedSeat[0]?.number,
       paymentMethod: 'flutterwave',
       paymentReference: reference?.flw_ref,
@@ -1009,6 +1010,7 @@ const updateReserved = async ()=>{
             updateReserved()
           }else{
             // onOpen()
+            closeDrawer()
             openDrawer('RECEIPT_VIEW', data)
           }
        }
@@ -1056,7 +1058,7 @@ const exitApp = ()=>{
 
     <Fragment>
      {/* {
-        isOpen && */}
+        isOpen && */} 
         <Drawer
           placement="right"
           size={"large"}
@@ -1297,7 +1299,7 @@ const exitApp = ()=>{
         
             <PaystackPayment
                 ref={paystackButtonRef}
-                email={userData?.data?.email}  // Replace with customer's email
+                email={userData?.data?.user?.email}  // Replace with customer's email
                 amount={(pickedSeat.length * data?.price) * 100}  // Amount in kobo (2000 kobo = 20 NGN)
                 onSuccess={handlePaymentSuccess}
                 onClose={handlePaymentClose}           
@@ -1308,7 +1310,7 @@ const exitApp = ()=>{
             isOpen &&
             <FlutterwavePayment
                 ref={flutterWaveButtonRef}
-                email={userData?.data?.email}  // Replace with customer's email
+                email={userData?.data?.user?.email}  // Replace with customer's email
                 amount={(pickedSeat.length * data?.price)}  
                 onSuccess={handlePaymentSuccess}
                 onClose={handlePaymentClose}           

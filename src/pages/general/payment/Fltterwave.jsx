@@ -38,7 +38,7 @@ const FlutterwavePayment = forwardRef(({ email, amount, onSuccess, onClose }, re
                 onClick={() => {
                 handleFlutterPayment({
                   callback: (response) => {
-                     console.log(response);
+                    //  console.log(response);
                      onSuccess(response)
                       closePaymentModal() // this will close the modal programmatically
                   },
@@ -48,7 +48,7 @@ const FlutterwavePayment = forwardRef(({ email, amount, onSuccess, onClose }, re
                 });
               }}
       
-            >FlutterWave Hooks</button>
+            ></button>
     );
 });
 

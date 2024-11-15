@@ -14,7 +14,7 @@ const UserRootLayout = () => {
   const navigate = useNavigate()
 
   const handleCommand = (command) => {
-    console.log(command, '...');
+    // console.log(command, '...');
     if (command.includes("scroll down")) {
       window.scrollBy(0, window.innerHeight);
     } else if (command.includes("scroll up")) {

@@ -77,7 +77,7 @@ const Body = ({ initialMessages, otherUser }) => {
       {messages?.map((message, i) => (
         <MessageBox 
           isLast={i === messages.length - 1} 
-          key={message?.id} 
+          key={message?._id} 
           data={message}
           otherUser={otherUser}
 

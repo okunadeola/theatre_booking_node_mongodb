@@ -24,6 +24,7 @@ const MovieList = props => {
                 const res = await  getFrontMovieAction()
                 if(res){
                     setMovieItems(res);
+                    console.log(res)
                 }
             } catch {
                 console.log('error');

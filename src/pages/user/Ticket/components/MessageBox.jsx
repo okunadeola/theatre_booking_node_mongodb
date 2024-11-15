@@ -14,7 +14,7 @@ const MessageBox = ({ data, otherUser }) => {
 
 
 
-  const isOwn = data?.userId === userData?.data?.id
+  const isOwn = data?.userId === userData?.data?.user?._id
   const tooMany  = data?.message?.length > 50
   const container = clsx('flex gap-3 p-4 px-7', isOwn && 'justify-end');
   const avatar = clsx(isOwn && 'order-2');
@@ -33,12 +33,12 @@ const MessageBox = ({ data, otherUser }) => {
   return ( 
     <div className={container}>
       <div className={avatar}>
-        <Avatar user={ otherUser !== null && !isOwn ? otherUser : isOwn ? userData?.data?.name : 'Admin'} className="w-4 h-4" />
+        <Avatar user={ otherUser !== null && !isOwn ? otherUser : isOwn ? userData?.data?.user?.name : 'Admin'} className="w-4 h-4" />
       </div>
       <div className={body}>
         <div className="flex items-center gap-1">
           <div className="text-sm text-gray-500">
-            {otherUser !== null && !isOwn ? otherUser  : isOwn ? userData?.data?.name : 'Admin' }
+            {otherUser !== null && !isOwn ? otherUser  : isOwn ? userData?.data?.user?.name : 'Admin' }
           </div>
           <div className="text-xs text-gray-400">
             {format(new Date(data?.createdAt), 'p')}

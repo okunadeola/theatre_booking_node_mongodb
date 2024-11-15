@@ -8,10 +8,12 @@ import { Chip, Button, useDisclosure } from "@nextui-org/react";
 import { createShowDateAction, createShowDateTimeAction, getMovieShowDateAction, getMovieShowDateTimesAction } from "../../../../API/movies";
 import { convertToAmPm, formatDateString, showSuccess } from "../../../../utils";
 import { PlusIcon } from "./PlusIcon";
-import ShowModal from "./ShowModal";
+
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Currency from "react-currency-formatter"
+import useDrawer from "@/hooks/useDrawer";
+import { getAllReservedAction } from "@/API/booking";
 
 const lvRating = {
   0: "⭐️",
@@ -23,7 +25,8 @@ const lvRating = {
 };
 
 const MovieModal = ({ isOpen, onClose, data }) => {
-  const { onOpen, isOpen: hasOpen, onClose: isClose } = useDisclosure();
+  const {openDrawer, isOpen:hasOpen, } = useDrawer()
+  // const { onOpen, isOpen: hasOpen, onClose: isClose } = useDisclosure();
   const [showDate, setshowDate] = useState(false)
   const [showTime, setshowTime] = useState(false)
   const [cinemaDate, setCinemaDate] = useState(null)
@@ -33,9 +36,47 @@ const MovieModal = ({ isOpen, onClose, data }) => {
   const [selectedmovieDate, setSelectedMovieDate] = useState(null)
   // console.log(selectedmovieDate)
 
-  const openShow = () => {
-    onOpen();
+  const openShow = (selectedmovieDateTime) => {
+    // console.log(data, selectedmovieDate,  selectedmovieDateTime)
+    // openDrawer("DRAWER_VIEW", data);
+    getReserved(selectedmovieDateTime)
   };
+  const getReserved = async (selectedmovieDateTime) => {
+
+    if (data._id && selectedmovieDate?._id && selectedmovieDateTime?._id) {
+      const json = {
+        movieId: data._id,
+        showDateId: selectedmovieDate?._id,
+        showTimeId: selectedmovieDateTime?._id,
+      };
+
+      // console.log(json)
+      const res = await getAllReservedAction(json);
+      if (res) {
+        console.log(res)
+        const reserve = res?.map((each) => each.seat);
+
+        selectedmovieDate.minimal =`${selectedmovieDate.formattedDate?.dayOfWeek} ${selectedmovieDate.formattedDate?.dayOfMonth} ${selectedmovieDate.formattedDate?.month}`
+  
+        // open reservation drawer  
+        // onClose()
+        openDrawer("DRAWER_VIEW", {...data, selectedDate: selectedmovieDate, selectedDateTime: selectedmovieDateTime, reserve:reserve})
+
+      }
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
 
   const handleDate = (date2)=>{
     if(date2){
@@ -44,7 +85,9 @@ const MovieModal = ({ isOpen, onClose, data }) => {
       const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
       const year = date.getFullYear();
       const fordate =  `${year}-${month}-${day}`
-    
+      
+      const dateString = fordate +"T00:00:00.000Z"
+
       // console.log(fordate)
       setCinemaDate(fordate)
     }
@@ -53,7 +96,7 @@ const MovieModal = ({ isOpen, onClose, data }) => {
 
   const getDate = async () => {
       if(data){
-        const res = await getMovieShowDateAction({movieId:data?.id})
+        const res = await getMovieShowDateAction({movieId:data?._id})
         if(res){
           console.log(res)
           const formatted = res?.map(dd => {
@@ -69,7 +112,7 @@ const MovieModal = ({ isOpen, onClose, data }) => {
 
   const getDateTimes = async (dateObject) => {
       if(dateObject){
-        const res = await getMovieShowDateTimesAction({dateId:dateObject?.id})
+        const res = await getMovieShowDateTimesAction({dateId:dateObject?._id})
         if(res){
           const formatted = res?.map(dd => {
             dd.formattedDateTime = convertToAmPm(dd?.time)
@@ -84,7 +127,7 @@ const MovieModal = ({ isOpen, onClose, data }) => {
 
     const getDate = async ()=> {
     if(data){
-      const res = await getMovieShowDateAction({movieId:data?.id})
+      const res = await getMovieShowDateAction({movieId:data?._id})
      
       if(res){
         const formatted = res?.map(dd => {
@@ -109,7 +152,7 @@ const MovieModal = ({ isOpen, onClose, data }) => {
 
   const createDate = async ()=>{
     if(data && cinemaDate){
-      const res = await createShowDateAction({movieId:data.id , date:cinemaDate})
+      const res = await createShowDateAction({movieId:data._id , date:cinemaDate})
       if(res){
         showSuccess('date created successfully')
         setCinemaDate(null)
@@ -138,16 +181,18 @@ const MovieModal = ({ isOpen, onClose, data }) => {
       // console.log(selectedmovieDate, cinemaDateTime)
 
       const json = {
-        movieId:selectedmovieDate?.movieId,
-        showDateId:selectedmovieDate?.id,
+        movieId:data?._id,
+        showDateId:selectedmovieDate?._id,
         time:cinemaDateTime,
         dateString:selectedmovieDate?.date,
       }
+      // console.log(json)
 
       const res = await createShowDateTimeAction(json)
       if(res){
         showSuccess('cinema date time created successfully')
         setCinemaDateTime(null)
+        getDateTimes(selectedmovieDate)
       }
     }
   }
@@ -236,11 +281,11 @@ const MovieModal = ({ isOpen, onClose, data }) => {
 
             <div className="flex gap-3 overflow-x-auto w-full scrollbar-hide p-2 transition-all duration-700">
               { movieDate?.length > 0 ? movieDate?.map((mv) => (
-                 <motion.div  key={mv.id}  initial={{x: 0}} animate={{ y: 0}} transition={{duration: 0.5}} onClick={()=>onSelectDate(mv)} className="cursor-pointer">
+                 <motion.div  key={mv._id}  initial={{x: 0}} animate={{ y: 0}} transition={{duration: 0.5}} onClick={()=>onSelectDate(mv)} className="cursor-pointer">
                   <div
                     className="rounded-3xl min-w-[4.8rem] h-26 bg-gray-500/90 p-1 items-center text-xl flex flex-col gap-4 transition-all duration-500"
                   >
-                    <div className={`w-2 h-2 rounded-full ${selectedmovieDate?.id === mv?.id ? 'bg-green-400' : 'bg-gray-700'} `}></div>
+                    <div className={`w-2 h-2 rounded-full ${selectedmovieDate?._id === mv?._id ? 'bg-green-400' : 'bg-gray-700'} `}></div>
                     <div className="text-white">
                       {mv?.formattedDate?.dayOfWeek}
                     </div>
@@ -283,7 +328,7 @@ const MovieModal = ({ isOpen, onClose, data }) => {
                   { movieDateTime?.length > 0 ? movieDateTime?.map((mv, i) => (
                     <div
                       key={i}
-                      onClick={openShow}
+                      onClick={()=>openShow(mv)}
                       className="rounded-xl min-w-36 h-12 bg-gray-600/90 p-2 px-4 items-center text-lg flex flex-col gap-4 cursor-pointer"
                     >
                       <div className="text-white">
@@ -300,7 +345,8 @@ const MovieModal = ({ isOpen, onClose, data }) => {
         </div>
       </Drawer>
 
-      <ShowModal onClose={isClose} isOpen={hasOpen} data={data} />
+
+      {/* onClose={closeDrawer} isOpen={hasOpen} data={data} */}
     </>
   );
 };

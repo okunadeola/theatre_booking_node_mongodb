@@ -9,6 +9,7 @@ import Button from '../../../../components/others/Button';
 import { Play } from 'lucide-react';
 import { Fragment } from 'react';
 import useCurrentBg from '../../../../hooks/useCurrentBg';
+import Currency from "react-currency-formatter"
 
 const MovieCard = props => {
     const {setCurrentBg} = useCurrentBg()
@@ -16,7 +17,7 @@ const MovieCard = props => {
 
     const item  = props.item;
 
-    const link = '/user/' + item.id;
+    const link = '/user/' + item._id;
 
     const bg = item?.img;
 
@@ -34,7 +35,7 @@ const MovieCard = props => {
         <Fragment>
             {
                 props.withVariant ? (
-                    <div className="movie-card top" style={{backgroundImage: `url(${bg})`}} onClick={()=>setCurrentBg(item)}>
+                    <div className="movie-card top cursor-pointer" style={{backgroundImage: `url(${bg})`}} onClick={()=>setCurrentBg(item)}>
                     </div>
                 ) :(
 
@@ -44,12 +45,16 @@ const MovieCard = props => {
                                 <Play/>
                             </Button>
     
-                            {/* <div className='absolute bottom-0 right-5'>
-                                <span className='text-xs text-stone-300'>18th Feb</span>
-                            </div> */}
                         </div>
                         
                         <h3 className='font-bold text-white'>{item?.title}</h3>
+                        <div className='font-bold text-green-400 flex  justify-between'>
+                        <Currency
+                            quantity={item?.price || 0}
+                            currency="NGN"
+                            />
+                            <div className='text-gray-400 text-xs'>50% OFF</div>
+                        </div>
 
                     </div>
 

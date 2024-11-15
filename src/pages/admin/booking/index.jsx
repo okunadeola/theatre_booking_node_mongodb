@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { Button, Pagination } from "@nextui-org/react"
+import { Pagination } from "@nextui-org/react"
 import AllBooking from "./AllBooking"
 
 import Search from "../../../components/others/Search"

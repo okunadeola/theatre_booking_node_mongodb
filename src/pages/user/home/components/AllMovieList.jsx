@@ -24,8 +24,10 @@ const AllMovieList = () => {
             try {
                 const res = await  getPaginatedMoviesAction({page: page, limit: 10})
                 if(res){
+
                     setMovieItemsPage(res?.movies);
                     setHasMore(res?.nextPage)
+                    console.log(res)
                 }
             } catch {
                 console.log('error');

@@ -26,7 +26,7 @@ const PaystackPayment = forwardRef(({ email, amount, onSuccess, onClose }, ref) 
             <button ref={ref}  onClick={() => {
                 initializePayment(onSuccess,
                     onClose)
-            }}>Paystack Hooks</button>
+            }}></button>
     );
 });
 

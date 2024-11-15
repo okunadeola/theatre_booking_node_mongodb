@@ -440,7 +440,7 @@ export default function MovieTable() {
         <TableBody  emptyContent={"No users found"} items={sortedItems} loadingContent={<Spinner />}
           loadingState={loadingState}>
           {(item) => (
-            <TableRow key={item.id}>
+            <TableRow key={item._id}>
               {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
             </TableRow>
           )}

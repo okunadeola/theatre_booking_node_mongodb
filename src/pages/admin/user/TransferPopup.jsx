@@ -37,7 +37,7 @@ const handleSend = async  ()=>{
 
     try {
       const json = {
-        userId: user?.id,
+        userId: user?._id,
         amount: amount,
         isInflow: true,
         note: note,

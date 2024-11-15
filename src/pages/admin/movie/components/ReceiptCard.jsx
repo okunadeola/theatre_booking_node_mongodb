@@ -20,7 +20,7 @@ const ReceiptCard = ({data}) => {
     const componentRef = useRef();
 
 
-    const time = convertToAmPm(data?.showTime?.time) 
+    const time = convertToAmPm(data?.showTime?.time ) 
     const date = formatDateString2(data?.showDate?.date)
 
     const print = () => {
@@ -112,7 +112,7 @@ const ReceiptCard = ({data}) => {
             alignSelf: "center",
             margin: "0 auto",
           }}
-          value={data?.id}
+          value={data?._id}
           viewBox={`0 0 256 256`}
         />
       </div>

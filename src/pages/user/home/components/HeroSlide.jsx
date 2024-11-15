@@ -33,6 +33,7 @@ const HeroSlide = () => {
                 const res = await  getFrontMovieAction()
                 if(res){
                     setMovieItems(shuffle(res));
+                    console.log(res)
                 }
             } catch {
                 console.log('error');
@@ -64,9 +65,9 @@ const HeroSlide = () => {
                     ))
                 }
             </Swiper>
-            {
-                movieItems.map((item, i) => <TrailerModal key={i} item={item}/>)
-            }
+                {
+                    movieItems.map((item, i) => <TrailerModal key={i} item={item}/>)
+                }
         </div>
     );
 }
@@ -80,7 +81,7 @@ const HeroSlideItem = props => {
     const background = item?.img;
 
     const setModalActive = async () => {
-        const modal = document.querySelector(`#modal_${item.id}`);
+        const modal = document.querySelector(`#modal_${item._id}`);
 
         const videSrc = item?.trailer + '?autoplay=1'
    
@@ -89,13 +90,13 @@ const HeroSlideItem = props => {
             modal.querySelector('.modal__content > iframe').setAttribute('allow', 'autoplay; encrypted-media');
             modal.classList.toggle('active');
         } else {
-            toast.error('No Trailer')
+            toast.error('No Trailer available')
         }
 
     }
 
     const moveToDetailPage = ()=>{
-        const link = '/user/' + item?.id
+        const link = '/user/' + item?._id
         hisrory(link, {state: item})
     }
 
@@ -137,7 +138,7 @@ const TrailerModal = props => {
 
 
     return (
-        <Modal  active={false} id={`modal_${item.id}`} >
+        <Modal  active={false} id={`modal_${item._id}`} >
             <ModalContent onClose={onClose}>
                 <iframe ref={iframeRef} width="100%" id="trailer_frame" height="500px" title="trailer" allow='autoplay; encrypted-media'></iframe>
             

@@ -20,7 +20,7 @@ const AdminWalletModal = ({ onClose, isOpen, data}) => {
     <div className="flex flex-col gap-3 pb-5  w-full h-full">
     {
           data?.map(card =>(
-                <WalletCard key={card.id} item={card}  />
+                <WalletCard key={card._id} item={card}  />
             ))
         }
     </div>

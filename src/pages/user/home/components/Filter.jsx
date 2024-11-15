@@ -28,6 +28,7 @@ const Filter = () => {
   const { RangePicker } = DatePicker;
   const [movieItemsPage, setMovieItemsPage] = useState([]);
   const [selectedCat, setSelectedCat] = useState(null);
+  const [selectedDate, setSelectedDate] = useState({start: null, end:null});
   const { userData } = useCurrentUser();
 
   const onDateChange = (dates) => {
@@ -51,6 +52,8 @@ const Filter = () => {
       ).toISOString();
 
     //   console.log(isoString, isoString2);
+    setSelectedDate({start:date, end:date2 })
+    setSelectedCat(null)
       ondateSelect({isoString, isoString2})
     }
   };
@@ -61,8 +64,8 @@ const Filter = () => {
     try {
       const res = await getMovieByDatesAction({ start:date?.isoString, end:date?.isoString2 });
       if (res) {
-
-        const dt = res?.map(d => d.movie)
+        console.log(res)
+        const dt = res?.map(d => d)
         setMovieItemsPage([...dt]);
         setSelectedCat(null)
       }
@@ -77,6 +80,7 @@ const Filter = () => {
     try {
       const res = await getMovieByCategoryAction({category: cat});
       if (res) {
+        console.log(res)
         setMovieItemsPage(res);
       }
     } catch (error) {
@@ -88,6 +92,7 @@ const Filter = () => {
 
   const selectCat = (cat)=>{
     setSelectedCat(cat)
+    setSelectedDate({start:null, end:null })
     oncategorySelect(cat)
   }
 
@@ -100,7 +105,7 @@ const Filter = () => {
     <div>
 
       {
-        userData?.data?.id &&
+        userData?.data?.user?._id &&
         <div className="flex  gap-2  md:gap-10 flex-wrap mb-5">
           <div className="flex flex-col">
             <h2 className=" text-lg  md:text-2xl font-bold mb-1">
@@ -140,7 +145,7 @@ const Filter = () => {
       {movieItemsPage?.length ? (
         <div className="section mb-3">
           <div className="section__header mb-2 flex text-white justify-between items-center py-4">
-            <h2 className="text-2xl font-bold">Sesrch Result {selectedCat && 'for'}  {selectedCat}</h2> 
+            <h2 className="text-2xl font-bold">Search Result {selectedCat && 'for'}  {selectedCat}</h2> 
           </div>
 
           <div className={`movie-list`}>
@@ -162,7 +167,7 @@ const Filter = () => {
                         </Swiper>
                 </div>
         </div>
-      ) : null}
+      ) : selectedCat  || (selectedDate?.start || selectedDate?.end) ?    <h6 className="text-sm font-bold text-default-400">Empty data </h6>  :   null}
     </div>
   );
 };

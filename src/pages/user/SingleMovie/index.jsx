@@ -29,6 +29,8 @@ const SingleMovie = () => {
     const getDetail = async () => {
       if(id && location.state){
 
+        console.log(id,location.state )
+
         location.state?.showDates?.map(dd => {
           dd.formattedDate = formatDateString(dd?.date)
           dd.minimal =`${dd.formattedDate?.dayOfWeek} ${dd.formattedDate?.dayOfMonth} ${dd.formattedDate?.month}`
@@ -47,8 +49,9 @@ const SingleMovie = () => {
 
   const getDateTimes = async (dateObject) => {
     if(dateObject){
-      const res = await getMovieShowDateTimesAction({dateId:dateObject?.id})
+      const res = await getMovieShowDateTimesAction({dateId:dateObject?._id})
       if(res){
+        console.log(res)
         const formatted = res?.map(dd => {
           dd.formattedDateTime = convertToAmPm(dd?.time)
           return dd
@@ -60,6 +63,7 @@ const SingleMovie = () => {
 
 
   const onSelectDate = (dateObject)=>{
+    console.log(dateObject)
     setSelectedMovieDate(dateObject)
     getDateTimes(dateObject)
   }
@@ -67,14 +71,18 @@ const SingleMovie = () => {
 
 
   const getReserved = async () => {
-    if (id && selectedmovieDate?.id && selectedmovieDateTime?.id) {
+
+    if (id && selectedmovieDate?._id && selectedmovieDateTime?._id) {
       const json = {
         movieId: id,
-        showDateId: selectedmovieDate?.id,
-        showTimeId: selectedmovieDateTime?.id,
+        showDateId: selectedmovieDate?._id,
+        showTimeId: selectedmovieDateTime?._id,
       };
+
+      // console.log(json)
       const res = await getAllReservedAction(json);
       if (res) {
+        console.log(res)
         const reserve = res?.map((each) => each.seat);
         // open reservation drawer
         openDrawer("DRAWER_VIEW", {...item, selectedDate: selectedmovieDate, selectedDateTime: selectedmovieDateTime, reserve:reserve})
@@ -126,12 +134,12 @@ const SingleMovie = () => {
 
 
               <div className="flex gap-3 flex-wrap w-full scrollbar-hide p-2 py-0 transition-all duration-700">
-              { item?.showDates?.length > 0 ? item?.showDates?.map((mv) => (
-                 <motion.div  key={mv.id}  initial={{x: 0}} animate={{ y: 0}} transition={{duration: 0.5}} onClick={()=>onSelectDate(mv)} className="cursor-pointer">
+              { item?.showDates?.length > 0 ? item?.showDates?.map((mv, i) => (
+                 <motion.div  key={i}  initial={{x: 0}} animate={{ y: 0}} transition={{duration: 0.5}} onClick={()=>onSelectDate(mv)} className="cursor-pointer">
                   <div
                     className="rounded-3xl min-w-[4.8rem] h-26 bg-gray-700/50 p-1 items-center text-xl flex flex-col gap-4 transition-all duration-500 border-white "
                   >
-                    <div className={`w-2 h-4 rounded-full ${selectedmovieDate?.id === mv?.id ? 'bg-green-400' : 'bg-gray-700'} `}></div>
+                    <div className={`w-2 h-4 rounded-full ${selectedmovieDate?._id === mv?._id ? 'bg-green-400' : 'bg-gray-700'} `}></div>
                     <div className="text-white">
                       {mv?.formattedDate?.dayOfWeek}
                     </div>
@@ -147,13 +155,13 @@ const SingleMovie = () => {
               {
                 selectedmovieDate &&
                 <div className="flex gap-3 flex-wrap w-full scrollbar-hide p-2 py-0">
-                    { selectedmovieDate && movieDateTime?.length > 0 ? movieDateTime?.map((mv) => (
+                    { selectedmovieDate && movieDateTime?.length > 0 ? movieDateTime?.map((mv, i) => (
                       <div
-                        key={mv.id}
+                        key={i}
                         onClick={()=>setSelectedMovieDateTime(mv)}
                         className="rounded-xl min-w-36 h-12 bg-gray-700/50 p-2 px-4 items-center text-lg flex flex-col gap-4 cursor-pointer"
                       >
-                        <div className={` ${ selectedmovieDateTime?.id === mv?.id ? 'text-green-300' : "text-white" }    `}>
+                        <div className={` ${ selectedmovieDateTime?._id === mv?._id ? 'text-green-300' : "text-white" }    `}>
                           {mv?.formattedDateTime}
                         </div>
                       </div>

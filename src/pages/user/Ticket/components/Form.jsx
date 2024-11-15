@@ -60,7 +60,7 @@ const [title, setTitle] = useState('')
     try {
         const json = {
           message: data?.message,
-          ticketId: initialMessage?.id,
+          ticketId: initialMessage?._id,
         }
         const res = await replyTicketAction(json)
         if(res){
@@ -80,6 +80,11 @@ const [title, setTitle] = useState('')
       priority: priority,
       title: title
     }
+
+    // if(title){
+
+    // }
+
       const res = await createTicketAction(json) 
     if(res){
       showSuccess('Ticket created Successfully')
@@ -129,8 +134,9 @@ const [title, setTitle] = useState('')
               hover:bg-sky-600 
               transition
               text-white 
-              mt-3 ml-auto
+              mt-3 ml-auto disabled:cursor-not-allowed
             "
+            disabled={!title && !message}
           >
             <span className="font-semibold">CREATE</span>
             <HiPaperAirplane

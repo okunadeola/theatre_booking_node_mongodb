@@ -17,7 +17,7 @@ export function capitalize(str) {
 
   // *** show success toaster ***/
 export function showSuccess(msg){
-  return toast.success(msg)
+  return toast.success(msg, {duration: 2000})
 }
 
   // *** show error toaster with duration option ***/
@@ -83,26 +83,44 @@ export const formatDateString2 = (dateString) => {
 
 
 export const convertToAmPm = (time) => {
-  // Split the time string
-  const [hours, minutes, seconds] = time.split(':');
+
+  const [hours, minutes] = time.split(':').map(Number);
+  let formattedTime;
+
+  if (hours === 0) {
+    formattedTime = '12:' + minutes.toString().padStart(2, '0') + ' AM';
+  } else if (hours < 12) {
+    formattedTime = hours.toString() + ':' + minutes.toString().padStart(2, '0') + ' AM';
+  } else if (hours === 12) {
+    formattedTime = '12:' + minutes.toString().padStart(2, '0') + ' PM';
+  } else {
+    formattedTime = (hours - 12).toString() + ':' + minutes.toString().padStart(2, '0') + ' PM';
+  }
+
+  return formattedTime;
+
+
+
+  // // Split the time string
+  // const [hours, minutes, seconds] = time.split(':');
   
-  // Create a new Date object
-  const date = new Date();
-  date.setHours(hours);
-  date.setMinutes(minutes);
-  date.setSeconds(seconds);
+  // // Create a new Date object
+  // const date = new Date();
+  // date.setHours(Number(hours));
+  // date.setMinutes(Number(minutes));
+  // date.setSeconds(seconds);
 
-  // Get hours and determine AM/PM
-  let hours12 = date.getHours();
-  const ampm = hours12 >= 12 ? 'PM' : 'AM';
-  hours12 = hours12 % 12;
-  hours12 = hours12 ? hours12 : 12; // the hour '0' should be '12'
+  // // Get hours and determine AM/PM
+  // let hours12 = date.getHours();
+  // const ampm = hours12 >= 12 ? 'PM' : 'AM';
+  // hours12 = hours12 % 12;
+  // hours12 = hours12 ? hours12 : 12; // the hour '0' should be '12'
 
-  // Format minutes
-  const minutesFormatted = minutes.padStart(2, '0');
+  // // Format minutes
+  // const minutesFormatted = minutes.padStart(2, '0');
 
-  // Return formatted time
-  return `${hours12}:${minutesFormatted} ${ampm}`;
+  // // Return formatted time
+  // return `${hours12}:${minutesFormatted} ${ampm}`;
 };
 
 

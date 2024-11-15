@@ -187,7 +187,7 @@ const uploadFile = async (formData) => {
                 errors={errors}
                 id="trailer"
                 size="large"
-                placeholder={'www.trailer.com'}
+                placeholder={'https://www.youtube.com/embed/727bnqhwhjw'}
                 
               />
             </div>

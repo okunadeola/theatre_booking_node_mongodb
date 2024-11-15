@@ -11,9 +11,10 @@ const RootLayout = () => {
     const { userData } = useCurrentUser();
     const navigate = useNavigate();
 
+    // console.log(userData)
 
   useEffect(() => {
-    const isAdmin = userData?.data.role === "ADMIN";
+    const isAdmin = userData?.data?.user?.role === "ADMIN";
     if (!isAdmin) {
       navigate("/user");
     }
@@ -26,6 +27,7 @@ const RootLayout = () => {
             <div className="h-[70px] md:pl-56 fixed inset-y-0 w-full z-50">
                     <Navbar/>
             </div>
+
 
             <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
                     <Sidebar closeBar={()=>{}}/>
