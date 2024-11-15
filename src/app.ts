@@ -52,7 +52,7 @@ class App {
         const { MONGO_PATH } = process.env;
 
         mongoose.connect(
-            `mongodb://${MONGO_PATH}`
+            `${MONGO_PATH}`
         ).then(val=> console.log("✅Synced database successfully...")).catch(e=> console.log("Error connecting to the database"));
     }
 
