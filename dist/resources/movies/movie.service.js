@@ -342,7 +342,7 @@ class MovieService {
     }
     async createDates(movie, date) {
         try {
-            const findDate = await this.showDate.findOne({ date: date });
+            const findDate = await this.showDate.findOne({ date: date, movie:movie });
             if (findDate) {
                 throw new http_exception_1.default(403, "Show with same date already exist");
             }
@@ -380,6 +380,10 @@ class MovieService {
             const findDate = await this.showDate.findOne({ date: dateString });
             // const findTime= await this.showTime.findOne({ time : `${time}:00`})
             const findTime = await this.showTime.findOne({ time: `${time}` });
+
+            // or if (findDate && findTime &&  findTime.movieId === movieId ) {
+            //     throw new http_exception_1.default(403, "Show with same date and time already exist");
+            // }
             if (findDate && findTime) {
                 throw new http_exception_1.default(403, "Show with same date and time already exist");
             }
