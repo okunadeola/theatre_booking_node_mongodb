@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-import movieModel from '@/resources/movies/movie.model';
+// import movieModel from '@/resources/movies/movie.model';
 import ShowDate from '@/resources/date/date.model'
 import ShowTime from '@/resources/time/time.model'
 import userModel from '@/resources/user/user.model';

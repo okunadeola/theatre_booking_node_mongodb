@@ -9,6 +9,14 @@ declare global {
     }
 }
 
+declare module 'jsonwebtoken';
+declare module 'bcrypt';
+declare module 'node-cron';
+declare module 'multer';
+declare module 'cors';
+declare module 'morgan';
+declare module 'compression';
+
 
 // declare module 'express' {
 //     interface Request {
