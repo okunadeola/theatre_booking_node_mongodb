@@ -22,6 +22,11 @@
 
   ![img](./img1.png)
 
+
+ACCESS ADMIN DASHBOARD CREDENTIAL
+EMAIL: test@gmail.com
+PASSWORD: password
+
 FLUTTERWAVE TESTCARD
 
 Test Card Details
