@@ -167,8 +167,8 @@ class MovieController {
         // movies
         this.router.post(`${this.path}/create-with-image-url`, [authenticatedAdmin_middleware_1.default, (0, validation_middleware_1.default)(movie_validation_1.default.createMovieWithImgUrl, 0 /* RequestType.BODY */),], this.createWithImageUrl);
         this.router.get(`${this.path}/`, authenticated_middleware_1.default, this.getAllMovies);
-        this.router.get(`${this.path}/paginated/`, [authenticated_middleware_1.default, (0, validation_middleware_1.default)(movie_validation_1.default.movieFilterQuery, 2 /* RequestType.QUERY */)], this.getAllMoviesPaginated);
-        this.router.get(`${this.path}/bookmark/`, [authenticated_middleware_1.default], this.getAllMoviesBookmark);
+        this.router.get(`${this.path}/paginated/`, [(0, validation_middleware_1.default)(movie_validation_1.default.movieFilterQuery, 2 /* RequestType.QUERY */)], this.getAllMoviesPaginated);
+        this.router.get(`${this.path}/bookmark/`, this.getAllMoviesBookmark);
         this.router.get(`${this.path}/by_booking`, [authenticatedAdmin_middleware_1.default], this.getAllMoviesByBooking);
         this.router.get(`${this.path}/category/:cat`, [authenticated_middleware_1.default, (0, validation_middleware_1.default)(movie_validation_1.default.getMovieByCat, 1 /* RequestType.PARAMS */)], this.getAllMoviesByCategory);
         this.router.post(`${this.path}/dates/`, [authenticated_middleware_1.default, (0, validation_middleware_1.default)(movie_validation_1.default.getMovieByDates, 0 /* RequestType.BODY */)], this.getAllMoviesByDate);
