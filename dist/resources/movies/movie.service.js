@@ -379,12 +379,12 @@ class MovieService {
             //date = 2024-04-09 00:00:00 
             const findDate = await this.showDate.findOne({ date: dateString });
             // const findTime= await this.showTime.findOne({ time : `${time}:00`})
-            const findTime = await this.showTime.findOne({ time: `${time}` });
+            const findTime = await this.showTime.findOne({ time: `${time}`, showDateId:showDateId });
 
             // or if (findDate && findTime &&  findTime.movieId === movieId ) {
             //     throw new http_exception_1.default(403, "Show with same date and time already exist");
             // }
-            if (findDate && findTime) {
+            if (findTime) {
                 throw new http_exception_1.default(403, "Show with same date and time already exist");
             }
             const timeDoc = await this.showTime.create({
