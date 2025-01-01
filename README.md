@@ -1,6 +1,7 @@
 # node_mongodb_typescript
 
 # [Visit site](https://theatrebookingreact.netlify.app)
+#  Frontend source code is in the [frontend branch](https://github.com/okunadeola/theatre_booking_node_mongodb/tree/react-frontend) 
 
 - # Screenshot Available
 
